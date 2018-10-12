@@ -37,6 +37,7 @@ public class OWLlinkGetEquivalentClassesElementHandler extends AbstractOWLClassR
         super(handler);
     }
 
+    @Override
     public GetEquivalentClasses getOWLObject() throws OWLXMLParserException {
         return new GetEquivalentClasses(super.kb, o);
     }

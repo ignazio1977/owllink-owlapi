@@ -37,6 +37,7 @@ public class OWLlinkIsKBSatisfiableElementHandler extends AbstractOWLlinkKBReque
         super(handler);
     }
 
+    @Override
     public IsKBSatisfiable getOWLObject() throws OWLXMLParserException {
         return new IsKBSatisfiable(getKB());
     }

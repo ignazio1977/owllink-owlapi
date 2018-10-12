@@ -38,6 +38,7 @@ public class OWLlinkClassifyElementHandler extends AbstractOWLlinkKBRequestEleme
     }
 
 
+    @Override
     public Classify getOWLObject() throws OWLXMLParserException {
         return new Classify(super.kb);
     }

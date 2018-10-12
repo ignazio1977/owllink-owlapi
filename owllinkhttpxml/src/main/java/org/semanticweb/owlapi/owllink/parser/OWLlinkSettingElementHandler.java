@@ -39,12 +39,14 @@ public class OWLlinkSettingElementHandler extends OWLlinkConfigurationElementHan
         super(handler);
     }
 
+    @Override
     public Setting getOWLLinkObject() {
         return new SettingImpl(this.key, this.type, this.values);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 
 }

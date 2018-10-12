@@ -39,17 +39,20 @@ public class OWLlinkGetDataPropertiesOfSourceElementHandler extends AbstractOWLI
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         isNegative = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
             this.isNegative = Boolean.parseBoolean(value);
     }
 
+    @Override
     public GetDataPropertiesOfSource getOWLObject() throws OWLXMLParserException {
         return new GetDataPropertiesOfSource(getKB(), getObject(), isNegative);
     }

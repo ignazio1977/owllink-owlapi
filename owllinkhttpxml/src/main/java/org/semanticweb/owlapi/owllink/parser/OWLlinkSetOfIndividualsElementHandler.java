@@ -42,14 +42,17 @@ public class OWLlinkSetOfIndividualsElementHandler extends AbstractSetOfOWLObjec
         super(handler);
     }
 
+    @Override
     public SetOfIndividuals getOWLLinkObject() {
         return new SetOfIndividualsImpl(super.elements);
     }
 
+    @Override
     public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
         super.elements.add(handler.getOWLObject());
     }
 
+    @Override
     public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
         super.elements.add(handler.getOWLObject());
     }

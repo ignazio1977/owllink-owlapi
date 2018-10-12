@@ -41,13 +41,15 @@ public class OWLlinkOneOfImpl extends OWLlinkDataRangeImpl implements OWLlinkOne
         this.type = type;
         if (literals == null && literals.isEmpty())
             throw new IllegalArgumentException();
-        this.literals = new HashSet<OWLlinkLiteral>(literals);
+        this.literals = new HashSet<>(literals);
     }
 
+    @Override
     public IRI getType() {
         return this.type;
     }
 
+    @Override
     public Set<OWLlinkLiteral> getLiterals() {
         return Collections.unmodifiableSet(this.literals);
     }

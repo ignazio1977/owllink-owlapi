@@ -23,14 +23,14 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.Node;
 
 /**
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public class HierarchyPairImpl<O extends OWLLogicalEntity> implements HierarchyPair<O> {
+public class HierarchyPairImpl<O extends OWLObject> implements HierarchyPair<O> {
     private final Node<O> superSynset;
     private final SubEntitySynsets<O> subs;
 
@@ -39,14 +39,17 @@ public class HierarchyPairImpl<O extends OWLLogicalEntity> implements HierarchyP
         this.subs = subs;
     }
 
+    @Override
     public Node<O> getSuper() {
         return this.superSynset;
     }
 
+    @Override
     public SubEntitySynsets<O> getSubs() {
         return this.subs;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof HierarchyPairImpl)) return false;
@@ -59,6 +62,7 @@ public class HierarchyPairImpl<O extends OWLLogicalEntity> implements HierarchyP
         return true;
     }
 
+    @Override
     public int hashCode() {
         int result;
         result = superSynset.hashCode();

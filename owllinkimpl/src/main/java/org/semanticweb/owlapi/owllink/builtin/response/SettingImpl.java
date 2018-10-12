@@ -35,14 +35,17 @@ public class SettingImpl extends ConfigurationImpl implements Setting {
         super(key, type, literals);
     }
 
+    @Override
     public boolean isSetting() {
         return true;
     }
 
+    @Override
     public Setting asSetting() {
         return this;
     }
 
+    @Override
     public Property asProperty() {
         throw new ClassCastException();
     }

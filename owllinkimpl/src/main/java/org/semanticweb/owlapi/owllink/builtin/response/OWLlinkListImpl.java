@@ -36,6 +36,7 @@ public class OWLlinkListImpl extends OWLlinkDataRangeImpl implements OWLlinkList
         this.type = type;
     }
 
+    @Override
     public IRI getType() {
         return this.type;
     }

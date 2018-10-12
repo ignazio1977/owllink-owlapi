@@ -37,10 +37,12 @@ public abstract class AbstractOWLlinkRequestElementHandler<R extends Request> ex
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

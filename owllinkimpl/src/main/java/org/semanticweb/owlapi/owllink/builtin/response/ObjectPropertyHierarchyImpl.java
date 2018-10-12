@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.reasoner.Node;
 
 import java.util.Set;
@@ -32,16 +32,17 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 25.11.2009
  */
-public class ObjectPropertyHierarchyImpl extends HierarchyImpl<OWLObjectProperty> implements ObjectPropertyHierarchy {
+public class ObjectPropertyHierarchyImpl extends HierarchyImpl<OWLObjectPropertyExpression> implements ObjectPropertyHierarchy {
 
-    public ObjectPropertyHierarchyImpl(Set<HierarchyPair<OWLObjectProperty>> hierarchyPairs, Node<OWLObjectProperty> unsatisfiables, String warning) {
+    public ObjectPropertyHierarchyImpl(Set<HierarchyPair<OWLObjectPropertyExpression>> hierarchyPairs, Node<OWLObjectPropertyExpression> unsatisfiables, String warning) {
         super(hierarchyPairs, unsatisfiables, warning);
     }
 
-    public ObjectPropertyHierarchyImpl(Set<HierarchyPair<OWLObjectProperty>> hierarchyPairs, Node<OWLObjectProperty> unsatisfiables) {
+    public ObjectPropertyHierarchyImpl(Set<HierarchyPair<OWLObjectPropertyExpression>> hierarchyPairs, Node<OWLObjectPropertyExpression> unsatisfiables) {
         this(hierarchyPairs, unsatisfiables, null);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

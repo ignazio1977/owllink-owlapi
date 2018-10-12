@@ -37,6 +37,7 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype;
 public class FaCTServerFactory implements OWLlinkServerFactory {
     final String FACTORY_NAME = "uk.ac.manchester.cs.factplusplus.owlapiv3.FaCTPlusPlusReasonerFactory";
 
+    @Override
     public OWLlinkHTTPXMLServer createServer(int port) {
          SimpleConfiguration configuration = new SimpleConfiguration() {
             @Override

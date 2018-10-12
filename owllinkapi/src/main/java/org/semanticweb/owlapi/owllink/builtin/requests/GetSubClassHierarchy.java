@@ -54,6 +54,7 @@ public class GetSubClassHierarchy extends AbstractKBRequest<ClassHierarchy> {
         return this.clazz != null;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

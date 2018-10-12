@@ -39,6 +39,7 @@ public class OWLlinkGetEquivalentObjectPropertiesElementHandler extends Abstract
     }
 
 
+    @Override
     public GetEquivalentObjectProperties getOWLObject() throws OWLXMLParserException {
         return new GetEquivalentObjectProperties(super.kb, (OWLObjectPropertyExpression) super.o);
     }

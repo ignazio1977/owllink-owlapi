@@ -38,6 +38,7 @@ public class Classify extends AbstractKBRequest<OK> {
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

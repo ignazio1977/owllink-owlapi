@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.Node;
 
 /**
@@ -32,7 +32,7 @@ import org.semanticweb.owlapi.reasoner.Node;
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public interface HierarchyPair<O extends OWLLogicalEntity> {
+public interface HierarchyPair<O extends OWLObject> {
     /**
      * Returns the {@link org.semanticweb.owlapi.reasoner.Node Node}
      * of super elements.

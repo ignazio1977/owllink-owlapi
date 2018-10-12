@@ -41,21 +41,25 @@ public class OWLlinkSupportedExtensionElemenetHandler extends AbstractOWLlinkEle
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         // super.startElement(name);
         //  this.fullIRI = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLParserException {
         if (OWLlinkXMLVocabulary.IDENTIFIER_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             fullIRI = getFullIRI(value);
         }
     }
 
+    @Override
     public IRI getOWLLinkObject() {
         return fullIRI;
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

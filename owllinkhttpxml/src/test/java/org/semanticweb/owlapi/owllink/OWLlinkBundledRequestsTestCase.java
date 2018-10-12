@@ -46,8 +46,8 @@ public class OWLlinkBundledRequestsTestCase extends AbstractOWLlinkTestCase {
     @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("B"), getOWLClass("C")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(b(), c()));
         return axioms;
     }
 
@@ -57,7 +57,7 @@ public class OWLlinkBundledRequestsTestCase extends AbstractOWLlinkTestCase {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
         axioms.addAll(createAxioms());
         Tell tell = new Tell(kbIRI, axioms);
-        IsClassSatisfiable cs = new IsClassSatisfiable(kbIRI, getOWLClass("A"));
+        IsClassSatisfiable cs = new IsClassSatisfiable(kbIRI, a());
         ReleaseKB releaseKB = new ReleaseKB(kbIRI);
 
         ResponseMessage message = reasoner.answer(kb, tell, cs, releaseKB);

@@ -37,6 +37,7 @@ public class GetAllAnnotationProperties extends AbstractKBRequest<SetOfAnnotatio
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

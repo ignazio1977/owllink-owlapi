@@ -42,8 +42,8 @@ public class OWLlinkXMLFactoryRegistry {
     List<OWLlinkElementHandlerFactory> parserFactories;
 
     private OWLlinkXMLFactoryRegistry() {
-        this.rendererFactories = new Vector<OWLlinkRequestRendererFactory>();
-        this.parserFactories = new Vector<OWLlinkElementHandlerFactory>();
+        this.rendererFactories = new Vector<>();
+        this.parserFactories = new Vector<>();
 
         register(new OWLlinkXMLRetractionRequestRendererFactory());
 

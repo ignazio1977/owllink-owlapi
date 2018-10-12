@@ -25,8 +25,6 @@ package org.semanticweb.owlapi.owllink.retraction;
 
 import org.semanticweb.owlapi.model.IRI;
 
-import java.net.URI;
-
 /**
  * Author: Olaf Noppens
  * Date: 28.04.2010
@@ -47,14 +45,15 @@ public enum RetractionVocabulary {
         return iri;
     }
 
-    public URI getURI() {
-        return iri.toURI();
+    public IRI getURI() {
+        return iri;
     }
 
     public String getShortName() {
         return shortName;
     }
 
+    @Override
     public String toString() {
         return iri.toString();
     }

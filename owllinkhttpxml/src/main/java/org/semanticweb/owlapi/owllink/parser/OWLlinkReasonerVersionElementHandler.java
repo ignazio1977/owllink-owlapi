@@ -43,6 +43,7 @@ public class OWLlinkReasonerVersionElementHandler extends AbstractOWLlinkElement
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.MAJOR_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.major = Integer.parseInt(value);
@@ -54,10 +55,12 @@ public class OWLlinkReasonerVersionElementHandler extends AbstractOWLlinkElement
     }
 
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
     }
 
+    @Override
     public ReasonerVersionImpl getOWLLinkObject() {
         if (this.build == null)
             return new ReasonerVersionImpl(this.major.intValue(), this.minor.intValue());
@@ -65,8 +68,9 @@ public class OWLlinkReasonerVersionElementHandler extends AbstractOWLlinkElement
             return new ReasonerVersionImpl(this.major.intValue(), this.minor.intValue(), this.build.intValue());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 }
 

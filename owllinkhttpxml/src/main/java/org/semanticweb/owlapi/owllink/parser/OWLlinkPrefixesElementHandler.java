@@ -45,6 +45,7 @@ public class OWLlinkPrefixesElementHandler extends AbstractOWLlinkKBResponseElem
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.mapping = CollectionFactory.createMap();
@@ -61,6 +62,7 @@ public class OWLlinkPrefixesElementHandler extends AbstractOWLlinkKBResponseElem
         return new PrefixesImpl(this.mapping);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         super.endElement();
         final IRI kb = getRequest().getKB();

@@ -53,7 +53,7 @@
     <!--
         You have to adjust the protegehomedir. It should link to the protege 4.1 home directory.
     -->
-    <property name="protegehomedir" value="/Applications/Protege_4.1_alpha"/>
+    <property name="protegehomedir" value="../../Protege-5.5.0-beta-4-SNAPSHOT"/>
     <property name="osgilibdir" value="${protegehomedir}/bundles"/>
     <property name="protegecorelibdir" value="${protegehomedir}/bundles"/>
     <property name="pluginsdir" value="${protegehomedir}/plugins"/>
@@ -62,15 +62,16 @@
     <path id="osgi.libs">
         <filelist dir="${osgilibdir}">
             <file name="org.eclipse.equinox.common.jar"/>
-            <file name="org.eclipse.equinox.registry.jar"/>
             <file name="org.eclipse.equinox.supplement.jar"/>
         </filelist>
     </path>
 
     <path id="protege.core.libs">
         <filelist dir="${protegecorelibdir}">
-            <file name="org.protege.common.jar"/>
-            <file name="org.protege.editor.core.application.jar"/>
+            <file name="owlapi-osgidistribution.jar"/>
+            <file name="protege-common.jar"/>
+            <file name="protege-editor-core.jar"/>
+            <file name="protege-editor-owl.jar"/>
         </filelist>
     </path>
 
@@ -104,7 +105,7 @@
     <target name="compile-plugin">
         <echo>ant.java.version = ${ant.java.version}</echo>
         <mkdir dir="${owllink-protege4.classesdir}"/>
-        <javac srcdir="${owllink-protege4.sourcepath}" destdir="${owllink-protege4.classesdir}" debug="on" target="1.5">
+        <javac srcdir="${owllink-protege4.sourcepath}" destdir="${owllink-protege4.classesdir}" debug="on" target="1.8">
             <classpath refid="owllink-protege4.classpath"/>
            <!-- <include name="${owllink-protege4.sourcepath}"/>-->
         </javac>

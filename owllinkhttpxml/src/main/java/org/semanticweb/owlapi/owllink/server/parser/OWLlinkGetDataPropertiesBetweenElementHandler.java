@@ -42,11 +42,13 @@ public class OWLlinkGetDataPropertiesBetweenElementHandler extends AbstractOWLIn
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         isNegative = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
@@ -54,10 +56,12 @@ public class OWLlinkGetDataPropertiesBetweenElementHandler extends AbstractOWLIn
     }
 
 
+    @Override
     public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
         this.literal = handler.getOWLObject();
     }
 
+    @Override
     public GetDataPropertiesBetween getOWLObject() throws OWLXMLParserException {
         return new GetDataPropertiesBetween(getKB(), getObject(), literal, isNegative);
     }

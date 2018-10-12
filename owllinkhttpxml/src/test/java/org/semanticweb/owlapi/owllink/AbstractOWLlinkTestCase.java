@@ -24,16 +24,157 @@
 package org.semanticweb.owlapi.owllink;
 
 import junit.framework.TestCase;
+
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.owllink.server.OWLlinkServer;
+import org.semanticweb.owlapi.owllink.server.serverfactory.HermiTServerFactory;
+import org.semanticweb.owlapi.owllink.server.serverfactory.OWLlinkServerFactory;
+import org.semanticweb.owlapi.owllink.server.serverfactory.OpenlletServerFactory;
 import org.semanticweb.owlapi.reasoner.BufferingMode;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Olaf Noppens
  */
 public abstract class AbstractOWLlinkTestCase extends TestCase {
+     static class ReasonerServer {
+        protected static OWLlinkServerFactory openlletFactory = new OpenlletServerFactory();
+        private static OWLlinkServer server;
+       static  void start() throws InterruptedException {
+           if(server==null) {
+                server = openlletFactory.createServer(8080);
+            server.run();
+           }
+        }
+    }
+
+    @SafeVarargs
+    protected static final <X> Set<X> set(X... xs ){
+        return new HashSet<>(Arrays.asList(xs));
+    }
+
+    protected OWLClass top() {
+        return getDataFactory().getOWLThing();
+    }
+
+    protected OWLNamedIndividual j() {
+        return getOWLIndividual("j");
+    }
+
+    protected OWLNamedIndividual i() {
+        return getOWLIndividual("i");
+    }
+
+    protected OWLClass a() {
+        return getOWLClass("A");
+    }
+
+    protected OWLClass b() {
+        return getOWLClass("B");
+    }
+
+    protected OWLClass c() {
+        return getOWLClass("C");
+    }
+
+    protected OWLClass d() {
+        return getOWLClass("D");
+    }
+
+    protected OWLNamedIndividual ib() {
+        return getOWLIndividual("B");
+    }
+
+    protected OWLNamedIndividual id() {
+        return getOWLIndividual("D");
+    }
+
+    protected OWLNamedIndividual ic() {
+        return getOWLIndividual("C");
+    }
+
+    protected OWLNamedIndividual ia() {
+        return getOWLIndividual("A");
+    }
+    protected OWLDataProperty dpA() {
+        return getOWLDataProperty("A");
+    }
+
+    protected OWLDataProperty dpB() {
+        return getOWLDataProperty("B");
+    }
+
+    protected OWLDataProperty dpC() {
+        return getOWLDataProperty("C");
+    }
+
+    protected OWLDataProperty dpD() {
+        return getOWLDataProperty("D");
+    }
+
+    protected OWLDataProperty dpE() {
+        return getOWLDataProperty("E");
+    }
+
+    protected OWLDataProperty dpp() {
+        return getOWLDataProperty("p");
+    }
+
+    protected OWLDataProperty dpq() {
+        return getOWLDataProperty("q");
+    }
+
+    protected OWLDataProperty dpr() {
+        return getOWLDataProperty("r");
+    }
+
+    protected OWLObjectProperty opd() {
+        return getOWLObjectProperty("D");
+    }
+
+    protected OWLObjectProperty opc() {
+        return getOWLObjectProperty("C");
+    }
+
+    protected OWLObjectProperty opb() {
+        return getOWLObjectProperty("B");
+    }
+
+    protected OWLObjectProperty opa() {
+        return getOWLObjectProperty("A");
+    }
+
+    protected OWLObjectProperty opE() {
+        return getOWLObjectProperty("E");
+    }
+
+    protected OWLObjectProperty opF() {
+        return getOWLObjectProperty("F");
+    }
+
+    protected OWLObjectProperty opP() {
+        return getOWLObjectProperty("P");
+    }
+
+    protected OWLObjectProperty opS() {
+        return getOWLObjectProperty("S");
+    }
+
+    protected OWLObjectProperty opp() {
+        return getOWLObjectProperty("p");
+    }
+
+    protected OWLObjectProperty opq() {
+        return getOWLObjectProperty("q");
+    }
+
+    protected OWLObjectProperty opr() {
+        return getOWLObjectProperty("r");
+    }
 
     protected OWLlinkReasoner reasoner;
     protected OWLDataFactory dataFactory;
@@ -42,11 +183,13 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
     protected IRI reasonerIRI;
     OWLOntology rootOntology;
 
-
+    @Override
     protected void setUp() throws Exception {
+       ReasonerServer.start();
         this.manager = OWLManager.createOWLOntologyManager();
         rootOntology = this.manager.createOntology();
-        reasoner = new OWLlinkHTTPXMLReasoner(rootOntology, new OWLlinkReasonerConfiguration(), BufferingMode.NON_BUFFERING);
+        reasoner = new OWLlinkHTTPXMLReasoner(rootOntology, new OWLlinkReasonerConfigurationImpl(),
+            BufferingMode.NON_BUFFERING);
         uriBase = IRI.create("http://www.semanticweb.org/owlapi/owllink/test");
         reasonerIRI = uriBase;
     }
@@ -68,13 +211,13 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
             } else {
                 return manager.createOntology(iri);
             }
-        }
-        catch (OWLOntologyCreationException e) {
+        } catch (OWLOntologyCreationException e) {
             throw new RuntimeException(e);
         }
     }
 
 
+    @Override
     protected void tearDown() throws Exception {
         this.manager.removeOntology(rootOntology);
         super.tearDown();
@@ -117,15 +260,14 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
     }
 
     public OWLLiteral getLiteral(int value) {
-        return getDataFactory().getOWLTypedLiteral(value);
+        return getDataFactory().getOWLLiteral(value);
     }
 
 
     public void addAxiom(OWLOntology ont, OWLAxiom ax) {
         try {
             manager.addAxiom(ont, ax);
-        }
-        catch (OWLOntologyChangeException e) {
+        } catch (OWLOntologyChangeException e) {
             fail(e.getMessage() + " " + e.getStackTrace().toString());
         }
     }
@@ -133,8 +275,7 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
     public void removeAxiom(OWLOntology ont, OWLAxiom ax) {
         try {
             manager.removeAxiom(ont, ax);
-        }
-        catch (OWLOntologyChangeException e) {
+        } catch (OWLOntologyChangeException e) {
             fail(e.getMessage() + " " + e.getStackTrace().toString());
         }
     }

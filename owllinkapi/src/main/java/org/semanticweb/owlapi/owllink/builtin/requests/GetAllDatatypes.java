@@ -37,6 +37,7 @@ public class GetAllDatatypes extends AbstractKBRequest<SetOfDatatypes> {
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

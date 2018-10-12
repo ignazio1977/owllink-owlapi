@@ -41,10 +41,12 @@ public class OWLlinkSetOfLiteralsElementHandler extends AbstractSetOfOWLObjectRe
         super(handler);
     }
 
+    @Override
     public SetOfLiterals getOWLLinkObject() {
         return new SetOfLiteralsImpl(super.elements);
     }
 
+    @Override
     public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
         super.elements.add(handler.getOWLObject());
     }

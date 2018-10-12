@@ -40,12 +40,14 @@ public abstract class AbstractConfirmationElementHandler<C extends Confirmation>
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.WARNING_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.warning = value;
         }
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.warning = null;

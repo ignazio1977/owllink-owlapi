@@ -25,7 +25,7 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.Node;
 
 import java.util.HashSet;
@@ -35,18 +35,20 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 17.02.2010
  */
-public abstract class AbstractOWLlinkEntitySynsetElementHandler<S extends OWLLogicalEntity> extends AbstractOWLlinkElementHandler<Node<S>> {
+public abstract class AbstractOWLlinkEntitySynsetElementHandler<S extends OWLObject> extends AbstractOWLlinkElementHandler<Node<S>> {
     protected Set<S> elements;
 
     public AbstractOWLlinkEntitySynsetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
-        this.elements = new HashSet<S>();
+        this.elements = new HashSet<>();
     }
 
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         if (this.elements.isEmpty())
             throw new OWLXMLParserException("A synset must contain at least one element which is missing here!", getLineNumber(), getColumnNumber());

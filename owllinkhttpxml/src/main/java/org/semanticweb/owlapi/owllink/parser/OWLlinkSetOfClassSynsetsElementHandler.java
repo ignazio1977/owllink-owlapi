@@ -40,10 +40,12 @@ public class OWLlinkSetOfClassSynsetsElementHandler extends AbstractOWLlinkSetOf
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException {
         super.synsets.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public SetOfClassSynsets getOWLLinkObject() {
         return new SetOfClassSynsetsImpl(this.synsets, super.warning);
     }

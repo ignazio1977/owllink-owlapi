@@ -45,35 +45,41 @@ public class SetOfIndividualSynsetsImpl extends KBResponseImpl implements SetOfI
 
     public SetOfIndividualSynsetsImpl(Set<IndividualSynset> synonymsets, String warning) {
         super(warning);
-        this.synsets = new HashSet<IndividualSynset>(synonymsets.size());
+        this.synsets = new HashSet<>(synonymsets.size());
         this.synsets.addAll(synonymsets);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
+    @Override
     public Set<OWLIndividual> getFlattened() {
-        Set<OWLIndividual> indis = new HashSet<OWLIndividual>();
+        Set<OWLIndividual> indis = new HashSet<>();
         for (IndividualSynset synset : this.synsets) {
             indis.addAll(synset.getIndividuals());
         }
         return Collections.unmodifiableSet(indis);
     }
 
+    @Override
     public boolean isEmpty() {
         return this.synsets.isEmpty();
     }
 
 
+    @Override
     public boolean isSingleton() {
         return synsets.size() == 1;
     }
 
+    @Override
     public Set<IndividualSynset> getSynsets() {
         return Collections.unmodifiableSet(this.synsets);
     }
 
+    @Override
     public boolean isNode() {
         for (IndividualSynset synset : this.synsets) {
             if (!synset.isNode()) return false;
@@ -81,10 +87,12 @@ public class SetOfIndividualSynsetsImpl extends KBResponseImpl implements SetOfI
         return true;
     }
 
+    @Override
     public int getSize() {
         return this.synsets.size();
     }
 
+    @Override
     public NodeSet<OWLNamedIndividual> asNode() {
         OWLNamedIndividualNodeSet set = new OWLNamedIndividualNodeSet();
         for (IndividualSynset synset : this.synsets) {

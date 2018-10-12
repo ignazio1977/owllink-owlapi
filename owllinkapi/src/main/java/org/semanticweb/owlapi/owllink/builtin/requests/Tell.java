@@ -44,17 +44,19 @@ public class Tell extends AbstractKBRequest<OK> implements Iterable<OWLAxiom> {
     public Tell(IRI kb, java.util.Set<OWLAxiom> axioms) {
         super(kb);
         if (axioms.size() < 1) throw new IllegalArgumentException("axioms must not be empty");
-        this.axioms = Collections.unmodifiableSet(new HashSet<OWLAxiom>(axioms));
+        this.axioms = Collections.unmodifiableSet(new HashSet<>(axioms));
     }
 
     public java.util.Set<OWLAxiom> getAxioms() {
         return this.axioms;
     }
 
+    @Override
     public Iterator<OWLAxiom> iterator() {
         return this.axioms.iterator();
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

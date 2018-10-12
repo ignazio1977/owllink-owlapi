@@ -38,14 +38,17 @@ public class OWLlinkDataPropertySubDataPropertiesPairElementHandler extends Abst
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
         super.superSynset = handler.getOWLLinkObject();
     }
 
+    @Override
     public void handleChild(OWLlinkSubDataPropertySynsetsElementHandler handler) throws OWLXMLParserException {
         super.subSetOfSynset = handler.getOWLLinkObject();
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

@@ -38,10 +38,12 @@ public abstract class ConfirmationImpl implements Confirmation {
         this(null);
     }
 
+    @Override
     public boolean hasWarning() {
         return this.warning != null;
     }
 
+    @Override
     public String getWarning() {
         return this.warning;
     }

@@ -48,7 +48,7 @@ public class OWLlinkClassesElementHandler extends AbstractOWLlinkKBResponseEleme
     @Override
     public void startElement(String s) throws OWLXMLParserException {
         super.startElement(s);
-        this.classes = new HashSet<OWLClass>();
+        this.classes = new HashSet<>();
     }
 
     @Override

@@ -67,6 +67,7 @@ public class GetDataPropertiesBetween extends AbstractKBRequest
         return this.isNegative;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

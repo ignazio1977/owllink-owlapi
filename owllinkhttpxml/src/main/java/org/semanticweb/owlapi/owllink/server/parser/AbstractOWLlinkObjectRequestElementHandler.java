@@ -41,6 +41,7 @@ public abstract class AbstractOWLlinkObjectRequestElementHandler<R extends KBReq
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.o = null;

@@ -25,13 +25,21 @@ package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.owllink.AbstractOWLlinkTestCase.ReasonerServer;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDisjointObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsEntailed;
+import org.semanticweb.owlapi.owllink.builtin.requests.ReleaseKB;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertySynsets;
+import org.semanticweb.owlapi.owllink.server.OWLlinkHTTPXMLServer;
+import org.semanticweb.owlapi.owllink.server.serverfactory.HermiTServerFactory;
+import org.semanticweb.owlapi.owllink.server.serverfactory.OpenlletServerFactory;
+import org.semanticweb.owlapi.reasoner.BufferingMode;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import java.net.URL;
 import java.util.Set;
 
 /**
@@ -40,55 +48,57 @@ import java.util.Set;
  * Date: 02.11.2009
  */
 public class OWLlinkDisjointObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
+
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C")));
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("D")));
+        axioms.add(getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc()));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opd()));
         return axioms;
     }
 
-    public void testAreObjectPropertiesDisjoint() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B")));
-        BooleanResponse answer = super.reasoner.answer(query);
+    public void testAreObjectPropertiesDisjoint() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb()));
+        BooleanResponse answer = reasoner.answer(query);
         assertTrue(answer.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C")));
-        answer = super.reasoner.answer(query);
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc()));
+        answer = reasoner.answer(query);
         assertTrue(answer.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("E")));
-        answer = super.reasoner.answer(query);
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opE()));
+        answer = reasoner.answer(query);
         assertFalse(answer.getResult());
 
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C")));
-        answer = super.reasoner.answer(query);
-        assertFalse(answer.getResult());
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc()));
+        answer = reasoner.answer(query);
+        assertTrue(answer.getResult());
     }
 
-    public void testAreObjectPropertiesDisjointViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"));
+    public void testAreObjectPropertiesDisjointViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C"));
+        axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("E"));
+        axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opE());
         assertFalse(reasoner.isEntailed(axiom));
 
 
-        axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C"));
-        assertFalse(reasoner.isEntailed(axiom));
+        axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc());
+        assertTrue(reasoner.isEntailed(axiom));
     }
 
-    public void testGetDisjointObjectProperties() throws Exception {
-        GetDisjointObjectProperties query = new GetDisjointObjectProperties(getKBIRI(), getOWLObjectProperty("B"));
-        ObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 2);
+    public void testGetDisjointObjectProperties() {
+        GetDisjointObjectProperties query = new GetDisjointObjectProperties(getKBIRI(), opb());
+        ObjectPropertySynsets response = reasoner.answer(query);
+        assertEquals(response.getNodes().toString(),3,response.nodes().count());
     }
 
-    public void testGetDisjointObjectPropertiesViaOWLReasoner() throws Exception {
-        NodeSet<OWLObjectProperty> response = super.reasoner.getDisjointObjectProperties(getOWLObjectProperty("B"), false);
-        assertTrue(response.getNodes().size() == 2);
+    public void testGetDisjointObjectPropertiesViaOWLReasoner() {
+        NodeSet<OWLObjectPropertyExpression> response = reasoner.getDisjointObjectProperties(opb());
+        assertEquals(response.getNodes().toString(),3,response.nodes().count());
     }
 }

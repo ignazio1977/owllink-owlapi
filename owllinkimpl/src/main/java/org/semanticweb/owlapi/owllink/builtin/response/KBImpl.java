@@ -36,10 +36,12 @@ public class KBImpl extends KBResponseImpl implements KB {
         this.kb = kb;
     }
 
+    @Override
     public IRI getKB() {
         return this.kb;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

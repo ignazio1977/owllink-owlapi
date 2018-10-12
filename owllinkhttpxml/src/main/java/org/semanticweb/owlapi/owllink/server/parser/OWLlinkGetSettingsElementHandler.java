@@ -37,6 +37,7 @@ public class OWLlinkGetSettingsElementHandler extends AbstractOWLlinkKBRequestEl
         super(handler);
     }
 
+    @Override
     public GetSettings getOWLObject() throws OWLXMLParserException {
         return new GetSettings(getKB());
     }

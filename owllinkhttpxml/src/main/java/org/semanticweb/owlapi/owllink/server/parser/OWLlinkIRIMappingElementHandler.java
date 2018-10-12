@@ -57,6 +57,7 @@ public class OWLlinkIRIMappingElementHandler extends AbstractOWLlinkElementHandl
         }
     }
 
+    @Override
     public IRIMapping getOWLObject() throws OWLXMLParserException {
         return new IRIMapping(key, iri);
     }

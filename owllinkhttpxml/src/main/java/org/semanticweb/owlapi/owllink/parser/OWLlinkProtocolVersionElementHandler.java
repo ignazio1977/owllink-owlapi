@@ -42,6 +42,7 @@ public class OWLlinkProtocolVersionElementHandler extends AbstractOWLlinkElement
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.MAJOR_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.major = Integer.parseInt(value);
@@ -50,17 +51,20 @@ public class OWLlinkProtocolVersionElementHandler extends AbstractOWLlinkElement
         }
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.major = 0;
         this.minor = 0;
     }
 
+    @Override
     public ProtocolVersion getOWLLinkObject() {
         return new ProtocolVersionImpl(this.major, this.minor);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 }

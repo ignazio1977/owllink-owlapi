@@ -43,6 +43,7 @@ public class GetDifferentIndividuals extends AbstractKBRequestWithOneObject<
         return super.getObject();
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

@@ -51,10 +51,12 @@ public abstract class SetOfImpl<E> extends AbstractSetOfImpl<E> implements SetOf
         this.warning = warning;
     }
 
+    @Override
     public boolean hasWarning() {
         return getWarning() != null;
     }
 
+    @Override
     public String getWarning() {
         return this.warning;
     }

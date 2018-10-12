@@ -40,11 +40,13 @@ public class OWLlinkIsEntailedDirectElementHandler extends AbstractOWLlinkKBRequ
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.axiom = null;
     }
 
+    @Override
     public IsEntailedDirect getOWLObject() throws OWLXMLParserException {
         if (isOWLSubClassAxiom(axiom)) {
             return new IsEntailedDirect(getKB(), (OWLSubClassOfAxiom) axiom);

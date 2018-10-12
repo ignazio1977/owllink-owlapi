@@ -41,17 +41,21 @@ public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElement
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
-        this.responses = new Vector<Object>();
+        this.responses = new Vector<>();
     }
 
+    @Override
     public List<Object> getOWLLinkObject() {
         return this.responses;
     }
 
+    @Override
     public void handleChild(OWLlinkElementHandler handler) throws OWLXMLParserException {
         try {
             if (handler.getOWLObject() instanceof Response)
@@ -61,14 +65,17 @@ public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElement
         }
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkResponseElementHandler handler) throws OWLXMLParserException {
         //if response ==> Prefixes ==> which kb? prov.put(kb, prefixes);
         this.responses.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public void handleChild(OWLlinkErrorElementHandler handler) throws OWLXMLParserException {
         this.responses.add(handler.getOWLLinkObject());
     }
@@ -77,16 +84,20 @@ public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElement
         this.responses.add(response);
     }
 
+    @Override
     public void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException {
     }
 
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkBooleanResponseElementHandler handler) {
         handle(handler.getOWLLinkObject());
     }

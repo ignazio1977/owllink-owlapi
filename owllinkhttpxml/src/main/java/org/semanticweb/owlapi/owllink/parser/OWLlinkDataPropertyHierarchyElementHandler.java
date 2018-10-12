@@ -40,10 +40,12 @@ public class OWLlinkDataPropertyHierarchyElementHandler extends AbstractOWLlinkH
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkDataPropertySubDataPropertiesPairElementHandler handler) {
         super.pairs.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
         super.unsatisfiables = handler.getOWLLinkObject();
     }

@@ -48,6 +48,7 @@ public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElement
         this.handler = (OWLlinkXMLRequestParserHandler) handler;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.KB_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.kb = IRI.create(value);
@@ -56,6 +57,7 @@ public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElement
         }
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.kb = null;
@@ -67,6 +69,7 @@ public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElement
         return this.kb;
     }
 
+    @Override
     public void handleChild(OWLlinkPrefixElementHandler handler) {
         prefixes.add(handler.getOWLlinkObject());
     }
@@ -94,6 +97,7 @@ public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElement
         super.endElement();
     }
 
+    @Override
     public CreateKB getOWLObject() throws OWLXMLParserException {
         Map<String, String> map = CollectionFactory.createMap();
         for (OWLlinkPrefixElementHandler.Prefix prefix : prefixes) {

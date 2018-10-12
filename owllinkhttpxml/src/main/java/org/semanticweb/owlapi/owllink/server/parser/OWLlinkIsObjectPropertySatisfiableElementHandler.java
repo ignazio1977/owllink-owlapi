@@ -51,6 +51,7 @@ public class OWLlinkIsObjectPropertySatisfiableElementHandler extends AbstractOW
         this.property = handler.getOWLObject();
     }
 
+    @Override
     public IsObjectPropertySatisfiable getOWLObject() throws OWLXMLParserException {
         return new IsObjectPropertySatisfiable(getKB(), property);
     }

@@ -48,6 +48,7 @@ public class SetOfDatatypesImpl extends SetOfImpl<OWLDatatype> implements SetOfD
         super(elements, warning);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

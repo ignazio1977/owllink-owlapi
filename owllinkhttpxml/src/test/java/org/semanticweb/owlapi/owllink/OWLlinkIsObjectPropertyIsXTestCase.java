@@ -35,135 +35,120 @@ import java.util.Set;
  * Date: 02.11.2009
  */
 public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTestCase {
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axiom = CollectionFactory.createSet();
-        axiom.add(getDataFactory().getOWLFunctionalObjectPropertyAxiom(getOWLObjectProperty("A")));
-        axiom.add(getDataFactory().getOWLInverseFunctionalObjectPropertyAxiom(getOWLObjectProperty("B")));
-        axiom.add(getDataFactory().getOWLReflexiveObjectPropertyAxiom(getOWLObjectProperty("C")));
-        axiom.add(getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(getOWLObjectProperty("D")));
-        axiom.add(getDataFactory().getOWLAsymmetricObjectPropertyAxiom(getOWLObjectProperty("E")));
-        axiom.add(getDataFactory().getOWLTransitiveObjectPropertyAxiom(getOWLObjectProperty("F")));
+        axiom.add(getDataFactory().getOWLFunctionalObjectPropertyAxiom(opa()));
+        axiom.add(getDataFactory().getOWLInverseFunctionalObjectPropertyAxiom(opb()));
+        axiom.add(getDataFactory().getOWLReflexiveObjectPropertyAxiom(opc()));
+        axiom.add(getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opd()));
+        axiom.add(getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opE()));
+        axiom.add(getDataFactory().getOWLTransitiveObjectPropertyAxiom(opF()));
 
         return axiom;
     }
 
-    public void testIsFunctional() throws Exception {
+    public void testIsFunctional() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalObjectPropertyAxiom
-                (getOWLObjectProperty("A")));
+                (opa()));
         assertTrue(reasoner.answer(query).getResult());
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalObjectPropertyAxiom
-                (getOWLObjectProperty("B")));
+                (opb()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsFunctionalViaOWLReasoner() throws Exception {
+    public void testIsFunctionalViaOWLReasoner() {
         OWLAxiom axiom = getDataFactory().getOWLFunctionalObjectPropertyAxiom
-                (getOWLObjectProperty("A"));
+                (opa());
         assertTrue(reasoner.isEntailed(axiom));
 
         axiom = getDataFactory().getOWLFunctionalObjectPropertyAxiom
-                (getOWLObjectProperty("B"));
+                (opb());
         assertFalse(reasoner.isEntailed(axiom));
     }
 
-    public void testIsInverseFunctional() throws Exception {
+    public void testIsInverseFunctional() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().
-                getOWLInverseFunctionalObjectPropertyAxiom(getOWLObjectProperty("B")));
+                getOWLInverseFunctionalObjectPropertyAxiom(opb()));
         assertTrue(reasoner.answer(query).getResult());
 
         query = new IsEntailed(getKBIRI(), getDataFactory().
-                getOWLInverseFunctionalObjectPropertyAxiom(getOWLObjectProperty("A")));
+                getOWLInverseFunctionalObjectPropertyAxiom(opa()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsInverseFunctionalViaOWLReasoner() throws Exception {
+    public void testIsInverseFunctionalViaOWLReasoner() {
         OWLAxiom axiom = getDataFactory().
-                getOWLInverseFunctionalObjectPropertyAxiom(getOWLObjectProperty("B"));
+                getOWLInverseFunctionalObjectPropertyAxiom(opb());
         assertTrue(reasoner.isEntailed(axiom));
 
         axiom = getDataFactory().
-                getOWLInverseFunctionalObjectPropertyAxiom(getOWLObjectProperty("A"));
+                getOWLInverseFunctionalObjectPropertyAxiom(opa());
         assertFalse(reasoner.isEntailed(axiom));
     }
 
-    public void testIsReflexive() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLReflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("C")));
+    public void testIsReflexive() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLReflexiveObjectPropertyAxiom(opc()));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLReflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("D")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLReflexiveObjectPropertyAxiom(opd()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsReflexiveViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLReflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("C"));
+    public void testIsReflexiveViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLReflexiveObjectPropertyAxiom(opc());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLReflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("D"));
+        axiom = getDataFactory().getOWLReflexiveObjectPropertyAxiom(opd());
         assertFalse(reasoner.isEntailed(axiom));
     }
 
-    public void testIsIrreflexive() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("D")));
+    public void testIsIrreflexive() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opd()));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("A")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opa()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsIrreflexiveViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("D"));
+    public void testIsIrreflexiveViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opd());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(
-                getOWLObjectProperty("A"));
+        axiom = getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opa());
         assertFalse(reasoner.isEntailed(axiom));
     }
 
-    public void testIsAsymmetric() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLAsymmetricObjectPropertyAxiom(
-                getOWLObjectProperty("E")));
+    public void testIsAsymmetric() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opE()));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLAsymmetricObjectPropertyAxiom(
-                getOWLObjectProperty("F")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opF()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsAsymmetricViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLAsymmetricObjectPropertyAxiom(
-                getOWLObjectProperty("E"));
+    public void testIsAsymmetricViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opE());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLAsymmetricObjectPropertyAxiom(
-                getOWLObjectProperty("F"));
+        axiom = getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opF());
         assertFalse(reasoner.isEntailed(axiom));
     }
 
-    public void testIsTranstive() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLTransitiveObjectPropertyAxiom(
-                getOWLObjectProperty("F")));
+    public void testIsTranstive() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLTransitiveObjectPropertyAxiom(opF()));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLTransitiveObjectPropertyAxiom(
-                getOWLObjectProperty("E")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLTransitiveObjectPropertyAxiom(opE()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsTranstiveViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLTransitiveObjectPropertyAxiom(
-                getOWLObjectProperty("F"));
+    public void testIsTranstiveViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLTransitiveObjectPropertyAxiom(opF());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLTransitiveObjectPropertyAxiom(
-                getOWLObjectProperty("E"));
+        axiom = getDataFactory().getOWLTransitiveObjectPropertyAxiom(opE());
         assertFalse(reasoner.isEntailed(axiom));
     }
 }

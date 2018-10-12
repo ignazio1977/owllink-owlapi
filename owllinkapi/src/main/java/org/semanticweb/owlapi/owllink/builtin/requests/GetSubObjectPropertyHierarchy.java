@@ -54,6 +54,7 @@ public class GetSubObjectPropertyHierarchy extends AbstractKBRequest<ObjectPrope
         return this.property != null;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

@@ -42,22 +42,26 @@ public class OWLlinkGetDataPropertiesOfLiteralElementHandler extends AbstractOWL
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.literal = null;
         this.isNegative = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
             this.isNegative = Boolean.parseBoolean(value);
     }
 
+    @Override
     public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
         this.literal = handler.getOWLObject();
     }
 
+    @Override
     public GetDataPropertiesOfLiteral getOWLObject() throws OWLXMLParserException {
         return new GetDataPropertiesOfLiteral(getKB(), literal, isNegative);
     }

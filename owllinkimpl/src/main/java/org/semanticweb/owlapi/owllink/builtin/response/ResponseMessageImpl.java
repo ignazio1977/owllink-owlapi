@@ -40,7 +40,7 @@ public class ResponseMessageImpl implements ResponseMessage {
 
     public ResponseMessageImpl(Request... requests) {
         this.requests = Collections.unmodifiableList(Arrays.asList(requests));
-        this.responsesByRequests = new HashMap<Request, Object>();
+        this.responsesByRequests = new HashMap<>();
         for (Request request : requests)
             this.responsesByRequests.put(request, null);
     }
@@ -59,25 +59,30 @@ public class ResponseMessageImpl implements ResponseMessage {
         this.hasError = true;
     }
 
+    @Override
     public Iterator<Response> iterator() {
         return new Iterator<Response>() {
             Iterator<Request> internal = requests.iterator();
 
+            @Override
             public boolean hasNext() {
                 return this.internal.hasNext();
             }
 
+            @Override
             public Response next() {
                 Request request = this.internal.next();
                 return _getResponse(request);
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
         };
     }
 
+    @Override
     public boolean hasError() {
         return this.hasError;
     }
@@ -87,6 +92,7 @@ public class ResponseMessageImpl implements ResponseMessage {
         this.hasError = true;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public <R extends Response> R getResponse(Request<R> request) throws OWLlinkErrorResponseException {
         return (R) this._getResponse(request);
@@ -102,14 +108,17 @@ public class ResponseMessageImpl implements ResponseMessage {
         return null;
     }
 
+    @Override
     public boolean hasErrorResponse(Request request) {
         return responsesByRequests.get(request) instanceof OWLlinkErrorResponseException;
     }
 
+    @Override
     public boolean isErrorResponse(int index) {
         return hasErrorResponse(this.requests.get(index));
     }
 
+    @Override
     public OWLlinkErrorResponseException getError(Request request) {
         Object error = this.responsesByRequests.get(request);
         if (error instanceof OWLlinkErrorResponseException)
@@ -117,6 +126,7 @@ public class ResponseMessageImpl implements ResponseMessage {
         return null;
     }
 
+    @Override
     public Response get(int index) throws OWLlinkErrorResponseException {
         Object response = this.responsesByRequests.get(this.requests.get(index));
         if (response instanceof Response) {
@@ -127,6 +137,7 @@ public class ResponseMessageImpl implements ResponseMessage {
         return null;
     }
 
+    @Override
     public OWLlinkErrorResponseException getError(int index) {
         return this.getError(this.requests.get(index));
     }

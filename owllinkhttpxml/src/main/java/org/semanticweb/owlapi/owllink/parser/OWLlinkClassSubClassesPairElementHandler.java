@@ -38,6 +38,7 @@ public class OWLlinkClassSubClassesPairElementHandler extends AbstractOWLlinkPai
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException {
         this.superSynset = handler.getOWLLinkObject();
     }
@@ -47,6 +48,7 @@ public class OWLlinkClassSubClassesPairElementHandler extends AbstractOWLlinkPai
         this.subSetOfSynset = handler.getOWLLinkObject();
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

@@ -25,7 +25,7 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.response.Hierarchy;
 import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertyHierarchyImpl;
 
@@ -34,22 +34,24 @@ import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertyHierarchyIm
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public class OWLlinkObjectPropertyHierarchyElementHandler extends AbstractOWLlinkHierarchyElementHandler<OWLObjectProperty> {
+public class OWLlinkObjectPropertyHierarchyElementHandler extends AbstractOWLlinkHierarchyElementHandler<OWLObjectPropertyExpression> {
 
     public OWLlinkObjectPropertyHierarchyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySubPropertiesPairElementHandler handler) throws OWLXMLParserException {
         super.pairs.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
         super.unsatisfiables = handler.getOWLLinkObject();
     }
 
     @Override
-    public Hierarchy<OWLObjectProperty> getOWLLinkObject() {
+    public Hierarchy<OWLObjectPropertyExpression> getOWLLinkObject() {
         return new ObjectPropertyHierarchyImpl(super.pairs, super.unsatisfiables);
     }
 }

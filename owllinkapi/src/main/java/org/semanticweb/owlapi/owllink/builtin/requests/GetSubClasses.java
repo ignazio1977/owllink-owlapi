@@ -51,6 +51,7 @@ public class GetSubClasses extends AbstractKBRequestWithOneObjectAndBooleanValue
         return super.bool;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

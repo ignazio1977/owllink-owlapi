@@ -39,10 +39,12 @@ public class PrefixesImpl extends KBResponseImpl implements Prefixes {
     }
 
 
+    @Override
     public Map<String, String> getPrefixes() {
-        return new HashMap<String, String>(this.prefixes);
+        return new HashMap<>(this.prefixes);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

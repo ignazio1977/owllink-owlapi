@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.OWLObjectPropertyNodeSet;
 
@@ -36,23 +36,26 @@ import java.util.Set;
 public class SetOfObjectPropertySynsetsImpl extends OWLObjectPropertyNodeSet implements SetOfObjectPropertySynsets {
     final String warning;
 
-    public SetOfObjectPropertySynsetsImpl(Set<Node<OWLObjectProperty>> synonymsets) {
+    public SetOfObjectPropertySynsetsImpl(Set<Node<OWLObjectPropertyExpression>> synonymsets) {
         this(synonymsets, null);
     }
 
-    public SetOfObjectPropertySynsetsImpl(Set<Node<OWLObjectProperty>> synonymsets, String warning) {
+    public SetOfObjectPropertySynsetsImpl(Set<Node<OWLObjectPropertyExpression>> synonymsets, String warning) {
         super(synonymsets);
         this.warning = warning;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
+    @Override
     public boolean hasWarning() {
         return this.warning != null;
     }
 
+    @Override
     public String getWarning() {
         return this.warning;
     }

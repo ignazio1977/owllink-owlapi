@@ -53,6 +53,7 @@ public class GetTypes extends AbstractKBRequestWithOneObjectAndBooleanValue<
         return super.object;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

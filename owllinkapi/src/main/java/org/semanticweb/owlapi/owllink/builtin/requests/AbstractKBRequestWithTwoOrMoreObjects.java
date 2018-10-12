@@ -43,7 +43,7 @@ public abstract class AbstractKBRequestWithTwoOrMoreObjects<R extends KBResponse
         super(kb);
         if (elements.size() < 2)
             throw new IllegalArgumentException("At least two elements must be in the argument but there are only " + elements.size());
-        this.elements = Collections.unmodifiableSet(new HashSet<O>(elements));
+        this.elements = Collections.unmodifiableSet(new HashSet<>(elements));
     }
 
     public AbstractKBRequestWithTwoOrMoreObjects(IRI kb, O... elem) {
@@ -57,6 +57,7 @@ public abstract class AbstractKBRequestWithTwoOrMoreObjects<R extends KBResponse
         return this.elements;
     }
 
+    @Override
     public Iterator<O> iterator() {
         return this.elements.iterator();
     }

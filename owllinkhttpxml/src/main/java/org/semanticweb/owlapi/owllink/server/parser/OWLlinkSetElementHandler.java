@@ -54,7 +54,7 @@ public class OWLlinkSetElementHandler extends AbstractOWLlinkKBRequestElementHan
     @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.literals = new HashSet<OWLlinkLiteral>();
+        this.literals = new HashSet<>();
         this.key = null;
     }
 
@@ -63,6 +63,7 @@ public class OWLlinkSetElementHandler extends AbstractOWLlinkKBRequestElementHan
         this.literals.add(handler.getOWLObject());
     }
 
+    @Override
     public KBRequest getOWLObject() throws OWLXMLParserException {
         return new Set(getKB(), this.key, this.literals);
     }

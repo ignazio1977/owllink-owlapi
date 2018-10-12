@@ -33,6 +33,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.Description;
  * author: Olaf Noppens
  */
 public class GetDescription implements Request<Description> {
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

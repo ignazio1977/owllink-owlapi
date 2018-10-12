@@ -36,6 +36,7 @@ public class OWLlinkKBErrorElementHandler extends AbstractOWLlinkErrorHandler<OW
         super(handler);
     }
 
+    @Override
     public OWLlinkKBErrorResponseException getOWLLinkObject() {
         return new OWLlinkKBErrorResponseException(getErrorString());
     }

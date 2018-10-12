@@ -37,6 +37,7 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype;
  */
 public class PelletServerFactory implements OWLlinkServerFactory {
 
+    @Override
     public OWLlinkHTTPXMLServer createServer(int port) throws OWLRuntimeException {
         SimpleConfiguration configuration = new SimpleConfiguration() {
             @Override

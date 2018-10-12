@@ -100,6 +100,7 @@ public class IsEntailedDirect extends AbstractKBRequest<BooleanResponse> {
         throw new OWLRuntimeException("axiom cannot be casted to OWLClassAssertionAxiom");
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

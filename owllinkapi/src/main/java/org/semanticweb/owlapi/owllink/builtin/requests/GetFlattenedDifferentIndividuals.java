@@ -46,6 +46,7 @@ public class GetFlattenedDifferentIndividuals extends AbstractKBRequestWithOneOb
         return super.getObject();
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

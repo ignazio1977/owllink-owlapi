@@ -43,6 +43,7 @@ public abstract class AbstractSetOfOWLObjectResponseElementHandler<O extends OWL
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         this.elements = CollectionFactory.createSet();
     }

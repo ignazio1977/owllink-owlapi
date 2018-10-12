@@ -49,27 +49,32 @@ public abstract class OWLlinkConfigurationElementHandler<C extends Configuration
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.key = null;
         this.type = null;
-        this.values = new HashSet<OWLlinkLiteral>();
+        this.values = new HashSet<>();
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.KEY_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.key = value;
         }
     }
 
+    @Override
     public void handleChild(OWLlinkDataRangeElementHandler handler) throws OWLXMLParserException {
         this.type = handler.getOWLLinkObject();
     }
 
+    @Override
     public void handleChild(OWLlinkLiteralElementHandler handler) throws OWLXMLParserException {
         this.values.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         //((OWLlinkXMLParserHandler) getParentHandler()).handleChild(this);
     }

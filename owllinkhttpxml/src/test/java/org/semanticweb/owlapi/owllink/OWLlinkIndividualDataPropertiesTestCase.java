@@ -24,13 +24,17 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.owllink.builtin.requests.*;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfLiterals;
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -40,12 +44,13 @@ import java.util.Set;
  */
 public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = createSet();
-        axioms.add(getDataFactory().getOWLDataPropertyAssertionAxiom(getOWLDataProperty("p"), getOWLIndividual("i"), getLiteral(1)));
-        axioms.add(getDataFactory().getOWLDataPropertyAssertionAxiom(getOWLDataProperty("p"), getOWLIndividual("i"), getLiteral(2)));
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("p"), getOWLDataProperty("q")));
-        axioms.add(getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("p"), getOWLDataProperty("r")));
+        axioms.add(getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(1)));
+        axioms.add(getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(2)));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpp(), dpq()));
+        axioms.add(getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpp(), dpr()));
 
         return axioms;
     }
@@ -54,16 +59,13 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
     public void testGetDataPropertiesOfSource() throws Exception {
         GetDataPropertiesOfSource query = new GetDataPropertiesOfSource(getKBIRI(), getOWLIndividual("i"));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("p")));
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("q")));
-        assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopDataProperty()));
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("r")));
+        Set<OWLDataProperty> expected = set(dpp(), dpq(), dpr(), manager.getOWLDataFactory().getOWLTopDataProperty()); 
+        assertEquals(expected, response.getFlattened());
 
         /*Set<Synset<OWLDataProperty>> synsets = CollectionFactory.createSet();
-        Synset<OWLDataProperty> synset = new SynsetImpl<OWLDataProperty>(getOWLDataProperty("p"), getOWLDataProperty("r"));
+        Synset<OWLDataProperty> synset = new SynsetImpl<OWLDataProperty>(dpp(), dpr());
         synsets.add(synset);
-        synset = new SynsetImpl<OWLDataProperty>(getOWLDataProperty("q"));
+        synset = new SynsetImpl<OWLDataProperty>(dpq());
         synsets.add(synset);
         for (Synset<OWLDataProperty> set : response) {
             synsets.remove(set);
@@ -74,69 +76,47 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
     public void testGetDataPropertiesOfTarget() throws Exception {
         GetDataPropertiesOfLiteral query = new GetDataPropertiesOfLiteral(getKBIRI(), getLiteral(2));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("p")));
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("q")));
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("r")));
-        assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopDataProperty()));
+        Set<OWLDataProperty> expected = set(dpp(), dpq(), dpr(), manager.getOWLDataFactory().getOWLTopDataProperty()); 
+        assertEquals(expected, response.getFlattened());
     }
 
     public void testGetDataPropertiesBetween() throws Exception {
         GetDataPropertiesBetween query = new GetDataPropertiesBetween(getKBIRI(), getOWLIndividual("i"), getLiteral(1));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("p")));
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("q")));
-        assertTrue(response.getFlattened().contains(getOWLDataProperty("r")));
-        assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopDataProperty()));
-
-        /* for (Synset<OWLDataProperty> synset : response) {
-            if (synset.contains(getOWLDataProperty("r")))
-                assertFalse(synset.isSingleton());
-            else
-                assertTrue(synset.isSingleton());
-        }*/
+        assertEquals(set(dpp(),dpq(),dpr(),manager.getOWLDataFactory().getOWLTopDataProperty()), response.getFlattened());
     }
 
 
     public void testIsIndividualRelatedWithLiteral() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(
-                getOWLDataProperty("p"), getOWLIndividual("i"), getLiteral(1)));
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(1)));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(
-                getOWLDataProperty("r"), getOWLIndividual("i"), getLiteral(1)));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpr(), getOWLIndividual("i"), getLiteral(1)));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(
-                getOWLDataProperty("p"), getOWLIndividual("i"), getLiteral(2)));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(2)));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(
-                getOWLDataProperty("q"), getOWLIndividual("i"), getLiteral(2)));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpq(), getOWLIndividual("i"), getLiteral(2)));
         assertTrue(reasoner.answer(query).getResult());
 
     }
 
     public void testGetDataPropertyTargets() throws Exception {
-        GetDataPropertyTargets query = new GetDataPropertyTargets(getKBIRI(), getOWLIndividual("i"), getOWLDataProperty("p"));
+        GetDataPropertyTargets query = new GetDataPropertyTargets(getKBIRI(), getOWLIndividual("i"), dpp());
         SetOfLiterals response = super.reasoner.answer(query);
-        assertTrue(response.size() == 2);
-        // assertTrue(response.contains(getLiteral(2)));
+        assertEquals(set(getLiteral(1), getLiteral(2)), response);
     }
 
     public void testGetDataPropertySources() throws Exception {
-        GetDataPropertySources query = new GetDataPropertySources(getKBIRI(), getOWLDataProperty("p"), getLiteral(1));
+        GetDataPropertySources query = new GetDataPropertySources(getKBIRI(), dpp(), getLiteral(1));
         SetOfIndividualSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 1);
-        assertTrue(response.getFlattened().contains(getOWLIndividual("i")));
+        assertEquals(set(getOWLIndividual("i")), response.getFlattened());
     }
 
-
     public void testGetFlattenedDataPropertySources() throws Exception {
-        GetFlattenedDataPropertySources query = new GetFlattenedDataPropertySources(getKBIRI(), getOWLDataProperty("p"), getLiteral(1));
+        GetFlattenedDataPropertySources query = new GetFlattenedDataPropertySources(getKBIRI(), dpp(), getLiteral(1));
         SetOfIndividuals response = super.reasoner.answer(query);
-        assertTrue(response.size() == 1);
-        assertTrue(response.contains(getOWLIndividual("i")));
+        assertEquals(set(getOWLIndividual("i")), response);
     }
 }

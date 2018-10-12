@@ -45,14 +45,17 @@ public class DataPropertySynsetsImpl extends OWLDataPropertyNodeSet implements D
         this.warning = warning;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
+    @Override
     public boolean hasWarning() {
         return this.warning != null;
     }
 
+    @Override
     public String getWarning() {
         return this.warning;
     }

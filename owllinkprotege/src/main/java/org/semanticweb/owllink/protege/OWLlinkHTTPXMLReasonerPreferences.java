@@ -47,7 +47,7 @@ public class OWLlinkHTTPXMLReasonerPreferences {
     }
 
     public boolean isUseCompression() {
-        return getPreferences().getBoolean("useCompresseion", true);
+        return getPreferences().getBoolean("useCompression", true);
     }
 
     public void setUseCompression(boolean useCompression) {

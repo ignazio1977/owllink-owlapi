@@ -27,6 +27,8 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,13 +62,12 @@ public class SetOfIndividualsImpl extends SetOfImpl<OWLIndividual> implements Se
         this(convertToFlattened(elements), warning);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
     public static Set<OWLIndividual> convertToFlattened(NodeSet<OWLNamedIndividual> nodeSet) {
-        Set<OWLIndividual> indis = new HashSet<OWLIndividual>();
-        indis.addAll(nodeSet.getFlattened());
-        return indis;
+        return asSet(nodeSet.entities(), OWLIndividual.class);
     }
 }

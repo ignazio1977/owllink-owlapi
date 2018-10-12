@@ -36,40 +36,35 @@ import java.util.Set;
  */
 public class OWLlinkIsDataPropertyFunctionalTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axiom = CollectionFactory.createSet();
-        axiom.add(getDataFactory().getOWLFunctionalDataPropertyAxiom(getOWLDataProperty("A")));
-        axiom.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("B"), getOWLDataProperty("A")));
-        axiom.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("C"), getOWLDataProperty("D")));
+        axiom.add(getDataFactory().getOWLFunctionalDataPropertyAxiom(dpA()));
+        axiom.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpB(), dpA()));
+        axiom.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpC(), dpD()));
 
         return axiom;
     }
 
-    public void testIsFunctional() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(
-                getOWLDataProperty("A")));
+    public void testIsFunctional() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(dpA()));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(
-                getOWLDataProperty("B")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(dpB()));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(
-                getOWLDataProperty("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(dpC()));
         assertFalse(reasoner.answer(query).getResult());
     }
 
-    public void testIsFunctionalViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLFunctionalDataPropertyAxiom(
-                getOWLDataProperty("A"));
+    public void testIsFunctionalViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLFunctionalDataPropertyAxiom(dpA());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLFunctionalDataPropertyAxiom(
-                getOWLDataProperty("B"));
+        axiom = getDataFactory().getOWLFunctionalDataPropertyAxiom(dpB());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLFunctionalDataPropertyAxiom(
-                getOWLDataProperty("C"));
+        axiom = getDataFactory().getOWLFunctionalDataPropertyAxiom(dpC());
         assertFalse(reasoner.isEntailed(axiom));
     }
 

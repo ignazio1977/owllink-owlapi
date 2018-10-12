@@ -42,10 +42,12 @@ public class OWLlinkSetOfDatatypesElementHandler extends AbstractSetOfOWLObjectR
         super(handler);
     }
 
+    @Override
     public SetOfDatatypes getOWLLinkObject() {
         return new SetOfDatatypesImpl(super.elements);
     }
 
+    @Override
     public void handleChild(AbstractOWLDataRangeHandler handler) throws OWLXMLParserException {
         OWLDataRange range = handler.getOWLObject();
         if (range instanceof OWLDatatype)

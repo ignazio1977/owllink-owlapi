@@ -42,11 +42,13 @@ public class OWLlinkGetDataPropertySourcesElementHandler extends AbstractOWLlink
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         isNegative = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName)) {
@@ -54,10 +56,12 @@ public class OWLlinkGetDataPropertySourcesElementHandler extends AbstractOWLlink
         }
     }
 
+    @Override
     public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
         this.literal = handler.getOWLObject();
     }
 
+    @Override
     public GetDataPropertySources getOWLObject() throws OWLXMLParserException {
         return new GetDataPropertySources(getKB(), getObject(), literal, isNegative);
     }

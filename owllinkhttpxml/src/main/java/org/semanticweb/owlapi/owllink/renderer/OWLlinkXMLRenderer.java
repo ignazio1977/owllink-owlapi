@@ -23,10 +23,23 @@
 
 package org.semanticweb.owlapi.owllink.renderer;
 
+import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.FULLIRI;
+import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.KB_ATTRIBUTE;
+import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.NAME_Attribute;
+import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.PREFIX;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.semanticweb.owlapi.io.OWLRendererException;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLOntologyWriterConfiguration;
 import org.semanticweb.owlapi.owllink.KBRequest;
-import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.*;
 import org.semanticweb.owlapi.owllink.PrefixManagerProvider;
 import org.semanticweb.owlapi.owllink.Request;
 import org.semanticweb.owlapi.owllink.builtin.requests.CreateKB;
@@ -34,12 +47,9 @@ import org.semanticweb.owlapi.owllink.builtin.requests.GetPrefixes;
 import org.semanticweb.owlapi.owllink.builtin.requests.RequestVisitor;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 
-import java.io.Writer;
-import java.util.*;
-
 /**
- * @author Olaf Noppens
- *         todo find requestrenderFactories via property files in user-directory, working-directory, jar-directory
+ * @author Olaf Noppens todo find requestrenderFactories via property files in user-directory,
+ *         working-directory, jar-directory
  */
 public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
 
@@ -47,13 +57,14 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
     private boolean fetchPrefixes = true;
 
     PrefixManagerProvider prov;
+    OWLOntologyWriterConfiguration config = new OWLOntologyWriterConfiguration();
 
     public OWLlinkXMLRenderer() {
-        this.rendererByRequest = new HashMap<String, OWLlinkRequestRendererFactory>();
+        rendererByRequest = new HashMap<>();
     }
 
     public void addFactory(OWLlinkRequestRendererFactory factory) {
-        this.rendererByRequest.put(factory.getRequestName(), factory);
+        rendererByRequest.put(factory.getRequestName(), factory);
     }
 
     public void addFactories(Collection<OWLlinkRequestRendererFactory> factories) {
@@ -63,18 +74,19 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
     }
 
 
-    public Request[] render(final Writer writer, final PrefixManagerProvider prov, final Request... requests) throws OWLRendererException {
-        final OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov);
+    public Request[] render(final PrintWriter writer, final PrefixManagerProvider prov,
+        final Request... requests) {
+        final OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
         w.startDocument(true);
         int i = 0;
         BitSet additionalQueryIndex = new BitSet();
         this.prov = prov;
-        List<Request> realRequests = new ArrayList<Request>();
+        List<Request> realRequests = new ArrayList<>();
 
         for (Request request : requests) {
             realRequests.add(request);
             if (request instanceof KBRequest) {
-                //check for kb!
+                // check for kb!
                 final KBRequest kbRequest = (KBRequest) request;
                 final IRI kb = kbRequest.getKB();
                 if (!prov.contains(kb) && fetchPrefixes) {
@@ -94,7 +106,8 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
 
     @Override
     public void answer(Request request) {
-        final OWLlinkRequestRendererFactory factory = this.rendererByRequest.get(request.getClass().getName());
+        final OWLlinkRequestRendererFactory factory =
+            rendererByRequest.get(request.getClass().getName());
         if (factory != null) {
             try {
                 factory.createRenderer().render(request, writer);
@@ -104,12 +117,15 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
         }
     }
 
+    @Override
     public void answer(CreateKB query) {
         writer.writeStartElement(BuiltinRequestVocabulary.CREATEKB.getURI());
-        if (query.getName() != null)
+        if (query.getName() != null) {
             writer.writeAttribute(NAME_Attribute.getURI().toString(), query.getName());
-        if (query.getKB() != null)
+        }
+        if (query.getKB() != null) {
             writer.writeAttribute(KB_ATTRIBUTE.getURI().toString(), query.getKB().toString());
+        }
         if (query.getPrefixes() != null) {
             final DefaultPrefixManager manager = new DefaultPrefixManager();
             final Map<String, String> prefixName2PrefixMap = manager.getPrefixName2PrefixMap();
@@ -121,7 +137,7 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
                 prefixName2PrefixMap.put(prefix.getValue(), prefix.getKey());
             }
             if (query.getKB() != null) {
-                //if kb is known we can update prefix information
+                // if kb is known we can update prefix information
                 prov.putPrefixes(query.getKB(), manager);
             }
         }
@@ -138,8 +154,9 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
             super(kb);
         }
 
+        @Override
         public void accept(RequestVisitor visitor) {
-            visitor.answer((GetPrefixes) this);
+            visitor.answer(this);
         }
     }
 

@@ -25,27 +25,30 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 /**
  * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public class OWLlinkObjectPropertySubPropertiesPairElementHandler extends AbstractOWLlinkPairElementHandler<OWLObjectProperty> {
+public class OWLlinkObjectPropertySubPropertiesPairElementHandler extends AbstractOWLlinkPairElementHandler<OWLObjectPropertyExpression> {
 
     public OWLlinkObjectPropertySubPropertiesPairElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
         super.superSynset = handler.getOWLLinkObject();
     }
 
+    @Override
     public void handleChild(OWLlinkSubObjectPropertySynsetsElementHandler handler) throws OWLXMLParserException {
         super.subSetOfSynset = handler.getOWLLinkObject();
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

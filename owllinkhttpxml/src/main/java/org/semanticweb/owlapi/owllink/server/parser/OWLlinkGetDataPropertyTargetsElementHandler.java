@@ -40,15 +40,18 @@ public class OWLlinkGetDataPropertyTargetsElementHandler extends AbstractOWLIndi
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.property = null;
     }
 
+    @Override
     public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
         this.property = handler.getOWLObject().asOWLDataProperty();
     }
 
+    @Override
     public GetDataPropertyTargets getOWLObject() throws OWLXMLParserException {
         return new GetDataPropertyTargets(getKB(), getObject(), property);
     }

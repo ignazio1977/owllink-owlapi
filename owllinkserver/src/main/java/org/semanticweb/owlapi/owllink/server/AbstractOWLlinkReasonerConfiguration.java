@@ -109,6 +109,7 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         return getConfiguration(UNIQUE_NAMEASSUMPTION);
     }
 
+    @Override
     public ReasonerVersion getReasonerVersion() {
         return this.reasonerversion;
     }
@@ -174,10 +175,12 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         replaceConfiguration(new PropertyImpl(UNIQUE_NAMEASSUMPTION, new OWLlinkDatatypeImpl(OWL2Datatype.XSD_BOOLEAN.getIRI()), literals));
     }
 
+    @Override
     public Set<Configuration> getConfigurations() {
         return Collections.unmodifiableSet(this.configurations);
     }
 
+    @Override
     public Set<Setting> getSettings() {
         Set<Setting> settings = CollectionFactory.createSet();
         for (Configuration conf : getConfigurations())
@@ -187,6 +190,7 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
     }
 
 
+    @Override
     public Configuration getConfiguration(String key) {
         for (Configuration configuration : getConfigurations()) {
             if (configuration.getKey().equals(key))
@@ -213,6 +217,7 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         return false;
     }
 
+    @Override
     public OWLReasonerConfiguration getOWLReasonerConfiguration() {
         return this.reasonerConfiguration;
     }

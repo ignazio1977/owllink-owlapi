@@ -43,21 +43,25 @@ public class OWLlinkDatatypeElementHandler extends OWLlinkDataRangeElementHandle
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         this.iri = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLParserException {
         if (OWLlinkXMLVocabulary.IRI_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.iri = getIRIFromAttribute(localName, value);
         }
     }
 
+    @Override
     public OWLlinkDatatype getOWLLinkObject() {
         return new OWLlinkDatatypeImpl(iri);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 }

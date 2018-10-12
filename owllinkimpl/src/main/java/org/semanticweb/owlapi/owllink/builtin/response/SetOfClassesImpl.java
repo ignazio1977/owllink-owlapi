@@ -48,6 +48,7 @@ public class SetOfClassesImpl extends SetOfImpl<OWLClass> implements SetOfClasse
         super(elements, warning);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

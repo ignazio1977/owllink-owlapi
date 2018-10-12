@@ -37,6 +37,7 @@ public class OWLlinkGetSubObjectPropertyHierarchyElementHandler extends Abstract
         super(handler);
     }
 
+    @Override
     public GetSubObjectPropertyHierarchy getOWLObject() throws OWLXMLParserException {
         if (super.getObject() instanceof OWLObjectProperty) {
             return new GetSubObjectPropertyHierarchy(getKB(), super.getObject().asOWLObjectProperty());

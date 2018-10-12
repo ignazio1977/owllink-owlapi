@@ -37,6 +37,7 @@ public class GetAllDataProperties extends AbstractKBRequest<SetOfDataProperties>
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

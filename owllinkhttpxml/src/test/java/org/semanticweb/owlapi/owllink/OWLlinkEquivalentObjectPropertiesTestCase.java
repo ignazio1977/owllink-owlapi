@@ -24,7 +24,7 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetEquivalentObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsEntailed;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
@@ -41,60 +41,57 @@ import java.util.Set;
  */
 public class OWLlinkEquivalentObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B")));
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("B"), getOWLObjectProperty("C")));
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("B"), getOWLObjectProperty("A")));
-        axioms.add(getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("D"), getOWLObjectProperty("E")));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opb()));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opb(), opc()));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opb(), opa()));
+        axioms.add(getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE()));
         return axioms;
     }
 
-    public void testAreObjectPropertiesEquivalent() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B")));
+    public void testAreObjectPropertiesEquivalent() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opa(), opb()));
         BooleanResponse result = super.reasoner.answer(query);
         assertTrue(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opa(), opb(), opc()));
         result = super.reasoner.answer(query);
         assertFalse(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("D"), getOWLObjectProperty("E"), getOWLObjectProperty("A")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE(), opa()));
         result = super.reasoner.answer(query);
         assertFalse(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("D"), getOWLObjectProperty("E")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE()));
         result = super.reasoner.answer(query);
         assertTrue(result.getResult());
     }
 
-    public void testAreObjectPropertiesEquivalentViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"));
+    public void testAreObjectPropertiesEquivalentViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opa(), opb());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B"), getOWLObjectProperty("C"));
+        axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opa(), opb(), opc());
         assertFalse(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("D"), getOWLObjectProperty("E"), getOWLObjectProperty("A"));
+        axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE(), opa());
         assertFalse(super.reasoner.isEntailed(axiom));
 
 
-        axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("D"), getOWLObjectProperty("E"));
+        axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE());
         assertTrue(super.reasoner.isEntailed(axiom));
     }
 
-    public void testGetEquivalentObjectProperties() throws Exception {
-        GetEquivalentObjectProperties query = new GetEquivalentObjectProperties(getKBIRI(), getOWLObjectProperty("A"));
+    public void testGetEquivalentObjectProperties() {
+        GetEquivalentObjectProperties query = new GetEquivalentObjectProperties(getKBIRI(), opa());
         SetOfObjectProperties result = super.reasoner.answer(query);
-        assertTrue(result.size() == 2);
-        assertTrue(result.contains(getOWLObjectProperty("A")));
-        assertTrue(result.contains(getOWLObjectProperty("B")));
+        assertEquals(set(opa(),opb()),result);
     }
 
-    public void testGetEquivalentObjectPropertiesViaOWLReasoner() throws Exception {
-        Node<OWLObjectProperty> result = super.reasoner.getEquivalentObjectProperties(getOWLObjectProperty("A"));
-        assertTrue(result.getSize() == 2);
-        assertTrue(result.contains(getOWLObjectProperty("A")));
-        assertTrue(result.contains(getOWLObjectProperty("B")));
+    public void testGetEquivalentObjectPropertiesViaOWLReasoner() {
+        Node<OWLObjectPropertyExpression> result = super.reasoner.getEquivalentObjectProperties(opa());
+        assertEquals(set(opa(),opb()),result.getEntities());
     }
 }

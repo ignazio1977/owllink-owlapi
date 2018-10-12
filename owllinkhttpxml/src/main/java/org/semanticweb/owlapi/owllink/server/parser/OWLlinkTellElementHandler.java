@@ -44,15 +44,18 @@ public class OWLlinkTellElementHandler extends AbstractOWLlinkKBRequestElementHa
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.axioms = new HashSet<OWLAxiom>();
+        this.axioms = new HashSet<>();
     }
 
+    @Override
     public Tell getOWLObject() throws OWLXMLParserException {
         return new Tell(super.kb, axioms);
     }
 
+    @Override
     public void handleChild(AbstractOWLAxiomElementHandler handler) throws OWLXMLParserException {
         axioms.add(handler.getOWLObject());
     }

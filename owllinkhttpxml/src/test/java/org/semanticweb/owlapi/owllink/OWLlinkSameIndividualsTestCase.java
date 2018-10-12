@@ -40,6 +40,7 @@ import java.util.Set;
  */
 public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = createSet();
         axioms.add(getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("j"), getOWLIndividual("k")));
@@ -47,7 +48,7 @@ public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCas
         return axioms;
     }
 
-    public void testAreSameIndividuals() throws Exception {
+    public void testAreSameIndividuals() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("k")));
         assertTrue(super.reasoner.answer(query).getResult());
 
@@ -61,7 +62,7 @@ public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCas
         assertFalse(super.reasoner.answer(query).getResult());
     }
 
-    public void testAreSameIndividualsViaOWLReasoner() throws Exception {
+    public void testAreSameIndividualsViaOWLReasoner() {
         OWLAxiom axiom = getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("k"));
         assertTrue(super.reasoner.isEntailed(axiom));
 
@@ -76,20 +77,14 @@ public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCas
 
     }
 
-    public void testGetSameIndividuals() throws Exception {
+    public void testGetSameIndividuals() {
         GetSameIndividuals query = new GetSameIndividuals(getKBIRI(), getOWLIndividual("i"));
         IndividualSynonyms response = super.reasoner.answer(query);
-        assertTrue(response.getIndividuals().size() == 3);
-        assertTrue(response.contains(getOWLIndividual("i")));
-        assertTrue(response.contains(getOWLIndividual("j")));
-        assertTrue(response.contains(getOWLIndividual("k")));
+        assertEquals(set(getOWLIndividual("i"),getOWLIndividual("j"),getOWLIndividual("k")), response.getIndividuals());
     }
 
-    public void testGetSameIndividualsViaOWLReasoner() throws Exception {
+    public void testGetSameIndividualsViaOWLReasoner() {
         Node<OWLNamedIndividual> nodeSet = super.reasoner.getSameIndividuals(getOWLIndividual("i"));
-        assertTrue(nodeSet.getSize() == 3);
-        assertTrue(nodeSet.contains(getOWLIndividual("i")));
-        assertTrue(nodeSet.contains(getOWLIndividual("j")));
-        assertTrue(nodeSet.contains(getOWLIndividual("k")));
+        assertEquals(set(getOWLIndividual("i"),getOWLIndividual("j"),getOWLIndividual("k")), nodeSet.getEntities());
     }
 }

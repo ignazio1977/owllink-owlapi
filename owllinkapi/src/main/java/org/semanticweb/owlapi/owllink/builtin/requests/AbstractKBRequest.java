@@ -38,6 +38,7 @@ public abstract class AbstractKBRequest<R extends KBResponse> implements KBReque
         this.kb = kb;
     }
 
+    @Override
     public IRI getKB() {
         return this.kb;
     }

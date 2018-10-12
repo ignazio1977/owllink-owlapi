@@ -37,6 +37,9 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectProperties;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.add;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,14 +50,14 @@ import java.util.Set;
  */
 public class OWLlinkGetEntitiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("C")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("B"), getOWLClass("D")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), c()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(b(), d()));
         axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("E"), getOWLClass("F")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("E"),
-                getDataFactory().getOWLObjectExactCardinality(1, getOWLObjectProperty("p"))));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("E"), getDataFactory().getOWLObjectExactCardinality(1, opp())));
 
         axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("oA"), getOWLObjectProperty("oB")));
         axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("oB"), getOWLObjectProperty("oC")));
@@ -70,8 +73,8 @@ public class OWLlinkGetEntitiesTestCase extends AbstractOWLlinkAxiomsTestCase {
         axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("dE"), getOWLDataProperty("dF")));
         axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("dG"), getOWLDataProperty("dH")));
 
-        axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("A"), getOWLIndividual("i1")));
-        axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("B"), getOWLIndividual("i2")));
+        axioms.add(getDataFactory().getOWLClassAssertionAxiom(a(), getOWLIndividual("i1")));
+        axioms.add(getDataFactory().getOWLClassAssertionAxiom(b(), getOWLIndividual("i2")));
         axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("X"), getOWLIndividual("i3")));
         axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("Y"), getOWLIndividual("i4")));
 
@@ -81,34 +84,27 @@ public class OWLlinkGetEntitiesTestCase extends AbstractOWLlinkAxiomsTestCase {
     public void testGetAllClasses() throws Exception {
         GetAllClasses query = new GetAllClasses(getKBIRI());
         SetOfClasses answer = reasoner.answer(query);
-        Set<OWLClass> classes = new HashSet<OWLClass>(getOntology().getClassesInSignature());
-        assertTrue(answer.containsAll(classes));
-        assertTrue(answer.size() == classes.size());
+        assertEquals(asSet(getOntology().classesInSignature()), answer);
     }
 
     public void testGetAllDataProperties() throws Exception {
         GetAllDataProperties query = new GetAllDataProperties(getKBIRI());
         SetOfDataProperties answer = reasoner.answer(query);
-        assertTrue(answer.containsAll(getOntology().getDataPropertiesInSignature()));
-        assertTrue(answer.size() == getOntology().getDataPropertiesInSignature().size());
+        assertEquals(asSet(getOntology().dataPropertiesInSignature()), answer);
     }
 
     public void testGetAllObjectProperties() throws Exception {
         GetAllObjectProperties query = new GetAllObjectProperties(getKBIRI());
         SetOfObjectProperties answer = reasoner.answer(query);
-        Set<OWLObjectProperty> props = getOntology().getObjectPropertiesInSignature();
-        assertTrue(answer.containsAll(getOntology().getObjectPropertiesInSignature()));
-        assertTrue(answer.size() == getOntology().getObjectPropertiesInSignature().size());
+        assertEquals(asSet(getOntology().objectPropertiesInSignature()), answer);
     }
 
     public void testGetAllIndividuals() throws Exception {
         GetAllIndividuals query = new GetAllIndividuals(getKBIRI());
         SetOfIndividuals answer = reasoner.answer(query);
         Set<OWLIndividual> individuals = CollectionFactory.createSet();
-        individuals.addAll(getOntology().getIndividualsInSignature());
-        individuals.addAll(getOntology().getReferencedAnonymousIndividuals());
-        assertTrue(answer.containsAll(individuals));
-        assertTrue(answer.size() == individuals.size());
+        add(individuals, getOntology().individualsInSignature());
+        add(individuals, getOntology().referencedAnonymousIndividuals());
+        assertEquals(individuals, answer);
     }
-
 }

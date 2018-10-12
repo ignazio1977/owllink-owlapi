@@ -25,7 +25,7 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.owllink.builtin.response.Hierarchy;
 import org.semanticweb.owlapi.owllink.builtin.response.HierarchyPair;
 import org.semanticweb.owlapi.reasoner.Node;
@@ -38,7 +38,7 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public abstract class AbstractOWLlinkHierarchyElementHandler<O extends OWLLogicalEntity> extends AbstractOWLlinkKBResponseElementHandler<Hierarchy<O>> {
+public abstract class AbstractOWLlinkHierarchyElementHandler<O extends OWLObject> extends AbstractOWLlinkKBResponseElementHandler<Hierarchy<O>> {
     protected Set<HierarchyPair<O>> pairs;
     protected Node<O> unsatisfiables;
 
@@ -46,9 +46,10 @@ public abstract class AbstractOWLlinkHierarchyElementHandler<O extends OWLLogica
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.pairs = new HashSet<HierarchyPair<O>>();
+        this.pairs = new HashSet<>();
         this.unsatisfiables = null;
     }
 

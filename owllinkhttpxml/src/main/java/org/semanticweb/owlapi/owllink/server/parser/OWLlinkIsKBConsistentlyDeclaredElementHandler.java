@@ -36,6 +36,7 @@ public class OWLlinkIsKBConsistentlyDeclaredElementHandler extends AbstractOWLli
         super(handler);
     }
 
+    @Override
     public IsKBConsistentlyDeclared getOWLObject() throws OWLXMLParserException {
         return new IsKBConsistentlyDeclared(getKB());
     }

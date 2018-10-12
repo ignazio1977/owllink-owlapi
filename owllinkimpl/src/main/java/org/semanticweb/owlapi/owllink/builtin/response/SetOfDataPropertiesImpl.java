@@ -48,6 +48,7 @@ public class SetOfDataPropertiesImpl extends SetOfImpl<OWLDataProperty> implemen
         super(elements, warning);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

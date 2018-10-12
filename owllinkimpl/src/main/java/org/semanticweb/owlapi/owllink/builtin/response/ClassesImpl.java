@@ -55,18 +55,22 @@ public class ClassesImpl extends OWLClassNode implements Classes {
             throw new IllegalArgumentException("Classes should not be empty");
     }
 
+    @Override
     public void add(OWLClass owlClass) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
+    @Override
     public boolean hasWarning() {
         return warning != null;
     }
 
+    @Override
     public String getWarning() {
         return warning;
     }

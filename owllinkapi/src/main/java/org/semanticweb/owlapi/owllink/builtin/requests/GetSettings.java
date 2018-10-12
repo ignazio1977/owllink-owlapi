@@ -38,6 +38,7 @@ public class GetSettings extends AbstractKBRequest<Settings> {
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

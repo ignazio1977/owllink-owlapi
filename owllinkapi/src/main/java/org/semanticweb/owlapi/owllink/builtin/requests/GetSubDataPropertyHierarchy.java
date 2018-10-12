@@ -50,6 +50,7 @@ public class GetSubDataPropertyHierarchy extends
         return super.getObject();
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

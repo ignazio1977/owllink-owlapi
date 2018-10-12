@@ -41,12 +41,14 @@ public class OWLlinkDataPropertySynsetElementHandler extends AbstractOWLlinkEnti
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
         if (!handler.getOWLObject().isAnonymous())
             super.elements.add(handler.getOWLObject().asOWLDataProperty());
     }
 
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         super.endElement();
         getParentHandler().handleChild(this);

@@ -40,6 +40,7 @@ public abstract class AbstractOWLClassRequestElementHandler<R extends KBRequest>
         super(handler);
     }
 
+    @Override
     public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
         this.o = handler.getOWLObject();
     }

@@ -50,10 +50,12 @@ public class RetractRequest extends AbstractKBRequest<OK> implements Iterable<OW
         return Collections.unmodifiableSet(this.axioms);
     }
 
+    @Override
     public Iterator<OWLAxiom> iterator() {
         return this.axioms.iterator();
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

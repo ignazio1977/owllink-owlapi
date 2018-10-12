@@ -33,6 +33,7 @@ import org.semanticweb.owlapi.reasoner.impl.*;
 import org.semanticweb.owlapi.util.Version;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -57,14 +58,14 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
     Description description;
     HTTPSessionImpl session;
 
-    public OWLlinkHTTPXMLReasoner(OWLOntology rootOntology, OWLlinkReasonerConfiguration configuration, BufferingMode bufferingMode) {
+    public OWLlinkHTTPXMLReasoner(OWLOntology rootOntology, OWLlinkReasonerConfigurationImpl configuration, BufferingMode bufferingMode) {
         super(rootOntology, configuration, bufferingMode);
         session = new HTTPSessionImpl(rootOntology.getOWLOntologyManager(), configuration.getReasonerURL(), prov);
         this.reasonerURL = configuration.getReasonerURL();
         createDefaultKB();
         this.description = getReasonerInfo();
         flush();
-        Set<OWLAxiom> axioms = new HashSet<OWLAxiom>(getReasonerAxioms());
+        Set<OWLAxiom> axioms = new HashSet<>(getReasonerAxioms());
         if (axioms.size() > 0) {
             Tell tell = new Tell(defaultKnowledgeBase, axioms);
             OK message = performRequestOWLAPI(tell);
@@ -78,19 +79,23 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         }
     }
 
+    @Override
     public String getReasonerName() {
         return this.description.getName();
     }
 
+    @Override
     public Version getReasonerVersion() {
         return new org.semanticweb.owlapi.util.Version(description.getReasonerVersion().getMajor(),
                 description.getReasonerVersion().getMinor(), 0, 0);
     }
 
+    @Override
     public boolean isEntailmentCheckingSupported(AxiomType<?> axiomType) {
         return true;
     }
 
+    @Override
     public void interrupt() {
     }
 
@@ -98,10 +103,12 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return this.defaultKnowledgeBase;
     }
 
+    @Override
     public <R extends Response> R answer(Request<R> request) {
         return performRequest(request);
     }
 
+    @Override
     public ResponseMessage answer(Request... request) {
         return performRequests(request);
     }
@@ -125,7 +132,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
                 performRequest(release);
                 CreateKB createKB = new CreateKB(defaultKnowledgeBase);
                 performRequest(createKB);
-                Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
+                Set<OWLAxiom> axioms = new HashSet<>();
                 axioms.addAll(getReasonerAxioms());
                 if (axioms.size() > 0) {
                     Tell tell = new Tell(defaultKnowledgeBase, axioms);
@@ -139,22 +146,26 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return this.description.getSupportedExtensions().contains(RetractRequest.EXTENSION_IRI);
     }
 
+    @Override
     public boolean isConsistent() throws ReasonerInterruptedException, TimeOutException {
         IsKBSatisfiable satisfiable = new IsKBSatisfiable(getDefaultKB());
         BooleanResponse response = performRequestOWLAPI(satisfiable);
         return response.getResult();
     }
 
+    @Override
     public boolean isSatisfiable(OWLClassExpression classExpression) throws ReasonerInterruptedException, TimeOutException, ClassExpressionNotInProfileException, FreshEntitiesException, InconsistentOntologyException {
         IsClassSatisfiable query = new IsClassSatisfiable(defaultKnowledgeBase, classExpression);
         return performRequestOWLAPI(query).getResult();
     }
 
+    @Override
     public boolean isEntailed(OWLAxiom axiom) throws ReasonerInterruptedException, UnsupportedEntailmentTypeException, TimeOutException, AxiomNotInProfileException, FreshEntitiesException {
         IsEntailed query = new IsEntailed(defaultKnowledgeBase, axiom);
         return performRequestOWLAPI(query).getResult();
     }
 
+    @Override
     public boolean isEntailed(Set<? extends OWLAxiom> axioms) throws ReasonerInterruptedException, UnsupportedEntailmentTypeException, TimeOutException, AxiomNotInProfileException, FreshEntitiesException {
         IsEntailed[] queries = new IsEntailed[axioms.size()];
         int i = 0;
@@ -173,6 +184,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return true;
     }
 
+    @Override
     public Node<OWLClass> getTopClassNode() {
         final GetEquivalentClasses query = new GetEquivalentClasses(defaultKnowledgeBase, getOWLDataFactory().getOWLThing());
         final SetOfClasses classes = performRequest(query);
@@ -183,31 +195,32 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return node;
     }
 
+    @Override
     public Node<OWLClass> getBottomClassNode() {
         return getUnsatisfiableClasses();
     }
 
+    @Override
     public NodeSet<OWLClass> getSubClasses(OWLClassExpression ce, boolean direct) {
         GetSubClasses query = new GetSubClasses(defaultKnowledgeBase, ce, direct);
         SetOfClassSynsets result = performRequestOWLAPI(query);
         return result;
     }
 
+    @Override
     public NodeSet<OWLClass> getSuperClasses(OWLClassExpression ce, boolean direct) throws InconsistentOntologyException, ClassExpressionNotInProfileException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetSuperClasses query = new GetSuperClasses(defaultKnowledgeBase, ce, direct);
         SetOfClassSynsets result = performRequestOWLAPI(query);
         return result;
     }
 
-    public NodeSet<OWLClass> getDisjointClasses(OWLClassExpression ce, boolean direct) {
-        if (!direct) {
+    @Override
+    public NodeSet<OWLClass> getDisjointClasses(OWLClassExpression ce) {
             GetDisjointClasses query = new GetDisjointClasses(defaultKnowledgeBase, ce);
             return performRequestOWLAPI(query);
-        } else {
-            throw new OWLlinkSemanticErrorResponseException("getDisjointClasses (direct) is not supported");
-        }
     }
 
+    @Override
     public Node<OWLClass> getEquivalentClasses(OWLClassExpression ce) throws InconsistentOntologyException, ClassExpressionNotInProfileException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetEquivalentClasses query = new GetEquivalentClasses(defaultKnowledgeBase, ce);
         OWLClassNode node = new OWLClassNode();
@@ -217,71 +230,79 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
 
     }
 
+    @Override
     public Node<OWLClass> getUnsatisfiableClasses() throws ReasonerInterruptedException, TimeOutException {
         return getEquivalentClasses(getOWLDataFactory().getOWLNothing());
     }
 
-    public NodeSet<OWLObjectProperty> getSubObjectProperties(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
+    @Override
+    public NodeSet<OWLObjectPropertyExpression> getSubObjectProperties(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetSubObjectProperties query = new GetSubObjectProperties(defaultKnowledgeBase, pe, direct);
         return performRequestOWLAPI(query);
     }
 
-    public NodeSet<OWLObjectProperty> getSuperObjectProperties(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
+    @Override
+    public NodeSet<OWLObjectPropertyExpression> getSuperObjectProperties(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetSuperObjectProperties query = new GetSuperObjectProperties(defaultKnowledgeBase, pe, direct);
         return performRequestOWLAPI(query);
     }
 
-    public Node<OWLObjectProperty> getEquivalentObjectProperties(OWLObjectPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
+    @Override
+    public Node<OWLObjectPropertyExpression> getEquivalentObjectProperties(OWLObjectPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetEquivalentObjectProperties query = new GetEquivalentObjectProperties(defaultKnowledgeBase, pe);
         OWLObjectPropertyNode node = new OWLObjectPropertyNode();
-        for (OWLObjectProperty prop : performRequestOWLAPI(query)) {
+        for (OWLObjectPropertyExpression prop : performRequestOWLAPI(query)) {
             node.add(prop);
         }
         return node;
     }
 
-    public Node<OWLObjectProperty> getTopObjectPropertyNode() {
+    @Override
+    public Node<OWLObjectPropertyExpression> getTopObjectPropertyNode() {
         final GetEquivalentObjectProperties query = new GetEquivalentObjectProperties(defaultKnowledgeBase, getOWLDataFactory().getOWLTopObjectProperty());
         final SetOfObjectProperties classes = performRequest(query);
         final OWLObjectPropertyNode node = new OWLObjectPropertyNode();
         node.add(getOWLDataFactory().getOWLTopObjectProperty());
-        for (OWLObjectProperty clazz : classes)
+        for (OWLObjectPropertyExpression clazz : classes)
             node.add(clazz);
         return node;
     }
 
-    public Node<OWLObjectProperty> getBottomObjectPropertyNode() {
+    @Override
+    public Node<OWLObjectPropertyExpression> getBottomObjectPropertyNode() {
         final GetEquivalentObjectProperties query = new GetEquivalentObjectProperties(defaultKnowledgeBase, getOWLDataFactory().getOWLBottomObjectProperty());
         final SetOfObjectProperties classes = performRequest(query);
         final OWLObjectPropertyNode node = new OWLObjectPropertyNode();
         node.add(getOWLDataFactory().getOWLBottomObjectProperty());
-        for (OWLObjectProperty clazz : classes)
+        for (OWLObjectPropertyExpression clazz : classes)
             node.add(clazz);
         return node;
     }
 
-    public NodeSet<OWLObjectProperty> getDisjointObjectProperties(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
-        if (!direct) {
+    @Override
+    public NodeSet<OWLObjectPropertyExpression> getDisjointObjectProperties(OWLObjectPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
             GetDisjointObjectProperties properties = new GetDisjointObjectProperties(defaultKnowledgeBase, pe);
             return performRequestOWLAPI(properties);
-        }
-        throw new OWLlinkSemanticErrorResponseException("getDisjointObjectProperties (direct) is not supported");
     }
 
-    public Node<OWLObjectProperty> getInverseObjectProperties(OWLObjectPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
+    @Override
+    public Node<OWLObjectPropertyExpression> getInverseObjectProperties(OWLObjectPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         final OWLObjectPropertyExpression inverse = pe.getInverseProperty();
         return getEquivalentObjectProperties(inverse);
     }
 
+    @Override
     public NodeSet<OWLClass> getObjectPropertyDomains(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
 
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
     public NodeSet<OWLClass> getObjectPropertyRanges(OWLObjectPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
     public Node<OWLDataProperty> getTopDataPropertyNode() {
         final GetEquivalentDataProperties query = new GetEquivalentDataProperties(defaultKnowledgeBase, getOWLDataFactory().getOWLTopDataProperty());
         final DataPropertySynonyms classes = performRequest(query);
@@ -292,6 +313,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return node;
     }
 
+    @Override
     public Node<OWLDataProperty> getBottomDataPropertyNode() {
         final GetEquivalentDataProperties query = new GetEquivalentDataProperties(defaultKnowledgeBase, getOWLDataFactory().getOWLBottomDataProperty());
         final DataPropertySynonyms classes = performRequest(query);
@@ -302,33 +324,36 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return node;
     }
 
+    @Override
     public NodeSet<OWLDataProperty> getSubDataProperties(OWLDataProperty pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetSubDataProperties query = new GetSubDataProperties(defaultKnowledgeBase, pe, direct);
         return performRequestOWLAPI(query);
     }
 
+    @Override
     public NodeSet<OWLDataProperty> getSuperDataProperties(OWLDataProperty pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetSuperDataProperties query = new GetSuperDataProperties(defaultKnowledgeBase, pe, direct);
         return performRequestOWLAPI(query);
     }
 
+    @Override
     public Node<OWLDataProperty> getEquivalentDataProperties(OWLDataProperty pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetEquivalentDataProperties query = new GetEquivalentDataProperties(defaultKnowledgeBase, pe);
         return performRequestOWLAPI(query);
     }
 
-    public NodeSet<OWLDataProperty> getDisjointDataProperties(OWLDataPropertyExpression pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
+    @Override
+    public NodeSet<OWLDataProperty> getDisjointDataProperties(OWLDataPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetDisjointDataProperties query = new GetDisjointDataProperties(defaultKnowledgeBase, pe);
-        if (!direct)
             return performRequestOWLAPI(query);
-        else
-            throw new OWLlinkSemanticErrorResponseException("getDisjointDataProperties (direct) is not supported");
     }
 
+    @Override
     public NodeSet<OWLClass> getDataPropertyDomains(OWLDataProperty pe, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
     public NodeSet<OWLNamedIndividual> getInstances(OWLClassExpression ce, boolean direct) throws InconsistentOntologyException, ClassExpressionNotInProfileException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         if (getIndividualNodeSetPolicy() == IndividualNodeSetPolicy.BY_NAME) {
             GetFlattenedInstances query = new GetFlattenedInstances(defaultKnowledgeBase, ce, direct);
@@ -344,11 +369,13 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         }
     }
 
+    @Override
     public NodeSet<OWLClass> getTypes(OWLNamedIndividual ind, boolean direct) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetTypes query = new GetTypes(defaultKnowledgeBase, ind, direct);
         return performRequestOWLAPI(query);
     }
 
+    @Override
     public NodeSet<OWLNamedIndividual> getObjectPropertyValues(OWLNamedIndividual ind, OWLObjectPropertyExpression pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         if (getIndividualNodeSetPolicy() == IndividualNodeSetPolicy.BY_NAME) {
             GetFlattenedObjectPropertyTargets query = new GetFlattenedObjectPropertyTargets(defaultKnowledgeBase, ind, pe);
@@ -364,11 +391,13 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return convertToNamedIndividuals(answer);
     }
 
+    @Override
     public Set<OWLLiteral> getDataPropertyValues(OWLNamedIndividual ind, OWLDataProperty pe) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetDataPropertyTargets query = new GetDataPropertyTargets(defaultKnowledgeBase, ind, pe);
         return performRequestOWLAPI(query);
     }
 
+    @Override
     public Node<OWLNamedIndividual> getSameIndividuals(OWLNamedIndividual ind) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetSameIndividuals query = new GetSameIndividuals(defaultKnowledgeBase, ind);
         IndividualSynonyms answer = performRequest(query);
@@ -378,6 +407,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
             return convertToNamedIndividual(answer);
     }
 
+    @Override
     public NodeSet<OWLNamedIndividual> getDifferentIndividuals(OWLNamedIndividual ind) throws InconsistentOntologyException, FreshEntitiesException, ReasonerInterruptedException, TimeOutException {
         GetDifferentIndividuals query = new GetDifferentIndividuals(defaultKnowledgeBase, ind);
         SetOfIndividualSynsets answer = performRequest(query);
@@ -419,27 +449,26 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         return set;
 
     }
-
-    public void prepareReasoner() throws ReasonerInterruptedException, TimeOutException {
-        try {
+@Override
+public void precomputeInferences(InferenceType... inferenceTypes)
+    throws ReasonerInterruptedException, TimeOutException, InconsistentOntologyException {
             classify();
-        } catch (OWLReasonerException e) {
-            e.printStackTrace();
-        }
-        try {
             realise();
-        } catch (OWLReasonerException e) {
-            e.printStackTrace();
-        }
     }
-
-
-    public void classify() throws OWLReasonerException {
+@Override
+public boolean isPrecomputed(InferenceType inferenceType) {
+    return false;
+}
+@Override
+public Set<InferenceType> getPrecomputableInferenceTypes() {
+    return Collections.emptySet();
+}
+    public void classify() {
         Classify classify = new Classify(defaultKnowledgeBase);
         performRequestOWLAPI(classify);
     }
 
-    public void realise() throws OWLReasonerException {
+    public void realise() {
         Realize realize = new Realize(defaultKnowledgeBase);
         performRequestOWLAPI(realize);
     }

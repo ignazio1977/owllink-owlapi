@@ -37,6 +37,7 @@ public class GetAllIndividuals extends AbstractKBRequest<SetOfIndividuals> {
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

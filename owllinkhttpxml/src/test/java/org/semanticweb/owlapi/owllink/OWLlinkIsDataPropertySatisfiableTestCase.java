@@ -23,6 +23,7 @@
 
 package org.semanticweb.owlapi.owllink;
 
+import org.junit.Ignore;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsDataPropertySatisfiable;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
@@ -35,15 +36,17 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 03.11.2009
  */
+@Ignore("unsupported")
 public class OWLlinkIsDataPropertySatisfiableTestCase extends AbstractOWLlinkAxiomsTestCase {
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = createSet();
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getDataFactory().getOWLBottomDataProperty()));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), getDataFactory().getOWLBottomDataProperty()));
         return axioms;
     }
 
     public void testIsSatisfiable() throws Exception {
-        IsDataPropertySatisfiable query = new IsDataPropertySatisfiable(getKBIRI(), getOWLDataProperty("A"));
+        IsDataPropertySatisfiable query = new IsDataPropertySatisfiable(getKBIRI(), dpA());
         BooleanResponse answer = super.reasoner.answer(query);
         assertTrue(answer.getResult());
 

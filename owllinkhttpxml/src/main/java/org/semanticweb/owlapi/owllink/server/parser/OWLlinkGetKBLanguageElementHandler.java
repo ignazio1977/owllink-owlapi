@@ -36,6 +36,7 @@ public class OWLlinkGetKBLanguageElementHandler extends AbstractOWLlinkKBRequest
         super(handler);
     }
 
+    @Override
     public GetKBLanguage getOWLObject() throws OWLXMLParserException {
         return new GetKBLanguage(getKB());
     }

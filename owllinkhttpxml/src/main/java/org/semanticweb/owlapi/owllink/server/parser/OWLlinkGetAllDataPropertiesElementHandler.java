@@ -37,6 +37,7 @@ public class OWLlinkGetAllDataPropertiesElementHandler extends AbstractOWLlinkKB
         super(handler);
     }
 
+    @Override
     public GetAllDataProperties getOWLObject() throws OWLXMLParserException {
         return new GetAllDataProperties(getKB());
     }

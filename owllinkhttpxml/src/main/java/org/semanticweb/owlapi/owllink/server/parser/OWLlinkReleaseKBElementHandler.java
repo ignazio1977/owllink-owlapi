@@ -37,6 +37,7 @@ public class OWLlinkReleaseKBElementHandler extends AbstractOWLlinkKBRequestElem
         super(handler);
     }
 
+    @Override
     public ReleaseKB getOWLObject() throws OWLXMLParserException {
         return new ReleaseKB(getKB());
     }

@@ -36,28 +36,36 @@ public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElemen
         super(handler);
     }
 
+    @Override
     protected OWLlinkElementHandler getParentHandler() {
         return (OWLlinkElementHandler) super.getParentHandler();
     }
 
+    @Override
     public void handleChild(OWLlinkRequestElementHandler handler) {
     }
 
+    @Override
     public void handleChild(OWLlinkLiteralElementHandler handler) {
     }
 
+    @Override
     public void handleChild(OWLlinkElementHandler handler) {
     }
 
+    @Override
     public void handleChild(OWLlinkOntologyIRIElementHandler handler) {
     }
 
+    @Override
     public void handleChild(OWLlinkIRIMappingElementHandler handler) {
     }
 
+    @Override
     public void handleChild(OWLlinkPrefixElementHandler handler) {
     }
 
+    @Override
     public O getOWLlinkObject() {
         try {
             return getOWLObject();
@@ -67,6 +75,7 @@ public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElemen
         return null;
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

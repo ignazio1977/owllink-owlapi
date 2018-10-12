@@ -47,9 +47,10 @@ public class OWLlinkSetOfIndividualSynsetsElementHandler extends AbstractOWLlink
     @Override
     public void startElement(String s) throws OWLXMLParserException {
         super.startElement(s);
-        this.synsets = new HashSet<IndividualSynset>();
+        this.synsets = new HashSet<>();
     }
 
+    @Override
     public void handleChild(OWLlinkIndividualSynsetElementHandler handler) throws OWLXMLParserException {
         this.synsets.add(handler.getOWLLinkObject());
     }

@@ -43,6 +43,7 @@ public abstract class AbstractOWLlinkErrorHandler<E extends OWLlinkErrorResponse
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.ERROR_ATTRIBUTE.getShortName().equals(localName)) {
             this.error = value;
@@ -52,6 +53,7 @@ public abstract class AbstractOWLlinkErrorHandler<E extends OWLlinkErrorResponse
         }
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

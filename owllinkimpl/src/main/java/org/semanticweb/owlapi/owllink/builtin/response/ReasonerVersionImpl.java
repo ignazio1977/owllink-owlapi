@@ -39,6 +39,7 @@ public class ReasonerVersionImpl extends Version implements ReasonerVersion {
         this.build = build;
     }
 
+    @Override
     public int getBuild() {
         return this.build;
     }

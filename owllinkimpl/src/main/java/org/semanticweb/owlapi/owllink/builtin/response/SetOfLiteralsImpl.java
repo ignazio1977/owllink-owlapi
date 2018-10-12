@@ -48,6 +48,7 @@ public class SetOfLiteralsImpl extends SetOfImpl<OWLLiteral> implements SetOfLit
         super(elements, warning);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

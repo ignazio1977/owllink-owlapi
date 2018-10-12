@@ -38,10 +38,12 @@ public class OWLlinkSyntacticalErrorElementHandler extends AbstractOWLlinkRespon
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         int i;
     }
 
+    @Override
     public KBResponse getOWLLinkObject() {
         return null;
     }

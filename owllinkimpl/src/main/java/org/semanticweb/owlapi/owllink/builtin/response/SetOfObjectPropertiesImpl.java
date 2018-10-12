@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 import java.util.Collection;
 
@@ -31,24 +31,25 @@ import java.util.Collection;
  * Author: Olaf Noppens
  * Date: 24.11.2009
  */
-public class SetOfObjectPropertiesImpl extends SetOfImpl<OWLObjectProperty> implements SetOfObjectProperties {
+public class SetOfObjectPropertiesImpl extends SetOfImpl<OWLObjectPropertyExpression> implements SetOfObjectProperties {
 
-    public SetOfObjectPropertiesImpl(OWLObjectProperty owlObjectProperty) {
+    public SetOfObjectPropertiesImpl(OWLObjectPropertyExpression owlObjectProperty) {
         super(owlObjectProperty);
     }
 
-    public SetOfObjectPropertiesImpl(OWLObjectProperty owlObjectProperty, String warning) {
+    public SetOfObjectPropertiesImpl(OWLObjectPropertyExpression owlObjectProperty, String warning) {
         super(owlObjectProperty, warning);
     }
 
-    public SetOfObjectPropertiesImpl(Collection<OWLObjectProperty> elements) {
+    public SetOfObjectPropertiesImpl(Collection<OWLObjectPropertyExpression> elements) {
         super(elements);
     }
 
-    public SetOfObjectPropertiesImpl(Collection<OWLObjectProperty> elements, String warning) {
+    public SetOfObjectPropertiesImpl(Collection<OWLObjectPropertyExpression> elements, String warning) {
         super(elements, warning);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

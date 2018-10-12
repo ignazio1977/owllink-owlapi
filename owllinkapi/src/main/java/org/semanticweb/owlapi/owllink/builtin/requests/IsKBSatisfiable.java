@@ -38,6 +38,7 @@ public class IsKBSatisfiable extends AbstractKBRequest<BooleanResponse> {
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

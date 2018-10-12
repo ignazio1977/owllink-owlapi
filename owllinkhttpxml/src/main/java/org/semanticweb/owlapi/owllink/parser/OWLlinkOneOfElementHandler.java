@@ -47,25 +47,30 @@ public class OWLlinkOneOfElementHandler extends OWLlinkDataRangeElementHandler<O
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         //super.startElement(name);
         this.iri = null;
-        this.literals = new HashSet<OWLlinkLiteral>();
+        this.literals = new HashSet<>();
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLParserException {
         this.iri = getIRIFromAttribute(localName, value);
     }
 
+    @Override
     public void handleChild(OWLlinkLiteralElementHandler handler) throws OWLXMLParserException {
         literals.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public OWLlinkOneOf getOWLLinkObject() {
         return new OWLlinkOneOfImpl(iri, literals);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 }

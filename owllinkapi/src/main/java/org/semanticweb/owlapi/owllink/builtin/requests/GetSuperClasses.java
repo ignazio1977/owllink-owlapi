@@ -52,6 +52,7 @@ public class GetSuperClasses extends
         return super.bool;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

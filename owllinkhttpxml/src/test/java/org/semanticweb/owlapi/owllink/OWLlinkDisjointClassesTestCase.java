@@ -42,53 +42,54 @@ import java.util.Set;
  */
 public class OWLlinkDisjointClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLDisjointClassesAxiom(getOWLClass("A"), getOWLClass("B"), getOWLClass("C")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("D")));
+        axioms.add(getDataFactory().getOWLDisjointClassesAxiom(a(), b(), c()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), d()));
         return axioms;
     }
 
-    public void testAreClassesDisjoint() throws Exception {
+    public void testAreClassesDisjoint() {
         Set<OWLClassExpression> classes = CollectionFactory.createSet();
-        classes.add(getOWLClass("A"));
-        classes.add(getOWLClass("B"));
+        classes.add(a());
+        classes.add(b());
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointClassesAxiom(classes));
         BooleanResponse answer = super.reasoner.answer(query);
         assertTrue(answer.getResult());
-        classes.add(getOWLClass("C"));
+        classes.add(c());
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointClassesAxiom(classes));
         answer = super.reasoner.answer(query);
         assertTrue(answer.getResult());
-        classes.add(getOWLClass("D"));
+        classes.add(d());
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointClassesAxiom(classes));
         answer = super.reasoner.answer(query);
         assertFalse(answer.getResult());
     }
 
-    public void testAreClassesDisjointViaOWLReasoner() throws Exception {
+    public void testAreClassesDisjointViaOWLReasoner() {
         Set<OWLClassExpression> classes = CollectionFactory.createSet();
-        classes.add(getOWLClass("A"));
-        classes.add(getOWLClass("B"));
+        classes.add(a());
+        classes.add(b());
         OWLAxiom axiom = getDataFactory().getOWLDisjointClassesAxiom(classes);
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        classes.add(getOWLClass("C"));
+        classes.add(c());
         axiom = getDataFactory().getOWLDisjointClassesAxiom(classes);
         assertTrue(super.reasoner.isEntailed(axiom));
-        classes.add(getOWLClass("D"));
+        classes.add(d());
         axiom = getDataFactory().getOWLDisjointClassesAxiom(classes);
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
-    public void testGetDisjointClasses() throws Exception {
-        GetDisjointClasses query = new GetDisjointClasses(getKBIRI(), getOWLClass("B"));
+    public void testGetDisjointClasses() {
+        GetDisjointClasses query = new GetDisjointClasses(getKBIRI(), b());
         ClassSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 3);
+        assertEquals(3,response.getNodes().size());
     }
 
-    public void testGetDisjointClassesViaOWLReasoner() throws Exception {
-        NodeSet<OWLClass> response = super.reasoner.getDisjointClasses(getOWLClass("B"), false);
-        assertTrue(response.getNodes().size() == 3);
+    public void testGetDisjointClassesViaOWLReasoner() {
+        NodeSet<OWLClass> response = super.reasoner.getDisjointClasses(b());
+        assertEquals(3,response.getNodes().size());
     }
 }

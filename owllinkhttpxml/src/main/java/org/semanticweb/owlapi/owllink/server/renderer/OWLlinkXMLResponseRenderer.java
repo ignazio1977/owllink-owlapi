@@ -23,7 +23,6 @@
 
 package org.semanticweb.owlapi.owllink.server.renderer;
 
-import org.semanticweb.owlapi.io.OWLRendererException;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.owllink.KBRequest;
 import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.*;
@@ -37,7 +36,7 @@ import org.semanticweb.owlapi.owllink.server.response.KBErrorResponse;
 import org.semanticweb.owlapi.owllink.server.response.UnsatisfiableKBErrorResponse;
 import org.semanticweb.owlapi.reasoner.Node;
 
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -48,15 +47,16 @@ public class OWLlinkXMLResponseRenderer {
 
     IRI defaultKB;
     ResponseRenderer renderer;
+    OWLOntologyWriterConfiguration config=new OWLOntologyWriterConfiguration();
 
     public OWLlinkXMLResponseRenderer() {
         this.renderer = new ResponseRenderer();
     }
 
     @Deprecated
-    public void render(Writer writer, PrefixManagerProvider prov, IRI defaultKB, Response... responses) throws OWLRendererException {
+    public void render(PrintWriter writer, PrefixManagerProvider prov, IRI defaultKB, Response... responses) {
         this.defaultKB = defaultKB;
-        OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov);
+        OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
         w.startDocument(false);
         renderer.setWriter(w);
         for (Response response : responses) {
@@ -71,8 +71,8 @@ public class OWLlinkXMLResponseRenderer {
     }
 
 
-    public void render(Writer writer, PrefixManagerProvider prov, List<Request> requests, List<Response> responses) throws OWLRendererException {
-        OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov);
+    public void render(PrintWriter writer, PrefixManagerProvider prov, List<Request> requests, List<Response> responses) {
+        OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
         w.startDocument(false);
         renderer.setWriter(w);
         int count = responses.size();
@@ -120,24 +120,24 @@ public class OWLlinkXMLResponseRenderer {
             writer.writeEndElement();
         }
 
-        public void renderObjectPropertySynset(Node<OWLObjectProperty> synset) {
+        public void renderObjectPropertySynset(Node<OWLObjectPropertyExpression> synset) {
             writer.writeStartElement(OBJECTPROPERTY_SYNSET);
-            for (OWLObjectProperty prop : synset)
+            for (OWLObjectPropertyExpression prop : synset)
                 writer.writeOWLObject(prop, defaultKB);
             writer.writeEndElement();
         }
 
 
-        public void renderObjectPropertySubPair(HierarchyPair<OWLObjectProperty> pair) {
+        public void renderObjectPropertySubPair(HierarchyPair<OWLObjectPropertyExpression> pair) {
             writer.writeStartElement(OBJECTPROPERTY_SUBOBJECTPROPERTIESPAIR);
             renderObjectPropertySynset(pair.getSuper());
             renderSetOfSubObjectPropertySynsets(pair.getSubs());
             writer.writeEndElement();
         }
 
-        public void renderSetOfSubObjectPropertySynsets(SubEntitySynsets<OWLObjectProperty> setofsubsynsets) {
+        public void renderSetOfSubObjectPropertySynsets(SubEntitySynsets<OWLObjectPropertyExpression> setofsubsynsets) {
             writer.writeStartElement(SUBOBJECTPROPERTY_SYNSETS);
-            for (Node<OWLObjectProperty> synset : setofsubsynsets)
+            for (Node<OWLObjectPropertyExpression> synset : setofsubsynsets)
                 renderObjectPropertySynset(synset);
             writer.writeEndElement();
         }
@@ -170,6 +170,7 @@ public class OWLlinkXMLResponseRenderer {
             writer.writeEndElement();
         }
 
+        @Override
         public Void visit(Response response) {
             if (response instanceof KBErrorResponse)
                 visit((KBErrorResponse) response);
@@ -180,6 +181,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(KBResponse response) {
             return null;
         }
@@ -203,6 +205,7 @@ public class OWLlinkXMLResponseRenderer {
         }
 
 
+        @Override
         public Void visit(BooleanResponse response) {
             writer.writeStartElement(BOOLEAN_RESPONSE);
             writer.writeAttribute(RESULT_ATTRIBUTE.getURI(), response.getResult().toString());
@@ -210,6 +213,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(Classes response) {
             writer.writeStartElement(CLASSES);
             for (OWLClass clazz : response) {
@@ -219,6 +223,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(ClassHierarchy response) {
             writer.writeStartElement(CLASS_HIERARCHY);
             renderWarning(response);
@@ -230,6 +235,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(ClassSynsets response) {
             writer.writeStartElement(CLASS_SYNSETS);
             renderWarning(response);
@@ -240,6 +246,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(DataPropertyHierarchy response) {
             writer.writeStartElement(DATAPROPERTY_HIERARCHY);
             renderWarning(response);
@@ -251,6 +258,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(DataPropertySynsets response) {
             writer.writeStartElement(DATAPROPERTY_SYNSETS);
             renderWarning(response);
@@ -260,6 +268,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(DataPropertySynonyms response) {
             writer.writeStartElement(DATAPROPERTY_SYNONYMS);
             renderWarning(response);
@@ -270,6 +279,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(Description response) {
             writer.writeStartElement(DESCRIPTION);
             renderWarning(response);
@@ -358,6 +368,7 @@ public class OWLlinkXMLResponseRenderer {
             writer.writeEndElement();
         }
 
+        @Override
         public Void visit(IndividualSynonyms response) {
             writer.writeStartElement(INDIVIDUAL_SYNONYMS);
             renderWarning(response);
@@ -367,6 +378,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(KB response) {
             writer.writeStartElement(KB_RESPONSE);
             renderWarning(response);
@@ -375,26 +387,29 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(ObjectPropertyHierarchy response) {
             writer.writeStartElement(OBJECTPROPERTY_HIERARCHY);
             renderWarning(response);
             renderObjectPropertySynset(response.getUnsatisfiables());
-            for (HierarchyPair<OWLObjectProperty> pair : response.getPairs()) {
+            for (HierarchyPair<OWLObjectPropertyExpression> pair : response.getPairs()) {
                 renderObjectPropertySubPair(pair);
             }
             writer.writeEndElement();
             return null;
         }
 
+        @Override
         public Void visit(ObjectPropertySynsets response) {
             writer.writeStartElement(OBJECTPROPERTY_SYNSETS);
             renderWarning(response);
-            for (Node<OWLObjectProperty> synset : response)
+            for (Node<OWLObjectPropertyExpression> synset : response)
                 renderObjectPropertySynset(synset);
             writer.writeEndElement();
             return null;
         }
 
+        @Override
         public Void visit(OK response) {
             writer.writeStartElement(OK);
             renderWarning(response);
@@ -402,6 +417,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(Prefixes response) {
             writer.writeStartElement(PREFIXES);
             renderWarning(response);
@@ -416,6 +432,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfAnnotationProperties response) {
             writer.writeStartElement(SET_OF_ANNOTATIONPROPERTIES);
             renderWarning(response);
@@ -425,6 +442,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfClasses response) {
             writer.writeStartElement(SET_OF_CLASSES);
             renderWarning(response);
@@ -434,6 +452,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfClassSynsets response) {
             writer.writeStartElement(SET_OF_CLASS_SYNSETS);
             renderWarning(response);
@@ -444,6 +463,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfDataProperties response) {
             writer.writeStartElement(SET_OF_DATAPROPERTIES);
             renderWarning(response);
@@ -453,6 +473,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfDataPropertySynsets response) {
             writer.writeStartElement(SET_OF_DATAPROPERTY_SYNSETS);
             renderWarning(response);
@@ -462,6 +483,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfDatatypes response) {
             writer.writeStartElement(SET_OF_DATATYPES);
             renderWarning(response);
@@ -471,6 +493,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfIndividuals response) {
             writer.writeStartElement(SET_OF_INDIVIDUALS);
             renderWarning(response);
@@ -480,6 +503,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfIndividualSynsets response) {
             writer.writeStartElement(SET_OF_INDIVIDUALS_SYNSETS);
             renderWarning(response);
@@ -489,6 +513,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfLiterals response) {
             writer.writeStartElement(SET_OF_LITERALS);
             renderWarning(response);
@@ -498,24 +523,27 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(SetOfObjectProperties response) {
             writer.writeStartElement(SET_OF_OBJECTPROPERTIES);
             renderWarning(response);
-            for (OWLObjectProperty prop : response)
+            for (OWLObjectPropertyExpression prop : response)
                 writer.writeOWLObject(prop, defaultKB);
             writer.writeEndElement();
             return null;
         }
 
+        @Override
         public Void visit(SetOfObjectPropertySynsets response) {
             writer.writeStartElement(SET_OF_OBJECTPROPERTY_SYNSETS);
             renderWarning(response);
-            for (Node<OWLObjectProperty> prop : response)
+            for (Node<OWLObjectPropertyExpression> prop : response)
                 renderObjectPropertySynset(prop);
             writer.writeEndElement();
             return null;
         }
 
+        @Override
         public Void visit(Settings response) {
             writer.writeStartElement(SETTINGS);
             renderWarning(response);
@@ -531,6 +559,7 @@ public class OWLlinkXMLResponseRenderer {
             return null;
         }
 
+        @Override
         public Void visit(StringResponse response) {
             writer.writeStartElement(String_RESPONSE);
             renderWarning(response);

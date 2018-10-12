@@ -43,26 +43,31 @@ public class OWLlinkGetObjectPropertySourcesElementHandler extends AbstractOWLli
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.targetIndividual = null;
         this.isNegative = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
             isNegative = Boolean.valueOf(value);
     }
 
+    @Override
     public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
         this.targetIndividual = handler.getOWLObject();
     }
 
+    @Override
     public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
         this.targetIndividual = handler.getOWLObject();
     }
 
+    @Override
     public GetObjectPropertySources getOWLObject() throws OWLXMLParserException {
         return new GetObjectPropertySources(getKB(), targetIndividual, getObject(), isNegative);
     }

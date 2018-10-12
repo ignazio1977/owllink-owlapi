@@ -36,6 +36,7 @@ public class OKImpl extends KBResponseImpl implements OK {
     public OKImpl() {
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

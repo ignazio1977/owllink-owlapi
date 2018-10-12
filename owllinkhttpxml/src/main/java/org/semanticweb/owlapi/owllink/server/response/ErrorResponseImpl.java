@@ -36,10 +36,12 @@ public class ErrorResponseImpl implements ErrorResponse {
         this.errorString = errorString;
     }
 
+    @Override
     public String getErrorString() {
         return this.errorString;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

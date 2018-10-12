@@ -39,18 +39,21 @@ public class SettingsImpl extends KBResponseImpl implements Settings {
         if (settings == null || settings.isEmpty())
             this.settings = Collections.emptySet();
         else
-            this.settings = Collections.unmodifiableSet(new HashSet<Setting>(settings));
+            this.settings = Collections.unmodifiableSet(new HashSet<>(settings));
 
     }
 
+    @Override
     public Set<Setting> getSettings() {
         return this.settings;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
+    @Override
     public Iterator<Setting> iterator() {
         return this.settings.iterator();
     }

@@ -38,9 +38,10 @@ import java.lang.reflect.Field;
  */
 public class HermiTServerFactory implements OWLlinkServerFactory {
 
-    public static final String FACTORY_CLASSNAME = "org.semanticweb.HermiT.Reasoner$ReasonerFactory";
+    public static final String FACTORY_CLASSNAME = "org.semanticweb.HermiT.ReasonerFactory";
     public static final String HERMIT_REASONERFACTORY = "org.semanticweb.HermiT.Configuration";
 
+    @Override
     public OWLlinkHTTPXMLServer createServer(int port) {
        OWLReasonerConfiguration configuration = null;
         try {

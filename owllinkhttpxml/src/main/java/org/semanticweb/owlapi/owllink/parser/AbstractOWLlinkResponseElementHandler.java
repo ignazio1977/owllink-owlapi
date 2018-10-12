@@ -38,6 +38,7 @@ public abstract class AbstractOWLlinkResponseElementHandler<R extends Response> 
         super(handler);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

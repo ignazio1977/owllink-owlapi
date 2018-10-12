@@ -40,18 +40,22 @@ public class DefaultPrefixManagerProvider implements PrefixManagerProvider {
         this.prefixManagerByKB = CollectionFactory.createMap();
     }
 
+    @Override
     public PrefixManager getPrefixes(IRI knowledgeBase) {
         return this.prefixManagerByKB.get(knowledgeBase);
     }
 
+    @Override
     public void putPrefixes(IRI knowledgeBase, PrefixManager manager) {
         this.prefixManagerByKB.put(knowledgeBase, manager);
     }
 
+    @Override
     public void removePrefixes(IRI knowledgeBase) {
         this.prefixManagerByKB.put(knowledgeBase, null);
     }
 
+    @Override
     public boolean contains(IRI knowledgeBase) {
         return this.prefixManagerByKB.containsKey(knowledgeBase);
     }

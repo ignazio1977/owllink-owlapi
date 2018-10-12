@@ -36,6 +36,7 @@ public class OWLlinkPrefixElementHandler extends AbstractOWLlinkElementHandler<O
     protected String name;
     protected IRI iri;
 
+    @Override
     public Prefix getOWLObject() throws OWLXMLParserException {
         return new Prefix(name, iri);
     }
@@ -44,12 +45,14 @@ public class OWLlinkPrefixElementHandler extends AbstractOWLlinkElementHandler<O
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.name = null;
 
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.NAME_Attribute.getShortName().equalsIgnoreCase(localName)) {
             this.name = value;
@@ -60,6 +63,7 @@ public class OWLlinkPrefixElementHandler extends AbstractOWLlinkElementHandler<O
     }
 
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

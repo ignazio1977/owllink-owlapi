@@ -26,9 +26,9 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLElementHandler;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLRuntimeException;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.PrefixManagerProvider;
 import org.semanticweb.owlapi.owllink.Request;
@@ -59,88 +59,102 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
     public OWLlinkXMLRequestParserHandler(OWLOntologyManager owlOntologyManager, PrefixManagerProvider prov, OWLOntology ontology, OWLElementHandler topHandler) {
         super(owlOntologyManager, ontology, topHandler);
-        owllinkHandlerMap = new HashMap<String, OWLlinkElementHandlerFactory>();
+        owllinkHandlerMap = new HashMap<>();
         this.prov = prov;
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(RetractionVocabulary.Retraction.getShortName()) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkRetractElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.CLASSIFY) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkClassifyElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_ALL_ANNOTATION_PROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetAllAnnotationPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_ALL_CLASSES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetAllClassesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_ALL_DATAPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetAllDataPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_ALL_DATATYPES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetAllDatatypesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_ALL_INDIVIDUALS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetAllIndividualsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_ALL_OBJECTPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetAllObjectPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.CREATE_KB) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkCreateKBElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DATAPROPERTIES_OF_SOURCE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDataPropertiesOfSourceElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DATAPROPERTIES_BETWEEN) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDataPropertiesBetweenElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DATAPROPERTIES_OF_LITERAL) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDataPropertiesOfLiteralElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DATAPROPERTY_TARGETS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDataPropertyTargetsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DATAPROPERTY_SOURCES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDataPropertySourcesElementHandler(handler);
             }
@@ -148,48 +162,56 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DESCRIPTION) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDescriptionElemenHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DIFFERENT_INDIVIDUALS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDifferentIndividualsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DISJOINT_CLASSES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDisjointClassesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DISJOINT_DATAPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDisjointDataPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_DISJOINT_OBJECTPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetDisjointObjectPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_EQUIVALENT_CLASSES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetEquivalentClassesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_EQUIVALENT_DATAPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetEquivalentDataPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_FLATTENED_DATAPROPERTY_SOURCES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetFlattenedDataPropertySourcesElementHandler(handler);
             }
@@ -197,6 +219,7 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_EQUIVALENT_OBJECTPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetEquivalentObjectPropertiesElementHandler(handler);
             }
@@ -204,54 +227,63 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_KB_LANGUAGE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetKBLanguageElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_FLATTENED_DIFFERENT_INDIVIDUALS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetFlattenedDifferentIndividualsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_FLATTENED_INSTANCES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetFlattenedInstancesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_FLATTENED_OBJECTPROPERTY_TARGETS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetFlattenedObjectPropertyTargetsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_FLATTENED_OBJECTPROPERTY_SOURCES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetFlattendObjectPropertySourcesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_INSTANCES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetInstancesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_OBJECTPROPERTY_SOURCES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetObjectPropertySourcesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_OBJECTPROPERTY_TARGETS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetObjectPropertyTargetsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_OBJECTPROPERTIES_BETWEEN) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetObjectPropertiesBetweenElementHandler(handler);
             }
@@ -259,12 +291,14 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_OBJECTPROPERTIES_OF_SOURCE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetObjectPropertiesOfSourceElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_OBJECTPROPERTIES_OF_TARGET) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetObjectPropertiesOfTargetElementHandler(handler);
             }
@@ -272,12 +306,14 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_PREFIXES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetPrefixesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SAME_INDIVIDUALS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSameIndividualsElementHandler(handler);
             }
@@ -285,12 +321,14 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SETTINGS) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSettingsElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUBCLASSES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSubClassesElementHandler(handler);
             }
@@ -299,66 +337,77 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUBCLASS_HIERARCHY) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSubClassHierarchyElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUBOBJECTPROPERTY_HIERARCHY) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSubObjectPropertyHierarchyElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUBDATAPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSubDataPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUBOBJECTPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSubObjectPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUPERCLASSES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSuperClassesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUBDATAPROPERTY_HIERARCHY) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSubDataPropertyHierarchyElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUPERDATAPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSuperDataPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_SUPEROBJECTPROPERTIES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetSuperObjectPropertiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_TYPES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetTypesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.GET_FLATTENED_TYPES) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkGetFlattenedTypesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IRI_MAPPING) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIRIMappingElementHandler(handler);
             }
@@ -366,12 +415,14 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_CLASS_SATISFIABLE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsClassSatisfiableElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_DATAPROPERTY_SATISFIABLE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsDataPropertySatisfiableElementHandler(handler);
             }
@@ -379,6 +430,7 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
         //
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_KB_SATISFIABLE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsKBSatisfiableElementHandler(handler);
             }
@@ -386,6 +438,7 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_KB_CONSISTENTLY_DECLARED) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsKBConsistentlyDeclaredElementHandler(handler);
             }
@@ -393,36 +446,42 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_ENTAILED) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsEntailedElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_ENTAILED_DIRECT) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsEntailedDirectElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.ONTOLOGY_IRI) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkOntologyIRIElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.IS_OBJECTPROPERTY_SATISFIABLE) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkIsObjectPropertySatisfiableElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.LITERAL) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkLiteralElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.PREFIX) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkPrefixElementHandler(handler);
             }
@@ -430,18 +489,21 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.LOAD_ONTOLOGIES) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkLoadOntologiesElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.RELEASE_KB) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkReleaseKBElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.SET) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkSetElementHandler(handler);
             }
@@ -449,12 +511,14 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.TELL) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkTellElementHandler(handler);
             }
         });
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.REALIZE) {
+            @Override
             public OWLlinkRequestElementHandler createHandler(OWLXMLParserHandler handler) {
                 return new OWLlinkRealizeElementHandler(handler);
             }
@@ -462,6 +526,7 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
 
 
         addFactory(new AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary.REQUEST_MESSAGE) {
+            @Override
             public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler) {
                 return messageHandler;
             }
@@ -491,6 +556,7 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
     }
 
 
+    @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         try {
             processXMLBase(attributes);
@@ -515,7 +581,7 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
             }
 
         }
-        catch (OWLException e) {
+        catch (OWLRuntimeException e) {
             throw new SAXException(e.getMessage() + "(Current element " + localName + ")", e);
         }
     }

@@ -45,13 +45,14 @@ public class Set extends AbstractKBRequest<OK> implements Iterable<OWLlinkLitera
     public Set(IRI kb, String key, java.util.Set<OWLlinkLiteral> value) {
         super(kb);
         this.key = key;
-        this.value = Collections.unmodifiableSet(new HashSet<OWLlinkLiteral>(value));
+        this.value = Collections.unmodifiableSet(new HashSet<>(value));
     }
 
     public java.util.Set<OWLlinkLiteral> getValue() {
         return this.value;
     }
 
+    @Override
     public Iterator<OWLlinkLiteral> iterator() {
         return this.value.iterator();
     }
@@ -60,6 +61,7 @@ public class Set extends AbstractKBRequest<OK> implements Iterable<OWLlinkLitera
         return this.key;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

@@ -42,18 +42,22 @@ public class OWLlinkListElementHandler extends OWLlinkDataRangeElementHandler<OW
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         this.iri = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLParserException {
         this.iri = getIRIFromAttribute(localName, value);
     }
 
+    @Override
     public OWLlinkList getOWLLinkObject() {
         return new OWLlinkListImpl(this.iri);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

@@ -35,34 +35,33 @@ import java.util.Set;
  */
 public class OWLlinkIsClassSatisfiableTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("C"), getDataFactory().getOWLNothing()));
-        axioms.add(getDataFactory().getOWLEquivalentClassesAxiom(getOWLClass("D"), getDataFactory().getOWLNothing()));
-        axioms.add(getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("P"), getOWLObjectProperty("S")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(c(), getDataFactory().getOWLNothing()));
+        axioms.add(getDataFactory().getOWLEquivalentClassesAxiom(d(), getDataFactory().getOWLNothing()));
+        axioms.add(getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opP(), opS()));
         return axioms;
     }
 
     public void testIsClassSatisfiable() throws Exception {
-        IsClassSatisfiable query = new IsClassSatisfiable(getKBIRI(), getOWLClass("A"));
+        IsClassSatisfiable query = new IsClassSatisfiable(getKBIRI(), a());
         BooleanResponse response = super.reasoner.answer(query);
         assertTrue(response.getResult());
-        query = new IsClassSatisfiable(getKBIRI(), getOWLClass("B"));
+        query = new IsClassSatisfiable(getKBIRI(), b());
         response = super.reasoner.answer(query);
         assertTrue(response.getResult());
-        query = new IsClassSatisfiable(getKBIRI(), getOWLClass("C"));
+        query = new IsClassSatisfiable(getKBIRI(), c());
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
-        query = new IsClassSatisfiable(getKBIRI(), getOWLClass("D"));
+        query = new IsClassSatisfiable(getKBIRI(), d());
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
         query = new IsClassSatisfiable(getKBIRI(), getDataFactory().getOWLNothing());
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
-        query = new IsClassSatisfiable(getKBIRI(),
-                getDataFactory().getOWLObjectIntersectionOf(getDataFactory().getOWLObjectExactCardinality(0, getOWLObjectProperty("P")),
-                        getDataFactory().getOWLObjectExactCardinality(1, getOWLObjectProperty("P"))));
+        query = new IsClassSatisfiable(getKBIRI(), getDataFactory().getOWLObjectIntersectionOf(getDataFactory().getOWLObjectExactCardinality(0, opP()), getDataFactory().getOWLObjectExactCardinality(1, opP())));
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
     }

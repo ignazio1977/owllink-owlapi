@@ -41,61 +41,56 @@ import java.util.Set;
  */
 public class OWLlinkEquivalentDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("B")));
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("B"), getOWLDataProperty("C")));
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("C"), getOWLDataProperty("A")));
-        axioms.add(getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("D"), getOWLDataProperty("E")));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpB()));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpB(), dpC()));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpC(), dpA()));
+        axioms.add(getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE()));
         return axioms;
     }
 
-    public void testAreDataPropertiesEquivalent() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B")));
+    public void testAreDataPropertiesEquivalent() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpA(), dpB()));
         BooleanResponse result = super.reasoner.answer(query);
         assertTrue(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpA(), dpB(), dpC()));
         result = super.reasoner.answer(query);
         assertTrue(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("D"), getOWLDataProperty("E"), getOWLDataProperty("A")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE(), dpA()));
         result = super.reasoner.answer(query);
         assertFalse(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("D"), getOWLDataProperty("E")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE()));
         result = super.reasoner.answer(query);
         assertTrue(result.getResult());
     }
 
-    public void testAreDataPropertiesEquivalentViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"));
+    public void testAreDataPropertiesEquivalentViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpA(), dpB());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("C"));
+        axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpA(), dpB(), dpC());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("D"), getOWLDataProperty("E"), getOWLDataProperty("A"));
+        axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE(), dpA());
         assertFalse(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(getOWLDataProperty("D"), getOWLDataProperty("E"));
+        axiom = getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE());
         assertTrue(super.reasoner.isEntailed(axiom));
     }
 
-    public void testGetEquivalentDataProperties() throws Exception {
-        GetEquivalentDataProperties query = new GetEquivalentDataProperties(getKBIRI(), getOWLDataProperty("A"));
+    public void testGetEquivalentDataProperties() {
+        GetEquivalentDataProperties query = new GetEquivalentDataProperties(getKBIRI(), dpA());
         DataPropertySynonyms result = super.reasoner.answer(query);
-        assertTrue(result.getSize() == 3);
-        assertTrue(result.contains(getOWLDataProperty("A")));
-        assertTrue(result.contains(getOWLDataProperty("B")));
-        assertTrue(result.contains(getOWLDataProperty("C")));
+        assertEquals(set(dpA(),dpB(),dpC()),result.getEntities());
     }
 
-    public void testGetEquivalentDataPropertiesViaOWLReasoner() throws Exception {
-        Node<OWLDataProperty> result = super.reasoner.getEquivalentDataProperties(getOWLDataProperty("A"));
-        assertTrue(result.getSize() == 3);
-        assertTrue(result.contains(getOWLDataProperty("A")));
-        assertTrue(result.contains(getOWLDataProperty("B")));
-        assertTrue(result.contains(getOWLDataProperty("C")));
+    public void testGetEquivalentDataPropertiesViaOWLReasoner() {
+        Node<OWLDataProperty> result = super.reasoner.getEquivalentDataProperties(dpA());
+        assertEquals(set(dpA(),dpB(),dpC()),result.getEntities());
     }
 }

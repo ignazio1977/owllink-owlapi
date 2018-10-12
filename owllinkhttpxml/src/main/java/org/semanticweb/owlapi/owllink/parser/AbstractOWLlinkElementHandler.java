@@ -43,96 +43,122 @@ public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElemen
         this.handler = (OWLlinkXMLParserHandler) handler;
     }
 
+    @Override
     public void handleChild(OWLlinkClassSubClassesPairElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkDataPropertySubDataPropertiesPairElementHandler handler) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySubPropertiesPairElementHandler handler) throws OWLXMLParserException {
     }
 
 
+    @Override
     public void handleChild(OWLlinkSubDataPropertySynsetsElementHandler handler) throws OWLXMLParserException {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
     public void handleChild(OWLlinkSubObjectPropertySynsetsElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkSubClassSynsetsElementHandler handler) throws OWLXMLParserException {
     }
 
 
+    @Override
     public void handleChild(OWLlinkElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkResponseElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkErrorElementHandler handler) throws OWLXMLParserException {
     }
 
     public void handleChild(OWLlinkBooleanResponseElementHandler handler) {
     }
 
+    @Override
     public void handleChild(OWLlinkConfigurationElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkDataRangeElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkLiteralElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkPrefixElementHandler handler) throws OWLXMLParserException {
 
     }
 
+    @Override
     public void handleChild(OWLlinkProtocolVersionElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkReasonerVersionElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkPublicKBElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkSupportedExtensionElemenetHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException {
 
     }
 
+    @Override
     public void handleChild(OWLlinkSettingElementHandler handler) throws OWLXMLParserException {
 
     }
 
+    @Override
     public void handleChild(OWLlinkPropertyElementHandler handler) throws OWLXMLParserException {
 
     }
 
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public void handleChild(OWLlinkIndividualSynsetElementHandler handler) throws OWLXMLParserException {
     }
 
 
+    @Override
     public void handleChild(OWLlinkResponseMessageElementHandler handler) throws OWLXMLParserException {
     }
 
+    @Override
     public abstract O getOWLLinkObject() throws OWLXMLParserException;
 
     public void handleChild(OWLlinkDescriptionElementHandler handler) {
     }
 
+    @Override
     public O getOWLObject() throws OWLXMLParserException {
         return this.getOWLLinkObject();
     }
@@ -142,6 +168,7 @@ public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElemen
         return super.getIRI(value);
     }
 
+    @Override
     protected OWLlinkElementHandler getParentHandler() {
         return (OWLlinkElementHandler) super.getParentHandler();
     }

@@ -40,6 +40,7 @@ public class OWLlinkGetEquivalentDataPropertiesElementHandler
     }
 
 
+    @Override
     public GetEquivalentDataProperties getOWLObject() throws OWLXMLParserException {
         return new GetEquivalentDataProperties(super.kb, (OWLDataProperty) super.o);
     }

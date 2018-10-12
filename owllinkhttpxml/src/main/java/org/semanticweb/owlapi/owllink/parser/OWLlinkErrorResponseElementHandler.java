@@ -36,6 +36,7 @@ public class OWLlinkErrorResponseElementHandler extends AbstractOWLlinkErrorHand
         super(handler);
     }
 
+    @Override
     public OWLlinkErrorResponseException getOWLLinkObject() {
         return new OWLlinkErrorResponseException(getErrorString());
     }

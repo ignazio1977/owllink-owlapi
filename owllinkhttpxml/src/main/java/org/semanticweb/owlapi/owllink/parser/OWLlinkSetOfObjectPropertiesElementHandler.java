@@ -26,7 +26,6 @@ package org.semanticweb.owlapi.owllink.parser;
 import org.coode.owlapi.owlxmlparser.AbstractOWLObjectPropertyElementHandler;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertiesImpl;
@@ -36,16 +35,18 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertiesImpl
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
-public class OWLlinkSetOfObjectPropertiesElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLObjectProperty> {
+public class OWLlinkSetOfObjectPropertiesElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLObjectPropertyExpression> {
 
     public OWLlinkSetOfObjectPropertiesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public SetOfObjectProperties getOWLLinkObject() {
         return new SetOfObjectPropertiesImpl(super.elements);
     }
 
+    @Override
     public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
         OWLObjectPropertyExpression expr = handler.getOWLObject();
         if (!expr.isAnonymous()) {

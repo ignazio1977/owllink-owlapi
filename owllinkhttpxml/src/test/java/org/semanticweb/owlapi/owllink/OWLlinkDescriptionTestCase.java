@@ -48,9 +48,9 @@ public class OWLlinkDescriptionTestCase extends AbstractOWLlinkTestCase {
         GetDescription desc = new GetDescription();
         Description answer = reasoner.answer(desc);
 
-        assertTrue(answer.getName().length() > 0);
-        assertTrue(answer.getDefaults().size() > 6);
-        assertTrue(answer.getProtocolVersion().getMajor() == 1);
+        assertFalse(answer.getName(), answer.getName().isEmpty());
+        assertTrue(answer.getDefaults()+" should be more than 6",answer.getDefaults().size() > 6);
+        assertEquals(1,answer.getProtocolVersion().getMajor());
     }
 
     public void testSettings() throws Exception {

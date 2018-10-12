@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.OWLObjectPropertyNodeSet;
 
@@ -33,17 +33,17 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 18.02.2010
  */
-public class SubObjectPropertySynsets extends OWLObjectPropertyNodeSet implements SubEntitySynsets<OWLObjectProperty> {
+public class SubObjectPropertySynsets extends OWLObjectPropertyNodeSet implements SubEntitySynsets<OWLObjectPropertyExpression> {
 
-    public SubObjectPropertySynsets(OWLObjectProperty entity) {
+    public SubObjectPropertySynsets(OWLObjectPropertyExpression entity) {
         super(entity);
     }
 
-    public SubObjectPropertySynsets(Node<OWLObjectProperty> owlObjectPropertyNode) {
+    public SubObjectPropertySynsets(Node<OWLObjectPropertyExpression> owlObjectPropertyNode) {
         super(owlObjectPropertyNode);
     }
 
-    public SubObjectPropertySynsets(Set<Node<OWLObjectProperty>> nodes) {
+    public SubObjectPropertySynsets(Set<Node<OWLObjectPropertyExpression>> nodes) {
         super(nodes);
     }
 

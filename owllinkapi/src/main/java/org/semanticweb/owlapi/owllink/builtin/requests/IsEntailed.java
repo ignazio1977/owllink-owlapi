@@ -46,6 +46,7 @@ public class IsEntailed extends AbstractKBRequest<BooleanResponse> {
         return this.axiom;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

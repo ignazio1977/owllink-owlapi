@@ -45,147 +45,129 @@ import java.util.Set;
  */
 public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
 
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("B"), getOWLClass("C")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("D"), getOWLClass("C")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(b(), c()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(d(), c()));
 
 
         return axioms;
     }
 
-    public void testSubsumedBy() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(
-                getOWLClass("A"), getOWLClass("B")));
+    public void testSubsumedBy() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(a(), b()));
         BooleanResponse response = super.reasoner.answer(query);
         assertTrue(response.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(a(), c()));
         response = super.reasoner.answer(query);
         assertTrue(response.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(
-                getOWLClass("D"), getOWLClass("B")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(d(), b()));
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
     }
 
-    public void testSubsumedByViaOWLReasoner() throws Exception {
-        OWLSubClassOfAxiom axiom = getDataFactory().getOWLSubClassOfAxiom(
-                getOWLClass("A"), getOWLClass("B"));
+    public void testSubsumedByViaOWLReasoner() {
+        OWLSubClassOfAxiom axiom = getDataFactory().getOWLSubClassOfAxiom(a(), b());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("C"));
+        axiom = getDataFactory().getOWLSubClassOfAxiom(a(), c());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLSubClassOfAxiom(
-                getOWLClass("D"), getOWLClass("B"));
+        axiom = getDataFactory().getOWLSubClassOfAxiom(d(), b());
         assertFalse(super.reasoner.isEntailed(axiom));
 
     }
 
-    public void testGetSubClasses() throws Exception {
-        GetSubClasses query = new GetSubClasses(getKBIRI(), getOWLClass("B"));
+    public void testGetSubClasses() {
+        GetSubClasses query = new GetSubClasses(getKBIRI(), b());
         NodeSet<OWLClass> response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 2);
+        assertEquals(2,response.nodes().count());
         Set<OWLClass> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 2);
-        assertTrue(flattenedClasses.contains(getOWLClass("A")));
-        assertTrue(flattenedClasses.contains(manager.getOWLDataFactory().getOWLNothing()));
+        assertEquals(set(a(),manager.getOWLDataFactory().getOWLNothing()), flattenedClasses);
     }
 
-    public void testGetSubClassesViaOWLReasoner() throws Exception {
-        NodeSet<OWLClass> nodeSet = super.reasoner.getSubClasses(getOWLClass("B"), false);
-        assertTrue(nodeSet.getNodes().size() == 2);
+    public void testGetSubClassesViaOWLReasoner() {
+        NodeSet<OWLClass> nodeSet = super.reasoner.getSubClasses(b(), false);
+        assertEquals(2,nodeSet.nodes().count());
 
         Set<OWLClass> flattenedClasses = nodeSet.getFlattened();
-        assertTrue(flattenedClasses.size() == 2);
-        assertTrue(flattenedClasses.contains(getOWLClass("A")));
-        assertTrue(flattenedClasses.contains(manager.getOWLDataFactory().getOWLNothing()));
+        assertEquals(set(a(),manager.getOWLDataFactory().getOWLNothing()), flattenedClasses);
     }
 
 
-    public void testGetSuperClasses() throws Exception {
-        GetSuperClasses query = new GetSuperClasses(getKBIRI(), getOWLClass("A"));
+    public void testGetSuperClasses() {
+        GetSuperClasses query = new GetSuperClasses(getKBIRI(), a());
         SetOfClassSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 3);
+        assertEquals(3,response.nodes().count());
 
-        query = new GetSuperClasses(getKBIRI(), getOWLClass("A"), true);
+        query = new GetSuperClasses(getKBIRI(), a(), true);
         response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 1);
+        assertEquals(1,response.nodes().count());
     }
 
-    public void testGetSuperClassesViaOWLReasoner() throws Exception {
-        NodeSet<OWLClass> response = super.reasoner.getSuperClasses(getOWLClass("A"), false);
-        assertTrue(response.getNodes().size() == 3);
+    public void testGetSuperClassesViaOWLReasoner() {
+        NodeSet<OWLClass> response = super.reasoner.getSuperClasses(a(), false);
+        assertEquals(3,response.nodes().count());
 
-        response = super.reasoner.getSuperClasses(getOWLClass("A"), true);
-        assertTrue(response.getNodes().size() == 1);
+        response = super.reasoner.getSuperClasses(a(), true);
+        assertEquals(1,response.nodes().count());
     }
 
-    public void testClassHierarchy() throws Exception {
+    public void testClassHierarchy() {
         GetSubClassHierarchy query = new GetSubClassHierarchy(getKBIRI());
         Hierarchy<OWLClass> response = super.reasoner.answer(query);
         Set<HierarchyPair<OWLClass>> pairs = response.getPairs();
-        assertFalse(pairs.isEmpty());
-        assertTrue(pairs.size() == 3);
+        assertEquals(3,pairs.size());
 
         Set<HierarchyPair<OWLClass>> expectedSet = CollectionFactory.createSet();
         Node<OWLClass> synset = new OWLClassNode(getDataFactory().getOWLThing());
         Set<Node<OWLClass>> set = CollectionFactory.createSet();
-        set.add(new OWLClassNode(getOWLClass("C")));
+        set.add(new OWLClassNode(c()));
         SubEntitySynsets<OWLClass> setOfSynsets = new SubClassSynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLClass>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLClassNode(getOWLClass("C"));
+        synset = new OWLClassNode(c());
         set = CollectionFactory.createSet();
-        set.add(new OWLClassNode(getOWLClass("B")));
-        set.add(new OWLClassNode(getOWLClass("D")));
+        set.add(new OWLClassNode(b()));
+        set.add(new OWLClassNode(d()));
         setOfSynsets = new SubClassSynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLClass>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLClassNode(getOWLClass("B"));
+        synset = new OWLClassNode(b());
         set = CollectionFactory.createSet();
-        set.add(new OWLClassNode(getOWLClass("A")));
+        set.add(new OWLClassNode(a()));
         setOfSynsets = new SubClassSynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLClass>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-
-        for (HierarchyPair pair : pairs) {
-            expectedSet.remove(pair);
-        }
-        assertTrue(expectedSet.isEmpty());
-
-
+        assertEquals(expectedSet, pairs);
     }
 
-    public void testSubClassHierarchy() throws Exception {
-        GetSubClassHierarchy query = new GetSubClassHierarchy(getKBIRI(), getOWLClass("C"));
+    public void testSubClassHierarchy() {
+        GetSubClassHierarchy query = new GetSubClassHierarchy(getKBIRI(), c());
         Hierarchy<OWLClass> response = super.reasoner.answer(query);
         Set<HierarchyPair<OWLClass>> pairs = response.getPairs();
-        assertFalse(pairs.isEmpty());
-        assertTrue(pairs.size() == 2);
+        assertEquals(2,pairs.size());
 
         Set<HierarchyPair<OWLClass>> expectedSet = CollectionFactory.createSet();
 
-        Node<OWLClass> synset = new OWLClassNode(getOWLClass("C"));
+        Node<OWLClass> synset = new OWLClassNode(c());
         Set<Node<OWLClass>> set = CollectionFactory.createSet();
-        set.add(new OWLClassNode(getOWLClass("D")));
-        set.add(new OWLClassNode(getOWLClass("B")));
+        set.add(new OWLClassNode(d()));
+        set.add(new OWLClassNode(b()));
         SubEntitySynsets<OWLClass> setOfSynsets = new SubClassSynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLClass>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLClassNode(getOWLClass("B"));
+        synset = new OWLClassNode(b());
         set = CollectionFactory.createSet();
-        set.add(new OWLClassNode(getOWLClass("A")));
+        set.add(new OWLClassNode(a()));
         setOfSynsets = new SubClassSynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLClass>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        for (HierarchyPair pair : pairs) {
-            expectedSet.remove(pair);
-        }
-        assertTrue(expectedSet.isEmpty());
+        assertEquals(expectedSet, pairs);
     }
 }

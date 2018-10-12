@@ -41,6 +41,7 @@ public class GetEquivalentObjectProperties extends AbstractKBRequestWithOneObjec
         super(kb, object);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

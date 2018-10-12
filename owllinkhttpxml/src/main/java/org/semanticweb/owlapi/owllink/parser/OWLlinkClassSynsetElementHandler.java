@@ -46,11 +46,13 @@ public class OWLlinkClassSynsetElementHandler extends AbstractOWLlinkEntitySynse
         return new OWLClassNode(super.elements);
     }
 
+    @Override
     public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
         if (!handler.getOWLObject().isAnonymous())
             super.elements.add(handler.getOWLObject().asOWLClass());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         super.endElement();
         getParentHandler().handleChild(this);

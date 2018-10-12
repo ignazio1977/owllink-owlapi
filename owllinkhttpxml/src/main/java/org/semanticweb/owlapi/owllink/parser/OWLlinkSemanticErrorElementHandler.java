@@ -37,6 +37,7 @@ public class OWLlinkSemanticErrorElementHandler extends AbstractOWLlinkErrorHand
         super(handler);
     }
 
+    @Override
     public OWLlinkSemanticErrorResponseException getOWLLinkObject() {
         return new OWLlinkSemanticErrorResponseException(getErrorString());
     }

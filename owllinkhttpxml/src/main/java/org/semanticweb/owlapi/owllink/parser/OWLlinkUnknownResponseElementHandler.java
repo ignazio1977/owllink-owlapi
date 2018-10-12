@@ -38,6 +38,7 @@ public class OWLlinkUnknownResponseElementHandler extends AbstractOWLlinkKBRespo
         super(handler);
     }
 
+    @Override
     public BooleanResponseImpl getOWLLinkObject() {
         return new BooleanResponseImpl(null, super.warning);
     }

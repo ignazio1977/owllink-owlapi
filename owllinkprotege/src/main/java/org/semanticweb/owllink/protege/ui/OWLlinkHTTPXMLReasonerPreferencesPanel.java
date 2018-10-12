@@ -31,7 +31,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.owllink.OWLlinkHTTPXMLReasoner;
 import org.semanticweb.owlapi.owllink.OWLlinkHTTPXMLReasonerFactory;
-import org.semanticweb.owlapi.owllink.OWLlinkReasonerConfiguration;
+import org.semanticweb.owlapi.owllink.OWLlinkReasonerConfigurationImpl;
 import org.semanticweb.owlapi.util.Version;
 import org.semanticweb.owllink.protege.OWLlinkHTTPXMLReasonerPreferences;
 
@@ -57,10 +57,12 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
     private static final int HORIZONTAL_SPACE = 25;
 
 
-    public void dispose() throws Exception {
+    @Override
+    public void dispose() {
     }
 
-    public void initialise() throws Exception {
+    @Override
+    public void initialise() {
         JComponent urlPanel = createURLPanel();
 
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -93,6 +95,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
 
 
         this.urlField = new JTextField() {
+            @Override
             public Dimension getPreferredSize() {
                 return new Dimension(0, super.getPreferredSize().height);
             }
@@ -102,6 +105,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
         this.portNumberField.setText(Integer.toString(prefs.getServerEndpointPort()));
         this.checkConnection = new JButton("Check connection now");
         this.checkConnection.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 checkConnection();
             }
@@ -142,6 +146,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
 
     private JComponent createPane(String title, int orientation) {
         JComponent c = new Box(orientation) {
+            @Override
             public Dimension getMaximumSize() {
                 return new Dimension(super.getMaximumSize().width, getPreferredSize().height);
             }
@@ -156,7 +161,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
     protected void checkConnection() {
         try {
             URL reasonerURL = new URL(urlField.getText() + ":" + this.portNumberField.getText());
-            OWLlinkReasonerConfiguration configuration = new OWLlinkReasonerConfiguration(reasonerURL);
+            OWLlinkReasonerConfigurationImpl configuration = new OWLlinkReasonerConfigurationImpl(reasonerURL);
             OWLlinkHTTPXMLReasonerFactory factory = new OWLlinkHTTPXMLReasonerFactory();
             OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
             OWLOntology owlOntology = null;

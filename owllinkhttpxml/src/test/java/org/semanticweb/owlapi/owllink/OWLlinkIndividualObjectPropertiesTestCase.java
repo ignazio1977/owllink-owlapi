@@ -24,7 +24,7 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.requests.*;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
@@ -41,12 +41,13 @@ import java.util.Set;
  */
 public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = createSet();
-        axioms.add(getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("p"), getOWLIndividual("i"), getOWLIndividual("j")));
-        axioms.add(getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("p"), getOWLIndividual("i"), getOWLIndividual("k")));
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("p"), getOWLObjectProperty("q")));
-        axioms.add(getDataFactory().getOWLEquivalentObjectPropertiesAxiom(getOWLObjectProperty("p"), getOWLObjectProperty("r")));
+        axioms.add(getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("i"), getOWLIndividual("j")));
+        axioms.add(getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("i"), getOWLIndividual("k")));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opp(), opq()));
+        axioms.add(getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opp(), opr()));
 
         return axioms;
     }
@@ -56,15 +57,15 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
         GetObjectPropertiesOfSource query = new GetObjectPropertiesOfSource(getKBIRI(), getOWLIndividual("i"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
         assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("p")));
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("q")));
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("r")));
+        assertTrue(response.getFlattened().contains(opp()));
+        assertTrue(response.getFlattened().contains(opq()));
+        assertTrue(response.getFlattened().contains(opr()));
         assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
 
         /* Set<Node<OWLObjectProperty>> synsets = CollectionFactory.createSet();
-        Synset<OWLObjectProperty> synset = new SynsetImpl<OWLObjectProperty>(getOWLObjectProperty("p"), getOWLObjectProperty("r"));
+        Synset<OWLObjectProperty> synset = new SynsetImpl<OWLObjectProperty>(opp(), opr());
         synsets.add(synset);
-        synset = new SynsetImpl<OWLObjectProperty>(getOWLObjectProperty("q"));
+        synset = new SynsetImpl<OWLObjectProperty>(opq());
         synsets.add(synset);
         for (Synset<OWLObjectProperty> set : response) {
             synsets.remove(set);
@@ -76,9 +77,9 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
         GetObjectPropertiesOfTarget query = new GetObjectPropertiesOfTarget(getKBIRI(), getOWLIndividual("k"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
         assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("p")));
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("q")));
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("r")));
+        assertTrue(response.getFlattened().contains(opp()));
+        assertTrue(response.getFlattened().contains(opq()));
+        assertTrue(response.getFlattened().contains(opr()));
         assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
     }
 
@@ -86,12 +87,12 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
         GetObjectPropertiesBetween query = new GetObjectPropertiesBetween(getKBIRI(), getOWLIndividual("i"), getOWLIndividual("j"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
         assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("p")));
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("q")));
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("r")));
+        assertTrue(response.getFlattened().contains(opp()));
+        assertTrue(response.getFlattened().contains(opq()));
+        assertTrue(response.getFlattened().contains(opr()));
         assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
-        for (Node<OWLObjectProperty> synset : response) {
-            if (synset.contains(getOWLObjectProperty("r")))
+        for (Node<OWLObjectPropertyExpression> synset : response) {
+            if (synset.contains(opr()))
                 assertFalse(synset.isSingleton());
             else
                 assertTrue(synset.isSingleton());
@@ -99,50 +100,46 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
     }
 
     public void testAreIndividualsRelated() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("p"), getOWLIndividual("i"), getOWLIndividual("j")));
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("i"), getOWLIndividual("j")));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("r"), getOWLIndividual("i"), getOWLIndividual("j")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opr(), getOWLIndividual("i"), getOWLIndividual("j")));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("p"), getOWLIndividual("i"), getOWLIndividual("k")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("i"), getOWLIndividual("k")));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("q"), getOWLIndividual("i"), getOWLIndividual("k")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opq(), getOWLIndividual("i"), getOWLIndividual("k")));
         assertTrue(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("r"), getOWLIndividual("j"), getOWLIndividual("j")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opr(), getOWLIndividual("j"), getOWLIndividual("j")));
         assertFalse(reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(getOWLObjectProperty("p"), getOWLIndividual("j"), getOWLIndividual("i")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("j"), getOWLIndividual("i")));
         assertFalse(reasoner.answer(query).getResult());
     }
 
     public void testGetObjectPropertyTargets() throws Exception {
-        GetObjectPropertyTargets query = new GetObjectPropertyTargets(getKBIRI(), getOWLIndividual("i"), getOWLObjectProperty("p"));
+        GetObjectPropertyTargets query = new GetObjectPropertyTargets(getKBIRI(), getOWLIndividual("i"), opp());
         SetOfIndividualSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 2);
-        assertTrue(response.getFlattened().contains(getOWLIndividual("k")));
+        assertEquals(set(getOWLIndividual("j"),getOWLIndividual("k")), response.getFlattened());
     }
 
     public void testGetObjectPropertySources() throws Exception {
-        GetObjectPropertySources query = new GetObjectPropertySources(getKBIRI(), getOWLIndividual("j"), getOWLObjectProperty("p"));
+        GetObjectPropertySources query = new GetObjectPropertySources(getKBIRI(), getOWLIndividual("j"), opp());
         SetOfIndividualSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 1);
-        assertTrue(response.getFlattened().contains(getOWLIndividual("i")));
+        assertEquals(set(getOWLIndividual("i")), response.getFlattened());
     }
 
     public void testGetFlattenedObjectPropertyTargets() throws Exception {
-        GetFlattenedObjectPropertyTargets query = new GetFlattenedObjectPropertyTargets(getKBIRI(), getOWLIndividual("i"), getOWLObjectProperty("p"));
+        GetFlattenedObjectPropertyTargets query = new GetFlattenedObjectPropertyTargets(getKBIRI(), getOWLIndividual("i"), opp());
         SetOfIndividuals response = super.reasoner.answer(query);
-        assertTrue(response.size() == 2);
-        assertTrue(response.contains(getOWLIndividual("k")));
+        assertEquals(set(getOWLIndividual("j"), getOWLIndividual("k")), response);
     }
 
     public void testGetFlattenedObjectPropertySources() throws Exception {
-        GetFlattenedObjectPropertySources query = new GetFlattenedObjectPropertySources(getKBIRI(), getOWLIndividual("j"), getOWLObjectProperty("p"));
+        GetFlattenedObjectPropertySources query = new GetFlattenedObjectPropertySources(getKBIRI(), getOWLIndividual("j"), opp());
         SetOfIndividuals response = super.reasoner.answer(query);
-        assertTrue(response.size() == 1);
-        assertTrue(response.contains(getOWLIndividual("i")));
+        assertEquals(set(getOWLIndividual("i")), response);
     }
 }

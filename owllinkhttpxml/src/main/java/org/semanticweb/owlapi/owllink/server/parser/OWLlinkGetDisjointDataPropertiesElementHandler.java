@@ -36,6 +36,7 @@ public class OWLlinkGetDisjointDataPropertiesElementHandler extends AbstractOWLl
         super(handler);
     }
 
+    @Override
     public GetDisjointDataProperties getOWLObject() throws OWLXMLParserException {
         return new GetDisjointDataProperties(getKB(), super.getObject());
     }

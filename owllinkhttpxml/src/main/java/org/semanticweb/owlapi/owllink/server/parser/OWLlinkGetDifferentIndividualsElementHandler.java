@@ -37,6 +37,7 @@ public class OWLlinkGetDifferentIndividualsElementHandler extends AbstractOWLInd
         super(handler);
     }
 
+    @Override
     public GetDifferentIndividuals getOWLObject() throws OWLXMLParserException {
         return new GetDifferentIndividuals(getKB(), getObject());
     }

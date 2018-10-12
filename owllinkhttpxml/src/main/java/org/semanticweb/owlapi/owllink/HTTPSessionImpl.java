@@ -134,7 +134,8 @@ public class HTTPSessionImpl implements HTTPSession {
         OWLlinkXMLFactoryRegistry registry = OWLlinkXMLFactoryRegistry.getInstance();
         try {
             //Handle the request
-            StringWriter writer = new StringWriter();
+            StringWriter out = new StringWriter();
+            PrintWriter writer = new PrintWriter( out);
             OWLlinkXMLRenderer renderer = new OWLlinkXMLRenderer();
             renderer.addFactories(registry.getRequestRendererFactories());
 
@@ -145,7 +146,8 @@ public class HTTPSessionImpl implements HTTPSession {
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
-            StringBuffer buffer = writer.getBuffer();
+            writer.flush();
+            StringBuffer buffer = out.getBuffer();
 
             conn.setRequestProperty("Content-Length", "" + buffer.length());   //todo length is wrong when compressing but we don't want to cache all the stuff in a buffer!
             conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
@@ -192,7 +194,7 @@ public class HTTPSessionImpl implements HTTPSession {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setNamespaceAware(true);
             SAXParser parser = factory.newSAXParser();
-            OWLlinkXMLParserHandler handler = new OWLlinkXMLParserHandler(manager, prov, askedRequests, null);
+            OWLlinkXMLParserHandler handler = new OWLlinkXMLParserHandler(manager, prov, askedRequests, manager.createOntology());
             handler.addFactories(registry.getParserFactories());
             parser.parse(is, handler);
             reader.close();

@@ -47,19 +47,23 @@ public class OWLlinkKBElementHandler extends AbstractOWLlinkResponseElementHandl
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLParserException {
         if (OWLlinkXMLVocabulary.KB_ATTRIBUTE.getShortName().equalsIgnoreCase(localName))
             this.kb = getFullIRI(value);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         this.kb = null;
     }
 
+    @Override
     public KB getOWLLinkObject() {
         return new KBImpl(kb);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         CreateKB createKB = (CreateKB) getRequest();
         Map<String, String> prefixes = createKB.getPrefixes();

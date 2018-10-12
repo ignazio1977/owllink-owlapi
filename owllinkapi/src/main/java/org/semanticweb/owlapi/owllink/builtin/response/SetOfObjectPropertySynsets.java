@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#IndividualObjectPropQueries">SetOfObjectPropertySynsets</a>
@@ -32,5 +32,5 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  * Author: Olaf Noppens
  * Date: 24.11.2009
  */
-public interface SetOfObjectPropertySynsets extends SetOfEntitySynsets<OWLObjectProperty> {
+public interface SetOfObjectPropertySynsets extends SetOfEntitySynsets<OWLObjectPropertyExpression> {
 }

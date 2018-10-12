@@ -43,6 +43,7 @@ public class DataPropertyHierarchyImpl extends HierarchyImpl<OWLDataProperty> im
     }
 
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

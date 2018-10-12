@@ -44,6 +44,7 @@ public abstract class AbstractOWLlinkKBRequestElementHandler<R extends KBRequest
         this.handler = (OWLlinkXMLRequestParserHandler) handler;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.KB_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.kb = IRI.create(value);
@@ -54,6 +55,7 @@ public abstract class AbstractOWLlinkKBRequestElementHandler<R extends KBRequest
         }
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.kb = null;
@@ -64,6 +66,7 @@ public abstract class AbstractOWLlinkKBRequestElementHandler<R extends KBRequest
         return this.kb;
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

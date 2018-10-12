@@ -41,11 +41,13 @@ public class OWLlinkStringResponseElementHandler extends AbstractOWLlinkKBRespon
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.result = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.RESULT_ATTRIBUTE.getShortName().equals(localName)) {
@@ -53,6 +55,7 @@ public class OWLlinkStringResponseElementHandler extends AbstractOWLlinkKBRespon
         }
     }
 
+    @Override
     public StringResponse getOWLLinkObject() {
         return new StringResponseImpl(super.warning, this.result);
     }

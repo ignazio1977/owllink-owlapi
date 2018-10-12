@@ -48,6 +48,7 @@ public class GetObjectPropertiesOfTarget extends AbstractKBRequestWithOneObjectA
         return super.object;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

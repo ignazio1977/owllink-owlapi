@@ -41,14 +41,17 @@ public class OWLlinkSetOfAnnotationPropertiesElementHandler extends AbstractSetO
         super(handler);
     }
 
+    @Override
     public SetOfAnnotationProperties getOWLLinkObject() {
         return new SetOfAnnotationPropertiesImpl(super.elements);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
 
     }
 
+    @Override
     public void handleChild(OWLAnnotationPropertyElementHandler handler) throws OWLXMLParserException {
         super.elements.add(handler.getOWLObject());
     }

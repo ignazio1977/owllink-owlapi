@@ -41,46 +41,41 @@ import java.util.Set;
  */
 public class OWLlinkEquivalentClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("B"), getOWLClass("C")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("C"), getOWLClass("A")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(b(), c()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(c(), a()));
         return axioms;
     }
 
-    public void testAreClassesEquivalent() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentClassesAxiom(getOWLClass("A"), getOWLClass("B")));
+    public void testAreClassesEquivalent() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentClassesAxiom(a(), b()));
         BooleanResponse result = super.reasoner.answer(query);
         assertTrue(result.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentClassesAxiom(getOWLClass("A"), getOWLClass("B"), getOWLClass("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentClassesAxiom(a(), b(), c()));
         result = super.reasoner.answer(query);
         assertTrue(result.getResult());
     }
 
-    public void testAreClassesEquivalentViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLEquivalentClassesAxiom(getOWLClass("A"), getOWLClass("B"));
+    public void testAreClassesEquivalentViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLEquivalentClassesAxiom(a(), b());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLEquivalentClassesAxiom(getOWLClass("A"), getOWLClass("B"), getOWLClass("C"));
+        axiom = getDataFactory().getOWLEquivalentClassesAxiom(a(), b(), c());
         assertTrue(super.reasoner.isEntailed(axiom));
     }
 
-    public void testGetEquivalentClasses() throws Exception {
-        GetEquivalentClasses query = new GetEquivalentClasses(getKBIRI(), getOWLClass("A"));
+    public void testGetEquivalentClasses() {
+        GetEquivalentClasses query = new GetEquivalentClasses(getKBIRI(), a());
         SetOfClasses result = super.reasoner.answer(query);
-        assertTrue(result.size() == 3);
-        assertTrue(result.contains(getOWLClass("A")));
-        assertTrue(result.contains(getOWLClass("B")));
-        assertTrue(result.contains(getOWLClass("C")));
+        assertEquals(set(a(),b(),c()),result);
     }
 
-    public void testGetEquivalentClassesViaOWLReasoner() throws Exception {
-        Node<OWLClass> result = super.reasoner.getEquivalentClasses(getOWLClass("A"));
-        assertTrue(result.getSize() == 3);
-        assertTrue(result.contains(getOWLClass("A")));
-        assertTrue(result.contains(getOWLClass("B")));
-        assertTrue(result.contains(getOWLClass("C")));
+    public void testGetEquivalentClassesViaOWLReasoner() {
+        Node<OWLClass> result = super.reasoner.getEquivalentClasses(a());
+        assertEquals(set(a(),b(),c()),result.getEntities());
     }
 }

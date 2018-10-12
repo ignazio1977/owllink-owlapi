@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.Node;
 
 import java.util.Collections;
@@ -33,7 +33,7 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public abstract class HierarchyImpl<O extends OWLLogicalEntity> extends KBResponseImpl implements Hierarchy<O> {
+public abstract class HierarchyImpl<O extends OWLObject> extends KBResponseImpl implements Hierarchy<O> {
     final Set<HierarchyPair<O>> pairs;
     final Node<O> unsatisfiables;
 
@@ -47,14 +47,17 @@ public abstract class HierarchyImpl<O extends OWLLogicalEntity> extends KBRespon
         this(pairs, unsatisfiables, null);
     }
 
+    @Override
     public Node<O> getUnsatisfiables() {
         return this.unsatisfiables;
     }
 
+    @Override
     public Set<HierarchyPair<O>> getPairs() {
         return this.pairs;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof HierarchyImpl)) return false;
@@ -66,6 +69,7 @@ public abstract class HierarchyImpl<O extends OWLLogicalEntity> extends KBRespon
         return true;
     }
 
+    @Override
     public int hashCode() {
         return pairs.hashCode();
     }

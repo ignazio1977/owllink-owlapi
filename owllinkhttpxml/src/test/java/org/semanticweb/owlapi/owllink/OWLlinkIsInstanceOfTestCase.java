@@ -45,94 +45,75 @@ import java.util.Set;
  */
 public class OWLlinkIsInstanceOfTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = createSet();
 
-        axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("A"), getOWLIndividual("i")));
-        axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("B"), getOWLIndividual("i")));
-        axioms.add(getDataFactory().getOWLClassAssertionAxiom(getOWLClass("B"), getOWLIndividual("j")));
+        axioms.add(getDataFactory().getOWLClassAssertionAxiom(a(), i()));
+        axioms.add(getDataFactory().getOWLClassAssertionAxiom(b(), i()));
+        axioms.add(getDataFactory().getOWLClassAssertionAxiom(b(), j()));
 
         return axioms;
     }
 
-    public void testIsInstanceOf() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(
-                getOWLClass("A"), getOWLIndividual("i")));
+    public void testIsInstanceOf() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(a(), i()));
         assertTrue(super.reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(getDataFactory().getOWLThing(),
-                getOWLIndividual("i")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(top(), i()));
         assertTrue(super.reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(getOWLClass("B"),
-                getOWLIndividual("j")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(b(), j()));
         assertTrue(super.reasoner.answer(query).getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(getOWLClass("A"),
-                getOWLIndividual("j")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(a(), j()));
         assertFalse(super.reasoner.answer(query).getResult());
     }
 
-    public void testIsInstanceOfViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLClassAssertionAxiom(
-                getOWLClass("A"), getOWLIndividual("i"));
+    public void testIsInstanceOfViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLClassAssertionAxiom(a(), i());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLClassAssertionAxiom(getDataFactory().getOWLThing(),
-                getOWLIndividual("i"));
+        axiom = getDataFactory().getOWLClassAssertionAxiom(top(), i());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLClassAssertionAxiom(getOWLClass("B"),
-                getOWLIndividual("j"));
+        axiom = getDataFactory().getOWLClassAssertionAxiom(b(), j());
         assertTrue(reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLClassAssertionAxiom(getOWLClass("A"),
-                getOWLIndividual("j"));
+        axiom = getDataFactory().getOWLClassAssertionAxiom(a(), j());
         assertFalse(reasoner.isEntailed(axiom));
     }
 
-    public void testFlattenedTypes() throws Exception {
-        GetFlattenedTypes query = new GetFlattenedTypes(getKBIRI(), getOWLIndividual("i"));
+    public void testFlattenedTypes() {
+        GetFlattenedTypes query = new GetFlattenedTypes(getKBIRI(), i());
         Classes answer = super.reasoner.answer(query);
-        assertTrue(answer.getSize() == 3);
-        assertTrue(answer.contains(getOWLClass("A")));
-        assertTrue(answer.contains(getOWLClass("B")));
-        assertTrue(answer.contains(getDataFactory().getOWLThing()));
+        assertEquals(set(a(),b(),top()), answer.getEntities());
 
-        query = new GetFlattenedTypes(getKBIRI(), getOWLIndividual("i"), true);
+        query = new GetFlattenedTypes(getKBIRI(), i(), true);
         answer = super.reasoner.answer(query);
-        assertTrue(answer.getSize() == 2);
-        assertTrue(answer.contains(getOWLClass("A")));
-        assertTrue(answer.contains(getOWLClass("B")));
+        assertEquals(set(a(),b()), answer.getEntities());
     }
 
-    public void testTypes() throws Exception {
-        GetTypes types = new GetTypes(getKBIRI(), getOWLIndividual("i"), true);
+    public void testTypes() {
+        GetTypes types = new GetTypes(getKBIRI(), i(), false);
         ClassSynsets answerTypes = super.reasoner.answer(types);
-        assertTrue(answerTypes.getFlattened().size() == 3);
-        assertTrue(answerTypes.getFlattened().contains(getOWLClass("A")));
-        assertTrue(answerTypes.getFlattened().contains(getOWLClass("B")));
-        assertTrue(answerTypes.getFlattened().contains(getDataFactory().getOWLThing()));
+        assertEquals(set(a(),b(),top()), answerTypes.getFlattened());
     }
 
-    public void testTypesViaOWLReasoner() throws Exception {
-        NodeSet<OWLClass> answerTypes = super.reasoner.getTypes(getOWLIndividual("i"), false);
-        assertTrue(answerTypes.getFlattened().size() == 3);
-        assertTrue(answerTypes.getFlattened().contains(getOWLClass("A")));
-        assertTrue(answerTypes.getFlattened().contains(getOWLClass("B")));
-        assertTrue(answerTypes.getFlattened().contains(getDataFactory().getOWLThing()));
+    public void testTypesViaOWLReasoner() {
+        NodeSet<OWLClass> answerTypes = super.reasoner.getTypes(i(), false);
+        Set<OWLClass> expected = set(a(),b(),top());
+        assertEquals(expected, answerTypes.getFlattened());
     }
 
-    public void testGetInstances() throws Exception {
-        GetInstances query = new GetInstances(getKBIRI(), getOWLClass("A"));
+    public void testGetInstances() {
+        GetInstances query = new GetInstances(getKBIRI(), a());
         SetOfIndividualSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 1);
-        assertTrue(response.getFlattened().contains(getOWLIndividual("i")));
+        assertEquals(set(i()), response.getFlattened());
     }
 
-    public void testGetInstancesViaOWLReasoner() throws Exception {
-        NodeSet<OWLNamedIndividual> response = super.reasoner.getInstances(getOWLClass("A"), false);
-        assertTrue(response.getFlattened().size() == 1);
-        assertTrue(response.getFlattened().contains(getOWLIndividual("i")));
+    public void testGetInstancesViaOWLReasoner() {
+        NodeSet<OWLNamedIndividual> response = super.reasoner.getInstances(a(), false);
+        assertEquals(set(i()), response.getFlattened());
     }
 }

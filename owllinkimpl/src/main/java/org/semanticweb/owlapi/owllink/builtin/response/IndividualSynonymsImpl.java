@@ -37,7 +37,7 @@ import java.util.*;
  * Date: 24.11.2009
  */
 public class IndividualSynonymsImpl extends KBResponseImpl implements IndividualSynonyms {
-    private Set<OWLIndividual> individuals = new HashSet<OWLIndividual>();
+    private Set<OWLIndividual> individuals = new HashSet<>();
 
     public IndividualSynonymsImpl(OWLIndividual owlIndividual) {
         this(owlIndividual, null);
@@ -58,36 +58,44 @@ public class IndividualSynonymsImpl extends KBResponseImpl implements Individual
         this.individuals.addAll(elements);
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }
 
+    @Override
     public Iterator<OWLIndividual> iterator() {
         return this.individuals.iterator();
     }
 
+    @Override
     public boolean isSingleton() {
         return individuals.size() == 1;
     }
 
+    @Override
     public OWLIndividual getSingletonElement() {
         return individuals.iterator().next();
     }
 
+    @Override
     public boolean contains(OWLIndividual individual) {
         return this.individuals.contains(individual);
     }
 
+    @Override
     public Set<OWLIndividual> getIndividuals() {
         return Collections.unmodifiableSet(this.individuals);
     }
 
+    @Override
     public boolean isNode() {
         for (OWLIndividual indi : this.individuals)
             if (indi.isAnonymous()) return false;
         return true;
     }
 
+    @Override
     public Node<OWLNamedIndividual> asNode() {
         if (!isNode())
             throw new OWLRuntimeException("Contains anonymous individuals. Conversion not possible. See isNode()");

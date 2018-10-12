@@ -23,38 +23,51 @@
 
 package org.semanticweb.owlapi.owllink.server;
 
-import org.mortbay.http.*;
+import java.net.BindException;
+
+import org.mortbay.http.HttpContext;
+import org.mortbay.http.HttpHandler;
+import org.mortbay.http.HttpRequest;
+import org.mortbay.http.HttpResponse;
+import org.mortbay.http.HttpServer;
+import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.AbstractHttpHandler;
 import org.mortbay.util.MultiException;
+import org.semanticweb.owlapi.owllink.OWLlinkReasonerConfigurationImpl;
 import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-
-import java.net.BindException;
 
 /**
  * @author Olaf Noppens
  */
-public class OWLlinkHTTPXMLServer extends AbstractHttpHandler implements HttpHandler, OWLlinkServer {
+public class OWLlinkHTTPXMLServer extends AbstractHttpHandler
+    implements HttpHandler, OWLlinkServer {
     private static final long serialVersionUID = 5605350732186236386L;
     public static int DEFAULT_PORT = 8080;
 
     private int port;
     private OWLlinkReasonerBridge bridge;
+    private HttpServer server;
 
-    public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory, OWLReasonerConfiguration configuration, int port) {
+    public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory,
+        OWLReasonerConfiguration configuration, int port) {
         this(reasonerFactory, new AbstractOWLlinkReasonerConfiguration(configuration), port);
     }
 
-    public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory, OWLlinkReasonerConfiguration configuration, int port) {
-        this.bridge = new OWLlinkReasonerBridge(reasonerFactory, configuration);
+    public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory,
+        OWLlinkReasonerConfiguration configuration, int port) {
+        bridge = new OWLlinkReasonerBridge(reasonerFactory, configuration);
         this.port = port;
     }
 
-    public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory, OWLReasonerConfiguration configuration) {
+    public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory,
+        OWLReasonerConfiguration configuration) {
         this(reasonerFactory, configuration, DEFAULT_PORT);
     }
 
-    public void handle(String pathInContext, String pathParams, HttpRequest request, HttpResponse response) {
+    @Override
+    public void handle(String pathInContext, String pathParams, HttpRequest request,
+        HttpResponse response) {
         try {
             response.setContentType("text/xml");
             bridge.process(request, response);
@@ -64,10 +77,11 @@ public class OWLlinkHTTPXMLServer extends AbstractHttpHandler implements HttpHan
     }
 
 
+    @Override
     public void run() {
         try {
             // Create the server
-            HttpServer server = new HttpServer();
+            server = new HttpServer();
             // Create a port listener
             SocketListener listener = new SocketListener();
             listener.setHost("localhost");
@@ -80,15 +94,19 @@ public class OWLlinkHTTPXMLServer extends AbstractHttpHandler implements HttpHan
             context.addHandler(this);
             // Start the http server
             server.start();
-        }
-        catch (Exception e) {
-            if (e instanceof MultiException && ((MultiException) e).getException(0) instanceof BindException)
+        } catch (Exception e) {
+            if (e instanceof MultiException
+                && ((MultiException) e).getException(0) instanceof BindException) {
                 System.err.println("Cannot start server. Port " + port + " is already in use!");
-            else
+            } else {
                 e.printStackTrace();
+            }
             System.exit(0);
         }
     }
 
-
+    @Override
+    public void stop() throws InterruptedException {
+        server.stop();
+    }
 }

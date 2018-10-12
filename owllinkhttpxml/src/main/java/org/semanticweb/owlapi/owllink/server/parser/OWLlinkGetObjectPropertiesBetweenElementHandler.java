@@ -44,6 +44,7 @@ public class OWLlinkGetObjectPropertiesBetweenElementHandler extends AbstractOWL
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         isNegative = false;
@@ -51,12 +52,14 @@ public class OWLlinkGetObjectPropertiesBetweenElementHandler extends AbstractOWL
         this.target = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
             isNegative = Boolean.valueOf(value);
     }
 
+    @Override
     public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
         if (this.source == null)
             this.source = handler.getOWLObject();
@@ -64,6 +67,7 @@ public class OWLlinkGetObjectPropertiesBetweenElementHandler extends AbstractOWL
             this.target = handler.getOWLObject();
     }
 
+    @Override
     public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
         if (this.source == null)
             this.source = handler.getOWLObject();
@@ -71,6 +75,7 @@ public class OWLlinkGetObjectPropertiesBetweenElementHandler extends AbstractOWL
             this.target = handler.getOWLObject();
     }
 
+    @Override
     public GetObjectPropertiesBetween getOWLObject() throws OWLXMLParserException {
         return new GetObjectPropertiesBetween(getKB(), source, target, isNegative);
     }

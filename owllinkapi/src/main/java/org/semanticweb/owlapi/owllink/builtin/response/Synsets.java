@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
 /**
@@ -36,6 +36,6 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
  * Author: Olaf Noppens
  * Date: 17.02.2010
  */
-public interface Synsets<E extends OWLLogicalEntity> extends NodeSet<E>, KBResponse {
+public interface Synsets<E extends OWLObject> extends NodeSet<E>, KBResponse {
 
 }

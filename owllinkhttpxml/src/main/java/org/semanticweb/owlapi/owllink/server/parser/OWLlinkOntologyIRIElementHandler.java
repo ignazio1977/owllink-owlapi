@@ -52,10 +52,12 @@ public class OWLlinkOntologyIRIElementHandler extends AbstractOWLlinkElementHand
         }
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }
 
+    @Override
     public IRI getOWLObject() throws OWLXMLParserException {
         return iri;
     }

@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ObjectPropGets">ObjectPropertySynsets</a>
@@ -32,5 +32,5 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  * Author: Olaf Noppens
  * Date: 09.12.2009
  */
-public interface ObjectPropertySynsets extends Synsets<OWLObjectProperty>, KBResponse {
+public interface ObjectPropertySynsets extends Synsets<OWLObjectPropertyExpression>, KBResponse {
 }

@@ -39,16 +39,19 @@ public class BooleanResponseImpl extends KBResponseImpl implements BooleanRespon
         this(result, null);
     }
 
+    @Override
     public Boolean getResult() throws UnknownResponseException {
         if (this.result == null)
             throw new UnknownResponseException();
         return this.result;
     }
 
+    @Override
     public boolean isUnknown() {
         return this.result == null;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

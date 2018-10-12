@@ -55,6 +55,7 @@ public class GetDataPropertySources extends AbstractKBRequestWithOneObjectAndNeg
         return super.object;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

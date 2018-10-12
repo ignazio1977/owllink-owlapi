@@ -35,28 +35,33 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
  */
 public class OWLlinkHTTPXMLReasonerFactory implements OWLReasonerFactory {
 
+    @Override
     public String getReasonerName() {
         return "OWLlink reasoner (via HTPP)";
     }
 
+    @Override
     public OWLlinkReasoner createNonBufferingReasoner(OWLOntology ontology) {
-        return createNonBufferingReasoner(ontology, new OWLlinkReasonerConfiguration());
+        return createNonBufferingReasoner(ontology, new OWLlinkReasonerConfigurationImpl());
     }
 
+    @Override
     public OWLlinkReasoner createReasoner(OWLOntology ontology) {
-        return createReasoner(ontology, new OWLlinkReasonerConfiguration());
+        return createReasoner(ontology, new OWLlinkReasonerConfigurationImpl());
     }
 
+    @Override
     public OWLlinkReasoner createNonBufferingReasoner(OWLOntology ontology, OWLReasonerConfiguration config) throws IllegalConfigurationException {
-        if (config instanceof OWLlinkReasonerConfiguration)
-            return new OWLlinkHTTPXMLReasoner(ontology, (OWLlinkReasonerConfiguration) config, BufferingMode.NON_BUFFERING);
+        if (config instanceof OWLlinkReasonerConfigurationImpl)
+            return new OWLlinkHTTPXMLReasoner(ontology, (OWLlinkReasonerConfigurationImpl) config, BufferingMode.NON_BUFFERING);
         else
             throw new IllegalConfigurationException("Configuration must be a OWLlinkReasonerConfiguration", config);
     }
 
+    @Override
     public OWLlinkReasoner createReasoner(OWLOntology ontology, OWLReasonerConfiguration config) throws IllegalConfigurationException {
-        if (config instanceof OWLlinkReasonerConfiguration)
-            return new OWLlinkHTTPXMLReasoner(ontology, (OWLlinkReasonerConfiguration) config, BufferingMode.BUFFERING);
+        if (config instanceof OWLlinkReasonerConfigurationImpl)
+            return new OWLlinkHTTPXMLReasoner(ontology, (OWLlinkReasonerConfigurationImpl) config, BufferingMode.BUFFERING);
         else
             throw new IllegalConfigurationException("Configuration must be a OWLlinkReasonerConfiguration", config);
 

@@ -25,7 +25,7 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.owllink.builtin.response.HierarchyPair;
 import org.semanticweb.owlapi.owllink.builtin.response.HierarchyPairImpl;
 import org.semanticweb.owlapi.owllink.builtin.response.SubEntitySynsets;
@@ -36,7 +36,7 @@ import org.semanticweb.owlapi.reasoner.Node;
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
-public abstract class AbstractOWLlinkPairElementHandler<O extends OWLLogicalEntity> extends AbstractOWLlinkElementHandler<HierarchyPair<O>> {
+public abstract class AbstractOWLlinkPairElementHandler<O extends OWLObject> extends AbstractOWLlinkElementHandler<HierarchyPair<O>> {
     protected Node<O> superSynset;
     protected SubEntitySynsets<O> subSetOfSynset;
 
@@ -45,13 +45,15 @@ public abstract class AbstractOWLlinkPairElementHandler<O extends OWLLogicalEnti
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.subSetOfSynset = null;
         this.subSetOfSynset = null;
     }
 
+    @Override
     public HierarchyPair<O> getOWLLinkObject() {
-        return new HierarchyPairImpl<O>(this.superSynset, this.subSetOfSynset);
+        return new HierarchyPairImpl<>(this.superSynset, this.subSetOfSynset);
     }
 }

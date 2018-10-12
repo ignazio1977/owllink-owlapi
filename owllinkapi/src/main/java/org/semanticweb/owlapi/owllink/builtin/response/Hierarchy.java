@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.Node;
 
 import java.util.Set;
@@ -33,7 +33,7 @@ import java.util.Set;
  * <p/>
  * Author: Olaf Noppens
  */
-public interface Hierarchy<O extends OWLLogicalEntity> extends KBResponse {
+public interface Hierarchy<O extends OWLObject> extends KBResponse {
 
     /**
      * Returns the set of {@link org.semanticweb.owlapi.owllink.builtin.response.HierarchyPair HierarchyPairs}.

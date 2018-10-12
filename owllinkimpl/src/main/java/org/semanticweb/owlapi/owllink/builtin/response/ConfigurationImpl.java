@@ -39,17 +39,20 @@ public abstract class ConfigurationImpl implements Configuration {
     public ConfigurationImpl(String key, OWLlinkDataRange type, Set<OWLlinkLiteral> literals) {
         this.key = key;
         this.type = type;
-        this.literals = Collections.unmodifiableSet(new HashSet<OWLlinkLiteral>(literals));
+        this.literals = Collections.unmodifiableSet(new HashSet<>(literals));
     }
 
+    @Override
     public String getKey() {
         return this.key;
     }
 
+    @Override
     public OWLlinkDataRange getType() {
         return this.type;
     }
 
+    @Override
     public Set<OWLlinkLiteral> getValues() {
         return this.literals;
     }

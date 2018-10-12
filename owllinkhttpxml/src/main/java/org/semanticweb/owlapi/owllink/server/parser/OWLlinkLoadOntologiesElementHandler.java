@@ -52,7 +52,7 @@ public class OWLlinkLoadOntologiesElementHandler extends AbstractOWLlinkKBReques
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.ontologyIRIs = CollectionFactory.createSet();
-        this.mappings = new Vector<IRIMapping>();
+        this.mappings = new Vector<>();
     }
 
     @Override
@@ -73,6 +73,7 @@ public class OWLlinkLoadOntologiesElementHandler extends AbstractOWLlinkKBReques
         mappings.add(handler.getOWLlinkObject());
     }
 
+    @Override
     public LoadOntologies getOWLObject() throws OWLXMLParserException {
         return new LoadOntologies(kb, ontologyIRIs, mappings, considerImports);
     }

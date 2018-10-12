@@ -37,6 +37,7 @@ public class OWLlinkGetFlattenedDifferentIndividualsElementHandler extends Abstr
         super(handler);
     }
 
+    @Override
     public GetFlattenedDifferentIndividuals getOWLObject() throws OWLXMLParserException {
         return new GetFlattenedDifferentIndividuals(getKB(), getObject());
     }

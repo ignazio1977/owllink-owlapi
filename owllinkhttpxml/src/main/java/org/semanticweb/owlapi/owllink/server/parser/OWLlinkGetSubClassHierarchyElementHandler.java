@@ -54,6 +54,7 @@ public class OWLlinkGetSubClassHierarchyElementHandler extends AbstractOWLlinkKB
             this.clazz = clazz.asOWLClass();
     }
 
+    @Override
     public GetSubClassHierarchy getOWLObject() throws OWLXMLParserException {
         if (clazz == null)
             return new GetSubClassHierarchy(getKB());

@@ -42,22 +42,26 @@ public class OWLlinkGetFlattendObjectPropertySourcesElementHandler extends Abstr
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.isNegative = false;
         this.property = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
             isNegative = Boolean.valueOf(value);
     }
 
+    @Override
     public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
         this.property = handler.getOWLObject();
     }
 
+    @Override
     public GetFlattenedObjectPropertySources getOWLObject() throws OWLXMLParserException {
         return new GetFlattenedObjectPropertySources(getKB(), getObject(), property, isNegative);
     }

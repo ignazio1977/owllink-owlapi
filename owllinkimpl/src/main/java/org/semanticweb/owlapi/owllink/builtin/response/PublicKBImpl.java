@@ -42,10 +42,12 @@ public class PublicKBImpl implements PublicKB {
         this(kb, null);
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public IRI getKB() {
         return this.kb;
     }

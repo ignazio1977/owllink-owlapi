@@ -55,6 +55,7 @@ public class GetFlattenedDataPropertySources extends AbstractKBRequestWithOneObj
         return super.object;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

@@ -41,10 +41,12 @@ public class OWLlinkSetOfDataPropertySynsetsElementHandler extends AbstractOWLli
     }
 
 
+    @Override
     public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
         super.synsets.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

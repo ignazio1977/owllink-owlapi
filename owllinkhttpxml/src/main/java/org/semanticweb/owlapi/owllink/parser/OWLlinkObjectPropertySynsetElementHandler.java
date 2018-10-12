@@ -26,7 +26,7 @@ package org.semanticweb.owlapi.owllink.parser;
 import org.coode.owlapi.owlxmlparser.AbstractOWLObjectPropertyElementHandler;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.OWLObjectPropertyNode;
 
@@ -35,24 +35,26 @@ import org.semanticweb.owlapi.reasoner.impl.OWLObjectPropertyNode;
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
-public class OWLlinkObjectPropertySynsetElementHandler extends AbstractOWLlinkEntitySynsetElementHandler<OWLObjectProperty> {
+public class OWLlinkObjectPropertySynsetElementHandler extends AbstractOWLlinkEntitySynsetElementHandler<OWLObjectPropertyExpression> {
 
     public OWLlinkObjectPropertySynsetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
         if (!handler.getOWLObject().isAnonymous())
             super.elements.add(handler.getOWLObject().asOWLObjectProperty());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         super.endElement();
         getParentHandler().handleChild(this);
     }
 
     @Override
-    public Node<OWLObjectProperty> getOWLLinkObject() throws OWLXMLParserException {
+    public Node<OWLObjectPropertyExpression> getOWLLinkObject() throws OWLXMLParserException {
         return new OWLObjectPropertyNode(super.elements);
     }
 }

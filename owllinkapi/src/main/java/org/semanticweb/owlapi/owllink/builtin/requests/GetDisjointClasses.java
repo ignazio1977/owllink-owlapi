@@ -39,6 +39,7 @@ public class GetDisjointClasses extends AbstractKBRequestWithOneObject<ClassSyns
         super(kb, object);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

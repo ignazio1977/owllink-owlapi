@@ -39,20 +39,21 @@ import java.util.Set;
  */
 public class OWLlinkRetractionTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("C")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), c()));
 
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("C"), getOWLClass("D")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(c(), d()));
 
         return axioms;
     }
 
     public void testSingleRetraction() throws Exception {
-        OWLClass A = getOWLClass("A");
-        OWLClass B = getOWLClass("B");
-        OWLClass C = getOWLClass("C");
+        OWLClass A = a();
+        OWLClass B = b();
+        OWLClass C = c();
 
         IsEntailed entailed = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(A, B));
         BooleanResponse response = reasoner.answer(entailed);
@@ -61,7 +62,7 @@ public class OWLlinkRetractionTestCase extends AbstractOWLlinkAxiomsTestCase {
         reasoner.answer(entailed);
         assertTrue(response.getResult());
 
-        Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
+        Set<OWLAxiom> axioms = new HashSet<>();
         axioms.add(getDataFactory().getOWLSubClassOfAxiom(A, C));
         RetractRequest request = new RetractRequest(getKBIRI(), axioms);
         reasoner.answer(request);
@@ -74,8 +75,5 @@ public class OWLlinkRetractionTestCase extends AbstractOWLlinkAxiomsTestCase {
         assertTrue(response.getResult());
 
         super.reasoner.answer(request);
-
-
     }
-
 }

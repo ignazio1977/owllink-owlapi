@@ -38,5 +38,6 @@ public abstract class OWLlinkDataRangeElementHandler<D extends OWLlinkDataRange>
         super(handler);
     }
 
+    @Override
     public abstract D getOWLLinkObject();
 }

@@ -52,6 +52,7 @@ public class GetFlattenedObjectPropertyTargets extends AbstractKBRequestWithIndi
         return this.isNegative;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

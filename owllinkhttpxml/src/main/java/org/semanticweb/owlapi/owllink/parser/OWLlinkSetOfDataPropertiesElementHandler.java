@@ -41,10 +41,12 @@ public class OWLlinkSetOfDataPropertiesElementHandler extends AbstractSetOfOWLOb
         super(handler);
     }
 
+    @Override
     public SetOfDataProperties getOWLLinkObject() {
         return new SetOfDataPropertiesImpl(super.elements);
     }
 
+    @Override
     public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
         if (handler.getOWLObject() instanceof OWLDataProperty)
             super.elements.add((OWLDataProperty) handler.getOWLObject());

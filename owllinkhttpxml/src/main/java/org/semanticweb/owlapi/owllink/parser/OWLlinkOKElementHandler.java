@@ -38,6 +38,7 @@ public class OWLlinkOKElementHandler extends AbstractOWLlinkKBResponseElementHan
         super(handler);
     }
 
+    @Override
     public OK getOWLLinkObject() {
         return new OKImpl(super.warning);
     }

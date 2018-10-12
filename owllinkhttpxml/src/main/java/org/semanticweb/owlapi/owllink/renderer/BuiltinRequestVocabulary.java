@@ -26,8 +26,6 @@ package org.semanticweb.owlapi.owllink.renderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.owllink.OWLlinkNamespaces;
 
-import java.net.URI;
-
 /**
  * @author Olaf Noppens
  */
@@ -51,14 +49,15 @@ public enum BuiltinRequestVocabulary {
         return iri;
     }
 
-    public URI getURI() {
-        return iri.toURI();
+    public IRI getURI() {
+        return iri;
     }
 
     public String getShortName() {
         return shortName;
     }
 
+    @Override
     public String toString() {
         return iri.toString();
     }

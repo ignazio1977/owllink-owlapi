@@ -23,7 +23,7 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 
 /**
@@ -33,5 +33,5 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  * Author: Olaf Noppens
  * Date: 24.11.2009
  */
-public interface SetOfObjectProperties extends SetOfX<OWLObjectProperty> {
+public interface SetOfObjectProperties extends SetOfX<OWLObjectPropertyExpression> {
 }

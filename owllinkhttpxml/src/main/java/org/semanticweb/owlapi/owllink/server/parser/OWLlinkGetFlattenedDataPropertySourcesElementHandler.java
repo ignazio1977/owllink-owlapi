@@ -42,11 +42,13 @@ public class OWLlinkGetFlattenedDataPropertySourcesElementHandler extends Abstra
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         isNegative = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName)) {
@@ -54,10 +56,12 @@ public class OWLlinkGetFlattenedDataPropertySourcesElementHandler extends Abstra
         }
     }
 
+    @Override
     public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
         this.literal = handler.getOWLObject();
     }
 
+    @Override
     public GetFlattenedDataPropertySources getOWLObject() throws OWLXMLParserException {
         return new GetFlattenedDataPropertySources(getKB(), getObject(), literal, isNegative);
     }

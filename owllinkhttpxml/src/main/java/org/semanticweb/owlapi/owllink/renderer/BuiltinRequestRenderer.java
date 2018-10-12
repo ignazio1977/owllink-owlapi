@@ -23,7 +23,6 @@
 
 package org.semanticweb.owlapi.owllink.renderer;
 
-import org.semanticweb.owlapi.io.OWLRendererException;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import static org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary.*;
@@ -37,16 +36,18 @@ import java.util.Map;
 /**
  * @author Olaf Noppens
  */
-public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, RequestVisitor {
-    protected OWLlinkXMLWriter writer;
+public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVisitor {
+    protected OWLlinkWriter writer;
 
 
+    @Override
     public void answer(Classify query) {
         writer.writeStartElement(CLASSIFY.getURI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(CreateKB query) {
         writer.writeStartElement(BuiltinRequestVocabulary.CREATEKB.getURI());
         if (query.getName() != null)
@@ -71,44 +72,51 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetAllAnnotationProperties query) {
-        writer.writeStartElement(GET_ALL_ANNOTATION_PROPERTIES);
+        writer.writeStartElement(GET_ALL_ANNOTATION_PROPERTIES.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetAllClasses query) {
-        writer.writeStartElement(GET_ALL_CLASSES);
+        writer.writeStartElement(GET_ALL_CLASSES.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetAllDataProperties query) {
-        writer.writeStartElement(GET_ALL_DATAPROPERTIES);
+        writer.writeStartElement(GET_ALL_DATAPROPERTIES.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetAllDatatypes query) {
-        writer.writeStartElement(GET_ALL_DATATYPES);
+        writer.writeStartElement(GET_ALL_DATATYPES.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetAllIndividuals query) {
-        writer.writeStartElement(GET_ALL_INDIVIDUALS);
+        writer.writeStartElement(GET_ALL_INDIVIDUALS.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetAllObjectProperties query) {
-        writer.writeStartElement(GET_ALL_OBJECTPROPERTIES);
+        writer.writeStartElement(GET_ALL_OBJECTPROPERTIES.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDataPropertiesBetween query) {
-        writer.writeStartElement(GET_DATAPROPERTIES_BETWEEN);
+        writer.writeStartElement(GET_DATAPROPERTIES_BETWEEN.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -117,8 +125,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDataPropertiesOfLiteral query) {
-        writer.writeStartElement(GET_DATAPROPERTIES_OF_LITERAL);
+        writer.writeStartElement(GET_DATAPROPERTIES_OF_LITERAL.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -126,8 +135,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDataPropertiesOfSource query) {
-        writer.writeStartElement(GET_DATAPROPERTIES_OF_SOURCE);
+        writer.writeStartElement(GET_DATAPROPERTIES_OF_SOURCE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -135,8 +145,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDataPropertySources query) {
-        writer.writeStartElement(GET_DATAPROPERTY_SOURCES);
+        writer.writeStartElement(GET_DATAPROPERTY_SOURCES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -145,8 +156,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDataPropertyTargets query) {
-        writer.writeStartElement(GET_DATAPROPERTY_TARGETS);
+        writer.writeStartElement(GET_DATAPROPERTY_TARGETS.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getOWLProperty(), kb);
@@ -155,77 +167,87 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
     }
 
 
+    @Override
     public void answer(GetDescription query) {
-        writer.writeStartElement(GET_DESCRIPTION);
+        writer.writeStartElement(GET_DESCRIPTION.getIRI());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDisjointClasses query) {
-        writer.writeStartElement(GET_DISJOINT_CLASSES);
+        writer.writeStartElement(GET_DISJOINT_CLASSES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDisjointDataProperties query) {
-        writer.writeStartElement(GET_DISJOINT_DATAPROPERTIES);
+        writer.writeStartElement(GET_DISJOINT_DATAPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDifferentIndividuals query) {
-        writer.writeStartElement(GET_DIFFERENT_INDIVIDUALS);
+        writer.writeStartElement(GET_DIFFERENT_INDIVIDUALS.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetDisjointObjectProperties query) {
-        writer.writeStartElement(GET_DISJOINT_OBJECTPROPERTIES);
+        writer.writeStartElement(GET_DISJOINT_OBJECTPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetEquivalentClasses query) {
-        writer.writeStartElement(GET_EQUIVALENT_CLASSES);
+        writer.writeStartElement(GET_EQUIVALENT_CLASSES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetEquivalentDataProperties query) {
-        writer.writeStartElement(GET_EQUIVALENT_DATAPROPERTIES);
+        writer.writeStartElement(GET_EQUIVALENT_DATAPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSameIndividuals query) {
-        writer.writeStartElement(GET_SAME_INDIVIDUALS);
+        writer.writeStartElement(GET_SAME_INDIVIDUALS.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetEquivalentObjectProperties query) {
-        writer.writeStartElement(GET_EQUIVALENT_OBJECTPROPERTIES);
+        writer.writeStartElement(GET_EQUIVALENT_OBJECTPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetFlattenedDataPropertySources query) {
-        writer.writeStartElement(GET_FLATTENED_DATAPROPERTY_SOURCES);
+        writer.writeStartElement(GET_FLATTENED_DATAPROPERTY_SOURCES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -234,8 +256,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetFlattenedDifferentIndividuals query) {
-        writer.writeStartElement(GET_FLATTENED_DIFFERENT_INDIVIDUALS);
+        writer.writeStartElement(GET_FLATTENED_DIFFERENT_INDIVIDUALS.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getIndividual(), kb);
@@ -243,8 +266,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
     }
 
 
+    @Override
     public void answer(GetFlattenedInstances query) {
-        writer.writeStartElement(GET_FLATTENED_INSTANCES);
+        writer.writeStartElement(GET_FLATTENED_INSTANCES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -252,8 +276,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetFlattenedObjectPropertySources query) {
-        writer.writeStartElement(GET_FLATTENED_OBJECTPROPERTY_SOURCES);
+        writer.writeStartElement(GET_FLATTENED_OBJECTPROPERTY_SOURCES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -262,8 +287,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetFlattenedObjectPropertyTargets query) {
-        writer.writeStartElement(GET_FLATTENED_OBJECTPROPERTY_TARGETS);
+        writer.writeStartElement(GET_FLATTENED_OBJECTPROPERTY_TARGETS.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getOWLProperty(), kb);
@@ -271,8 +297,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetFlattenedTypes query) {
-        writer.writeStartElement(GET_FLATTENED_TYPES);
+        writer.writeStartElement(GET_FLATTENED_TYPES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -280,8 +307,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetInstances query) {
-        writer.writeStartElement(GET_INSTANCES);
+        writer.writeStartElement(GET_INSTANCES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -289,15 +317,17 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetKBLanguage query) {
-        writer.writeStartElement(GET_KB_LANGUAGE);
+        writer.writeStartElement(GET_KB_LANGUAGE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetObjectPropertiesBetween query) {
-        writer.writeStartElement(GET_OBJECTPROPERTIES_BETWEEN);
+        writer.writeStartElement(GET_OBJECTPROPERTIES_BETWEEN.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -306,8 +336,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetObjectPropertiesOfSource query) {
-        writer.writeStartElement(GET_OBJECTPROPERTIES_OF_SOURCE);
+        writer.writeStartElement(GET_OBJECTPROPERTIES_OF_SOURCE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -315,8 +346,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetObjectPropertiesOfTarget query) {
-        writer.writeStartElement(GET_OBJECTPROPERTIES_OF_TARGET);
+        writer.writeStartElement(GET_OBJECTPROPERTIES_OF_TARGET.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -324,8 +356,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetObjectPropertySources query) {
-        writer.writeStartElement(GET_OBJECTPROPERTY_SOURCES);
+        writer.writeStartElement(GET_OBJECTPROPERTY_SOURCES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -334,8 +367,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetObjectPropertyTargets query) {
-        writer.writeStartElement(GET_OBJECTPROPERTY_TARGETS);
+        writer.writeStartElement(GET_OBJECTPROPERTY_TARGETS.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeNegativeAttribute(query.isNegative());
@@ -344,21 +378,24 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetPrefixes query) {
-        writer.writeStartElement(GET_PREFIXES);
+        writer.writeStartElement(GET_PREFIXES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSettings query) {
-        writer.writeStartElement(GET_SETTINGS);
+        writer.writeStartElement(GET_SETTINGS.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSubClasses query) {
-        writer.writeStartElement(GET_SUBCLASSES);
+        writer.writeStartElement(GET_SUBCLASSES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -366,8 +403,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSubClassHierarchy query) {
-        writer.writeStartElement(GET_SUBCLASS_HIERARCHY);
+        writer.writeStartElement(GET_SUBCLASS_HIERARCHY.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         if (query.getOWLClass() != null)
@@ -375,8 +413,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSubDataProperties query) {
-        writer.writeStartElement(GET_SUBDATAPROPERTIES);
+        writer.writeStartElement(GET_SUBDATAPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -384,8 +423,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSubDataPropertyHierarchy query) {
-        writer.writeStartElement(GET_SUBDATAPROPERTY_HIERARCHY);
+        writer.writeStartElement(GET_SUBDATAPROPERTY_HIERARCHY.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         if (query.getOWLProperty() != null)
@@ -393,8 +433,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSubObjectProperties query) {
-        writer.writeStartElement(GET_SUBOBJECTPROPERTIES);
+        writer.writeStartElement(GET_SUBOBJECTPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -402,8 +443,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSubObjectPropertyHierarchy query) {
-        writer.writeStartElement(GET_SUBOBJECTPROPERTY_HIERARCHY);
+        writer.writeStartElement(GET_SUBOBJECTPROPERTY_HIERARCHY.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         if (query.getObjectProperty() != null)
@@ -412,8 +454,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
     }
 
 
+    @Override
     public void answer(GetSuperClasses query) {
-        writer.writeStartElement(GET_SUPERCLASSES);
+        writer.writeStartElement(GET_SUPERCLASSES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -421,8 +464,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSuperDataProperties query) {
-        writer.writeStartElement(GET_SUPERDATAPROPERTIES);
+        writer.writeStartElement(GET_SUPERDATAPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -430,8 +474,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetSuperObjectProperties query) {
-        writer.writeStartElement(GET_SUPEROBJECTPROPERTIES);
+        writer.writeStartElement(GET_SUPEROBJECTPROPERTIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -439,8 +484,9 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(GetTypes query) {
-        writer.writeStartElement(GET_TYPES);
+        writer.writeStartElement(GET_TYPES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeDirectAttribute(query.isDirect());
@@ -448,71 +494,79 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsClassSatisfiable query) {
-        writer.writeStartElement(IS_CLASS_SATISFIABLE);
+        writer.writeStartElement(IS_CLASS_SATISFIABLE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsDataPropertySatisfiable query) {
-        writer.writeStartElement(IS_DATAPROPERTY_SATISFIABLE);
+        writer.writeStartElement(IS_DATAPROPERTY_SATISFIABLE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsKBConsistentlyDeclared query) {
-        writer.writeStartElement(IS_KB_CONSISTENTLY_DECLARED);
+        writer.writeStartElement(IS_KB_CONSISTENTLY_DECLARED.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsKBSatisfiable query) {
-        writer.writeStartElement(IS_KB_SATISFIABLE);
+        writer.writeStartElement(IS_KB_SATISFIABLE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsEntailed query) {
-        writer.writeStartElement(IS_ENTAILED);
+        writer.writeStartElement(IS_ENTAILED.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeOWLObject(query.getAxiom(), query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsEntailedDirect query) {
-        writer.writeStartElement(IS_ENTAILED_DIRECT);
+        writer.writeStartElement(IS_ENTAILED_DIRECT.getIRI());
         writer.writeKBAttribute(query.getKB());
         writer.writeOWLObject(query.getAxiom(), query.getKB());
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(IsObjectPropertySatisfiable query) {
-        writer.writeStartElement(IS_OBJECTPROPERTY_SATISFIABLE);
+        writer.writeStartElement(IS_OBJECTPROPERTY_SATISFIABLE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeOWLObject(query.getObject(), kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(LoadOntologies query) {
-        writer.writeStartElement(LOAD_ONTOLOGIES);
+        writer.writeStartElement(LOAD_ONTOLOGIES.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         if (!query.isConsideringImports())
             writer.writeAttribute(CONSIDER_IMPORTS_ATTRIBUTE.getURI().toString(), Boolean.FALSE.toString());
         for (IRI ontologyIRI : query.getOntologyIRIs()) {
-            writer.writeStartElement(ONTOLOGY_IRI);
+            writer.writeStartElement(ONTOLOGY_IRI.getIRI());
             writer.writeFullIRIAttribute(ontologyIRI);
             writer.writeEndElement();
         }
         for (IRIMapping irimapping : query.getIRIMapping()) {
-            writer.writeStartElement(IRI_MAPPING);
+            writer.writeStartElement(IRI_MAPPING.getIRI());
             writer.writeAttribute(KEY_ATTRIBUTE.getURI(), irimapping.key);
             writer.writeAttribute(VALUE_ATTRIBUTE.getURI(), irimapping.value.toString());
             writer.writeEndElement();
@@ -520,33 +574,37 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(Realize query) {
-        writer.writeStartElement(REALIZE);
+        writer.writeStartElement(REALIZE.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(ReleaseKB query) {
-        writer.writeStartElement(RELEASE_KB);
+        writer.writeStartElement(RELEASE_KB.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(Set query) {
-        writer.writeStartElement(SET);
+        writer.writeStartElement(SET.getIRI());
         final IRI kb = query.getKB();
         writer.writeKBAttribute(kb);
         writer.writeAttribute(KEY_ATTRIBUTE.getURI(), query.getKey());
         for (OWLlinkLiteral literal : query) {
-            writer.writeStartElement(LITERAL);
+            writer.writeStartElement(LITERAL.getIRI());
             writer.writeTextContent(literal.getValue());
             writer.writeEndElement();
         }
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(Tell request) {
         writer.writeStartElement(BuiltinRequestVocabulary.TELL.getURI());
         IRI kb = request.getKB();
@@ -557,12 +615,14 @@ public class BuiltinRequestRenderer implements OWLlinkXMLRequestRenderer, Reques
         writer.writeEndElement();
     }
 
+    @Override
     public void answer(Request request) {
     }
 
 
-    public void render(Request request, OWLlinkXMLWriter writer) throws OWLRendererException {
-        this.writer = writer;
+    @Override
+    public void render(Request request, OWLlinkWriter writer) {
+        this.writer = (OWLlinkXMLWriter) writer;
         request.accept(this);
         //this.answer(request);
     }

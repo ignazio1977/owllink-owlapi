@@ -35,14 +35,17 @@ public class PropertyImpl extends ConfigurationImpl implements Property {
         super(key, type, literals);
     }
 
+    @Override
     public boolean isSetting() {
         return false;
     }
 
+    @Override
     public Setting asSetting() {
         throw new ClassCastException();
     }
 
+    @Override
     public Property asProperty() {
         return this;
     }

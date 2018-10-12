@@ -37,6 +37,7 @@ public class OWLlinkGetDescriptionElemenHandler extends AbstractOWLlinkRequestEl
         super(handler);
     }
 
+    @Override
     public GetDescription getOWLObject() throws OWLXMLParserException {
         return new GetDescription();
     }

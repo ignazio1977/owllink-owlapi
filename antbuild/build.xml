@@ -23,7 +23,7 @@
 
 <project name="owllink" default="distribution">
 
-    <property name="version" value="1.0.2"/>
+    <property name="version" value="1.0.3"/>
 
     <!-- The directory that contains the jar file dependencies for
          the class path and building a release -->
@@ -68,10 +68,50 @@
     <path id="classpath">
         <filelist dir="${libdir}">
             <!--    <include name="*.jar"/>-->
+            <file name="caffeine-2.6.1.jar"/>
+            <file name="httpclient-cache-4.5.2.jar"/>
+            <file name="jackson-core-2.9.0.jar"/>
             <file name="org.mortbay.jetty.jar"/>
+            <file name="rdf4j-rio-binary-2.3.2.jar"/>
+            <file name="rdf4j-rio-rdfxml-2.3.2.jar"/>
+            <file name="commons-codec-1.10.jar"/>
+            <file name="httpclient-osgi-4.5.5.jar"/>
+            <file name="jackson-databind-2.9.0.jar"/>
             <file name="org.mortbay.jmx.jar"/>
-            <file name="owlapi-bin.jar"/>
-            <file name="owlapi-bin-2.jar"/>
+            <file name="rdf4j-rio-datatypes-2.3.2.jar"/>
+            <file name="rdf4j-rio-trig-2.3.2.jar"/>
+            <file name="commons-io-2.5.jar"/>
+            <file name="httpcore-4.4.4.jar"/>
+            <file name="javax.inject-1.jar"/>
+            <file name="rdf4j-rio-jsonld-2.3.2.jar"/>
+            <file name="rdf4j-rio-trix-2.3.2.jar"/>
+            <file name="commons-logging-1.1.1.jar"/>
+            <file name="httpcore-nio-4.4.5.jar"/>
+            <file name="javax.servlet.jar"/>
+            <file name="owlapi-distribution-5.1.7.jar"/>
+            <file name="rdf4j-rio-languages-2.3.2.jar"/>
+            <file name="rdf4j-rio-turtle-2.3.2.jar"/>
+            <file name="commons-rdf-api-0.5.0.jar"/>
+            <file name="httpcore-osgi-4.4.5.jar"/>
+            <file name="jcl-over-slf4j-1.7.22.jar"/>
+            <file name="protege-editor-core.jar"/>
+            <file name="rdf4j-rio-n3-2.3.2.jar"/>
+            <file name="rdf4j-util-2.3.2.jar"/>
+            <file name="guava-22.0.jar"/>
+            <file name="httpmime-4.5.5.jar"/>
+            <file name="jsonld-java-0.12.0.jar"/>
+            <file name="protege-editor-owl.jar"/>
+            <file name="rdf4j-rio-nquads-2.3.2.jar"/>
+            <file name="xz-1.6.jar"/>
+            <file name="hppcrt-0.7.5.jar"/>
+            <file name="j2objc-annotations-1.1.jar"/>
+            <file name="jsr305-3.0.2.jar"/>
+            <file name="rdf4j-model-2.3.2.jar"/>
+            <file name="rdf4j-rio-ntriples-2.3.2.jar"/>
+            <file name="httpclient-4.5.2.jar"/>
+            <file name="jackson-annotations-2.9.0.jar"/>
+            <file name="rdf4j-rio-api-2.3.2.jar"/>
+            <file name="rdf4j-rio-rdfjson-2.3.2.jar"/>
         </filelist>
     </path>
 
@@ -86,7 +126,7 @@
     <target name="compile">
         <echo>ant.java.version = ${ant.java.version}</echo>
         <mkdir dir="${classesdir}"/>
-        <javac srcdir="./.." destdir="${classesdir}" debug="on" target="1.5">
+        <javac srcdir="./.." destdir="${classesdir}" debug="on" target="1.8">
             <classpath refid="classpath"/>
             <include name="owllinkapi/${sourcepath}"/>
             <include name="owllinkhttpxml/${sourcepath}"/>

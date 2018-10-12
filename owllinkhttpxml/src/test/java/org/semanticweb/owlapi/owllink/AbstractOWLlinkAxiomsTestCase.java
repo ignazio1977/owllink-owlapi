@@ -41,15 +41,17 @@ import java.util.Set;
  */
 public abstract class AbstractOWLlinkAxiomsTestCase extends AbstractOWLlinkTestCase {
 
-    private Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
+    private Set<OWLAxiom> axioms = new HashSet<>();
     OWLOntology ontology;
 
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         this.ontology = createOntology();
         addAxiomsToRootOntology();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         removeAxiomsFromRootOntology();
         ReleaseKB releaseKB = new ReleaseKB(getKBIRI());
@@ -90,6 +92,7 @@ public abstract class AbstractOWLlinkAxiomsTestCase extends AbstractOWLlinkTestC
             removeAxiom(getRootOntology(), axiom);
     }
 
+    @Override
     protected abstract Set<? extends OWLAxiom> createAxioms();
 
 }

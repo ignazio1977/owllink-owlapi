@@ -54,6 +54,7 @@ public class GetSubDataProperties extends AbstractKBRequestWithOneObjectAndBoole
         return super.object;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

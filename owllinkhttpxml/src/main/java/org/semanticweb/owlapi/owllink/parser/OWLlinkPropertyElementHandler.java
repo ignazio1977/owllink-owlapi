@@ -39,10 +39,12 @@ public class OWLlinkPropertyElementHandler extends OWLlinkConfigurationElementHa
         super(handler);
     }
 
+    @Override
     public Property getOWLLinkObject() {
         return new PropertyImpl(this.key, this.type, this.values);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

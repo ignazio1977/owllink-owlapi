@@ -49,7 +49,7 @@ public class OWLlinkDataPropertySynonymsElementHandler extends AbstractOWLlinkKB
     @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.props = new HashSet<OWLDataProperty>();
+        this.props = new HashSet<>();
     }
 
 

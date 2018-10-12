@@ -46,6 +46,7 @@ public class GetSameIndividuals extends AbstractKBRequestWithOneObject<
         return super.getObject();
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

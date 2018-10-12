@@ -35,6 +35,10 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -44,21 +48,22 @@ import java.util.Set;
  */
 public class OWLlinkDifferentIndividualsTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLDifferentIndividualsAxiom(getOWLIndividual("A"), getOWLIndividual("B"), getOWLIndividual("C")));
-        axioms.add(getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("A"), getOWLIndividual("D")));
+        axioms.add(getDataFactory().getOWLDifferentIndividualsAxiom(ia(), ib(), ic()));
+        axioms.add(getDataFactory().getOWLSameIndividualAxiom(ia(), id()));
         return axioms;
     }
 
-    public void testAreIndividualsDisjoint() throws Exception {
+    public void testAreIndividualsDisjoint() {
         Set<OWLIndividual> indis = CollectionFactory.createSet();
-        indis.add(getOWLIndividual("A"));
-        indis.add(getOWLIndividual("B"));
+        indis.add(ia());
+        indis.add(ib());
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDifferentIndividualsAxiom(indis));
         BooleanResponse answer = super.reasoner.answer(query);
         assertTrue(answer.getResult());
-        indis.add(getOWLIndividual("C"));
+        indis.add(ic());
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDifferentIndividualsAxiom(indis));
         answer = super.reasoner.answer(query);
@@ -69,14 +74,14 @@ public class OWLlinkDifferentIndividualsTestCase extends AbstractOWLlinkAxiomsTe
         assertFalse(answer.getResult());
     }
 
-    public void testAreIndividualsDisjointViaOWLReasoner() throws Exception {
+    public void testAreIndividualsDisjointViaOWLReasoner() {
         Set<OWLIndividual> indis = CollectionFactory.createSet();
-        indis.add(getOWLIndividual("A"));
-        indis.add(getOWLIndividual("B"));
+        indis.add(ia());
+        indis.add(ib());
         OWLAxiom axiom = getDataFactory().getOWLDifferentIndividualsAxiom(indis);
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        indis.add(getOWLIndividual("C"));
+        indis.add(ic());
 
         axiom = getDataFactory().getOWLDifferentIndividualsAxiom(indis);
         assertTrue(super.reasoner.isEntailed(axiom));
@@ -85,26 +90,20 @@ public class OWLlinkDifferentIndividualsTestCase extends AbstractOWLlinkAxiomsTe
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
-    public void testGetDisjointIndividuals() throws Exception {
-        GetDifferentIndividuals query = new GetDifferentIndividuals(getKBIRI(), getOWLIndividual("B"));
+    public void testGetDisjointIndividuals() {
+        GetDifferentIndividuals query = new GetDifferentIndividuals(getKBIRI(), ib());
         SetOfIndividualSynsets response = super.reasoner.answer(query);
-        assertTrue(response.getSynsets().size() == 2);
+        assertEquals(2, response.getSynsets().size());
     }
 
-
-    public void testGetDisjointIndividualsWithOWLReasoner() throws Exception {
-        NodeSet<OWLNamedIndividual> response = super.reasoner.getDifferentIndividuals(getOWLIndividual("B"));
-        assertTrue(response.getFlattened().size() == 2);
+    public void testGetDisjointIndividualsWithOWLReasoner() {
+        NodeSet<OWLNamedIndividual> response = super.reasoner.getDifferentIndividuals(ib());
+        assertEquals(set(ia(),ic(),id()),response.getFlattened());
     }
 
-    public void testGetFlattenedDisjointIndividuals() throws Exception {
-        GetFlattenedDifferentIndividuals query = new GetFlattenedDifferentIndividuals(getKBIRI(), getOWLIndividual("B"));
+    public void testGetFlattenedDisjointIndividuals() {
+        GetFlattenedDifferentIndividuals query = new GetFlattenedDifferentIndividuals(getKBIRI(), ib());
         SetOfIndividuals response = super.reasoner.answer(query);
-
-        assertTrue(response.size() == 3);
-        assertTrue(response.contains(getOWLIndividual("A")));
-        assertTrue(response.contains(getOWLIndividual("C")));
-        assertTrue(response.contains(getOWLIndividual("D")));
-
+        assertEquals(set(ia(),ic(),id()), response);
     }
 }

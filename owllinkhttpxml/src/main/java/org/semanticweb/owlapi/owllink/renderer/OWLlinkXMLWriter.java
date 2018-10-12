@@ -24,43 +24,42 @@
 package org.semanticweb.owlapi.owllink.renderer;
 
 
-import org.coode.owlapi.owlxml.renderer.OWLXMLObjectRenderer;
-import org.coode.owlapi.owlxml.renderer.OWLXMLWriter;
-import org.coode.xml.XMLWriter;
-import org.coode.xml.XMLWriterNamespaceManager;
-import org.semanticweb.owlapi.io.OWLRendererException;
-import org.semanticweb.owlapi.io.OWLRendererIOException;
+import org.coode.owlapi.owlxmlrenderer.OWLXMLObjectRenderer;
+import org.coode.owlapi.owlxmlrenderer.OWLXMLWriter;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLObject;
-import org.semanticweb.owlapi.model.OWLRuntimeException;
+import org.semanticweb.owlapi.model.OWLOntologyWriterConfiguration;
 import org.semanticweb.owlapi.owllink.OWLlinkNamespaces;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.PrefixManagerProvider;
+import org.semanticweb.owlapi.rdf.rdfxml.renderer.XMLWriter;
+import org.semanticweb.owlapi.rdf.rdfxml.renderer.XMLWriterNamespaceManager;
 import org.semanticweb.owlapi.util.CollectionFactory;
 import org.semanticweb.owlapi.vocab.Namespaces;
 
-import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.URI;
 import java.util.Map;
 
 /**
  * @author Olaf Noppens
  */
-public class OWLlinkXMLWriter {
+public class OWLlinkXMLWriter implements OWLlinkWriter {
     private XMLWriter writer;
     private PrefixManagerProvider prefixProvider;
     Map<IRI, OWLXMLObjectRenderer> rendererByIRI;
     OWLXMLObjectRenderer defaultRenderer;
     Writer baseWriter;
+    OWLOntologyWriterConfiguration config;
 
-    public OWLlinkXMLWriter(Writer writer, PrefixManagerProvider prefixProvider) {
+    public OWLlinkXMLWriter(PrintWriter writer, PrefixManagerProvider prefixProvider, OWLOntologyWriterConfiguration config) {
+        this.config=config;
         XMLWriterNamespaceManager nsm = new XMLWriterNamespaceManager(OWLlinkNamespaces.OWLLink.toString() + "#");
         nsm.setPrefix("xsd", Namespaces.XSD.toString());
         nsm.setPrefix("owl", Namespaces.OWL.toString());
         String base = OWLlinkNamespaces.OWLLink.toString();
         //we need an own xml writer because in OWL attribute's NS are not allowed.
-        this.writer = new MyXMLWriterImpl(writer, nsm, base) {
+        this.writer = new MyXMLWriterImpl(writer, nsm, base, config) {
             @Override
             public void writeAttribute(String attr, String val) {
                 if (attr.startsWith(Namespaces.OWL.toString())) {
@@ -69,138 +68,73 @@ public class OWLlinkXMLWriter {
                 } else
                     super.writeAttribute(attr, val);
             }
-
-            @Override
-            public void writeStartElement(String name) throws IOException {
-                super.writeStartElement(name);    //To change body of overridden methods use File | Settings | File Templates.
-            }
         };
         this.writer.setEncoding("UTF-8");
-        OWLXMLWriter owlxmlWriter = new MyOWLXMLWriter(this.writer, null);
+        OWLXMLWriter owlxmlWriter = new MyOWLXMLWriter(this.writer, null, config);
         this.defaultRenderer = new OWLXMLObjectRenderer(owlxmlWriter);
         this.baseWriter = writer;
         rendererByIRI = CollectionFactory.createMap();
         this.prefixProvider = prefixProvider;
     }
 
-    public void startDocument(final boolean isRequest) throws OWLRendererException {
-        try {
-            if (isRequest)
-                writer.startDocument(OWLlinkXMLVocabulary.REQUEST_MESSAGE.toString());
-            else
-                writer.startDocument(OWLlinkXMLVocabulary.RESPONSE_MESSAGE.toString());
-        }
-        catch (IOException e) {
-            throw new OWLRendererIOException(e);
-        }
+    @Override
+    public void startDocument(final boolean isRequest) {
+        if (isRequest)
+            writer.startDocument(OWLlinkXMLVocabulary.REQUEST_MESSAGE.getIRI());
+        else
+            writer.startDocument(OWLlinkXMLVocabulary.RESPONSE_MESSAGE.getIRI());
     }
 
-
+    @Override
     public void endDocument() {
-        try {
-            writer.endDocument();
-        }
-        catch (IOException e) {
-            throw new OWLRuntimeException(e);
-        }
+        writer.endDocument();
     }
 
     public final void writeStartElement(OWLlinkXMLVocabulary v) {
         this.writeStartElement(v.getURI());
     }
 
-    public void writeStartElement(URI name) {
-        try {
-            writer.writeStartElement(name.toString());
-        }
-        catch (IOException e) {
-            throw new OWLRuntimeException(e);
-        }
+    @Override
+    public void writeStartElement(IRI name) {
+        writer.writeStartElement(name);
     }
 
-
+    @Override
     public void writeEndElement() {
-        try {
-            writer.writeEndElement();
-        }
-        catch (IOException e) {
-            throw new OWLRuntimeException(e);
-        }
+        writer.writeEndElement();
     }
 
+    @Override
     public void writeAttribute(String attribute, String value) {
-        try {
-            writer.writeAttribute(attribute, value);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        writer.writeAttribute(attribute, value);
     }
 
-    public void writeAttribute(URI attribute, String value) {
-        try {
-            writer.writeAttribute(attribute.toString(), value);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public void writeAttribute(IRI attribute, String value) {
+        writer.writeAttribute(attribute.toString(), value);
     }
 
+    @Override
     public void writeNegativeAttribute(boolean isNegative) {
-        try {
-            writer.writeAttribute(OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getURI().toString(), Boolean.toString(isNegative));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        writer.writeAttribute(OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getURI().toString(), Boolean.toString(isNegative));
     }
 
+    @Override
     public void writeDirectAttribute(boolean isNegative) {
-        try {
-            writer.writeAttribute(OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getURI().toString(), Boolean.toString(isNegative));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        writer.writeAttribute(OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getURI().toString(), Boolean.toString(isNegative));
     }
 
+    @Override
     public void writeKBAttribute(IRI kb) {
-        try {
-            writer.writeAttribute(OWLlinkXMLVocabulary.KB_ATTRIBUTE.getURI().toString(), kb.toString());
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        writer.writeAttribute(OWLlinkXMLVocabulary.KB_ATTRIBUTE.getURI().toString(), kb.toString());
     }
 
+    @Override
     public void writeFullIRIAttribute(IRI iri) {
-        try {
-            writer.writeAttribute(OWLlinkXMLVocabulary.IRI_ATTRIBUTE.getURI().toString(), iri.toString());
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        writer.writeAttribute(OWLlinkXMLVocabulary.IRI_ATTRIBUTE.getURI().toString(), iri.toString());
     }
 
-    /* public void writeIRIAttribute(IRI iri) {
-  try {
-      String attName = OWLXMLVocabulary.IRI_ATTRIBUTE.getURI().toString();
-      String value = iri.toString();
-      if (value.startsWith(writer.getXMLBase())) {
-          writer.writeAttribute(attName, value.substring(writer.getXMLBase().length(), value.length()));
-      } else {
-          String val = getIRIString(iri.toURI());
-          if (!val.equals(iri.toString())) {
-              writer.writeAttribute(OWLXMLVocabulary.ABBREVIATED_IRI_ATTRIBUTE.getURI().toString(), val);
-          } else {
-              writer.writeAttribute(attName, val);
-          }
-      }
-  }
-  catch (IOException e) {
-      throw new RuntimeException(e);
-  }
-}      */
-
-
+    @Override
     public void writeOWLObject(OWLObject object, IRI KB) {
         if (KB == null) {
             object.accept(defaultRenderer);
@@ -208,7 +142,7 @@ public class OWLlinkXMLWriter {
             OWLXMLObjectRenderer renderer = rendererByIRI.get(KB);
             if (renderer == null) {
                 //OWLXMLWriter writer = new OWLXMLWriter(baseWriter, null);
-                OWLXMLWriter writer = new MyOWLXMLWriter(this.writer, null);
+                OWLXMLWriter writer = new MyOWLXMLWriter(this.writer, null, config);
                 if (prefixProvider.contains(KB)) {
                     Map<String, String> map = prefixProvider.getPrefixes(KB).getPrefixName2PrefixMap();
                     for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -222,15 +156,12 @@ public class OWLlinkXMLWriter {
         }
     }
 
+    @Override
     public void writeTextContent(String text) {
-        try {
-            writer.writeTextContent(text);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        writer.writeTextContent(text);
     }
 
+    @Override
     public PrefixManagerProvider getPrefixManagerProvider() {
         return this.prefixProvider;
     }

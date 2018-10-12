@@ -36,6 +36,7 @@ public class OWLlinkIsDataPropertySatisfiableElementHandler extends AbstractOWLl
         super(handler);
     }
 
+    @Override
     public IsDataPropertySatisfiable getOWLObject() throws OWLXMLParserException {
         return new IsDataPropertySatisfiable(getKB(), super.getObject());
     }

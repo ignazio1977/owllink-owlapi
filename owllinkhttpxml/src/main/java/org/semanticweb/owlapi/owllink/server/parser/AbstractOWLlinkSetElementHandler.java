@@ -41,9 +41,10 @@ public abstract class AbstractOWLlinkSetElementHandler<R extends Request, O> ext
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.elements = new HashSet<O>();
+        this.elements = new HashSet<>();
     }
 
 }

@@ -25,6 +25,10 @@ package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetTypes;
+import org.semanticweb.owlapi.owllink.builtin.requests.IsKBSatisfiable;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
+import org.semanticweb.owlapi.reasoner.InferenceType;
+
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
 
 import java.util.Set;
@@ -43,14 +47,12 @@ public class OWLlinkExceptionTestCase extends AbstractOWLlinkAxiomsTestCase {
     }
 
     public void testInconsistentOntology() {
-        GetTypes query = new GetTypes(getKBIRI(), getOWLIndividual("i"));
-        //super.reasoner.answer(query);
+        IsKBSatisfiable request = new IsKBSatisfiable(getKBIRI());
+        BooleanResponse answer = reasoner.answer(request);
+        assertFalse(answer.getResult());
     }
 
       public void testInconsistentOntologyOWLAPI() {
-        super.reasoner.getTypes(getOWLIndividual("i"), true);
-    }
-    public void testClassify() {
-        super.reasoner.prepareReasoner();
+        assertFalse(reasoner.isConsistent());
     }
 }

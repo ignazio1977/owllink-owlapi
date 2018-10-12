@@ -67,38 +67,47 @@ public class DescriptionImpl extends ConfirmationImpl implements Description {
         this(null, name, null, rVersion, pVersion, supportedExtensions, configurations, publicKBs);
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public String getMessage() {
         return this.message;
     }
 
+    @Override
     public boolean hasMessage() {
         return getMessage() != null;
     }
 
+    @Override
     public Set<PublicKB> getPublicKBs() {
         return this.publicKBs;
     }
 
+    @Override
     public Set<Configuration> getDefaults() {
         return this.configurations;
     }
 
+    @Override
     public Set<IRI> getSupportedExtensions() {
         return this.supportedExtensions;
     }
 
+    @Override
     public ProtocolVersion getProtocolVersion() {
         return this.pVersion;
     }
 
+    @Override
     public ReasonerVersion getReasonerVersion() {
         return this.rVersion;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

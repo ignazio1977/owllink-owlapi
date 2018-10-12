@@ -46,6 +46,7 @@ public class OWLlinkIndividualSynsetElementHandler extends AbstractOWLlinkElemen
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         this.elements = CollectionFactory.createSet();
     }
@@ -56,15 +57,18 @@ public class OWLlinkIndividualSynsetElementHandler extends AbstractOWLlinkElemen
         return new IndividualSynsetImpl(elements);
     }
 
+    @Override
     public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
         elements.add(handler.getOWLObject());
     }
 
+    @Override
     public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
         elements.add(handler.getOWLObject());
     }
 
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

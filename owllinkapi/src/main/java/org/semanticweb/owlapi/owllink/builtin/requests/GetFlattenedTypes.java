@@ -54,6 +54,7 @@ public class GetFlattenedTypes extends AbstractKBRequestWithOneObjectAndBooleanV
         return super.object;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

@@ -24,6 +24,7 @@
 package org.semanticweb.owlapi.owllink.builtin.response;
 
 import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.OWLObjectPropertyNodeSet;
 
@@ -33,14 +34,14 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 18.02.2010
  */
-public abstract class ObjectPropertySynsetSet extends OWLObjectPropertyNodeSet implements Synsets<OWLObjectProperty> {
+public abstract class ObjectPropertySynsetSet extends OWLObjectPropertyNodeSet implements Synsets<OWLObjectPropertyExpression> {
 
-    public ObjectPropertySynsetSet(Set<Node<OWLObjectProperty>> nodes) {
+    public ObjectPropertySynsetSet(Set<Node<OWLObjectPropertyExpression>> nodes) {
         super(nodes);
         if (nodes.isEmpty()) throw new IllegalArgumentException("set must not be empty");
     }
 
-    public ObjectPropertySynsetSet(Node<OWLObjectProperty> owlClassNode) {
+    public ObjectPropertySynsetSet(Node<OWLObjectPropertyExpression> owlClassNode) {
         super(owlClassNode);
         if (owlClassNode.getSize() == 0) throw new IllegalArgumentException("set must not be empty");
 

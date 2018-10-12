@@ -37,6 +37,7 @@ public class OWLlinkSyntaxErrorElementHandler extends AbstractOWLlinkErrorHandle
         super(handler);
     }
 
+    @Override
     public OWLlinkSyntaxErrorException getOWLLinkObject() {
         return new OWLlinkSyntaxErrorException(getErrorString());
     }

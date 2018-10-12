@@ -39,17 +39,20 @@ public class OWLlinkGetInstancesElementHandler extends AbstractOWLClassRequestEl
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.isDirect = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getShortName().equals(localName))
             isDirect = Boolean.valueOf(value);
     }
 
+    @Override
     public GetInstances getOWLObject() throws OWLXMLParserException {
         return new GetInstances(getKB(), getObject(), isDirect);
     }

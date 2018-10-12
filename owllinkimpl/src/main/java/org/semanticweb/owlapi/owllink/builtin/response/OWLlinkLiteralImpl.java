@@ -34,6 +34,7 @@ public class OWLlinkLiteralImpl extends OWLlinkDataRangeImpl implements OWLlinkL
         this.value = value;
     }
 
+    @Override
     public String getValue() {
         return this.value;
     }

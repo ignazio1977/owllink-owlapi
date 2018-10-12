@@ -52,6 +52,7 @@ public class GetObjectPropertyTargets extends AbstractKBRequestWithIndividualPro
         return this.isNegative;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

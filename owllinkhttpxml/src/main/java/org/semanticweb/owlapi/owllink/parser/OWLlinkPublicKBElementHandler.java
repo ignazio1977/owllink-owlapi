@@ -46,12 +46,14 @@ public class OWLlinkPublicKBElementHandler extends AbstractOWLlinkElementHandler
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.name = null;
         this.kb = null;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLParserException {
         if (OWLlinkXMLVocabulary.KB_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
             this.kb = getFullIRI(value);
@@ -60,13 +62,15 @@ public class OWLlinkPublicKBElementHandler extends AbstractOWLlinkElementHandler
         }
     }
 
+    @Override
     public PublicKB getOWLLinkObject() {
         if (name == null)
             return new PublicKBImpl(kb);
         return new PublicKBImpl(kb, name);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 }

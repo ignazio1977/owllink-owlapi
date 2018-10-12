@@ -44,6 +44,7 @@ public abstract class AbstractOWLlinkElementHandlerFactory implements OWLlinkEle
     }
 
 
+    @Override
     public String getElementName() {
         return elementName;
     }

@@ -25,7 +25,7 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLLogicalEntity;
+import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.owllink.builtin.response.Synsets;
 import org.semanticweb.owlapi.reasoner.Node;
 
@@ -36,16 +36,17 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 17.02.2010
  */
-public abstract class AbstractOWLlinkEntitySynsetsElementHandler<S extends OWLLogicalEntity> extends AbstractOWLlinkKBResponseElementHandler<Synsets<S>> {
+public abstract class AbstractOWLlinkEntitySynsetsElementHandler<S extends OWLObject> extends AbstractOWLlinkKBResponseElementHandler<Synsets<S>> {
     protected Set<Node<S>> synsets;
 
     public AbstractOWLlinkEntitySynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.synsets = new HashSet<Node<S>>();
+        this.synsets = new HashSet<>();
     }
 
 

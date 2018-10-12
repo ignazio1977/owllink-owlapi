@@ -54,7 +54,7 @@ public class CreateKB implements Request<KB> {
     public CreateKB(IRI kb, String name, Map<String, String> prefixes) {
         this.kb = kb;
         this.name = name;
-        this.prefixes = prefixes == null ? Collections.<String, String>emptyMap() : new HashMap<String, String>(prefixes);
+        this.prefixes = prefixes == null ? Collections.<String, String>emptyMap() : new HashMap<>(prefixes);
     }
 
     public CreateKB(IRI kb) {
@@ -85,6 +85,7 @@ public class CreateKB implements Request<KB> {
         return Collections.unmodifiableMap(this.prefixes);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

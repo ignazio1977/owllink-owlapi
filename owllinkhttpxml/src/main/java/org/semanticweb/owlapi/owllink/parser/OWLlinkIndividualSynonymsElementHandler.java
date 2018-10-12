@@ -49,7 +49,7 @@ public class OWLlinkIndividualSynonymsElementHandler extends AbstractOWLlinkKBRe
     @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.individuals = new HashSet<OWLIndividual>();
+        this.individuals = new HashSet<>();
     }
 
     @Override

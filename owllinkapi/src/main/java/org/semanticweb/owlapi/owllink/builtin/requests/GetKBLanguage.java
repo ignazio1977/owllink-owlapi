@@ -37,6 +37,7 @@ public class GetKBLanguage extends AbstractKBRequest<StringResponse> {
         super(kb);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

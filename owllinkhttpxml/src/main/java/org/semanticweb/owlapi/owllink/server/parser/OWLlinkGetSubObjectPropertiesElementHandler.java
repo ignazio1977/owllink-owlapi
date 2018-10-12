@@ -40,11 +40,13 @@ public class OWLlinkGetSubObjectPropertiesElementHandler extends AbstractOWLProp
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         direct = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
@@ -52,6 +54,7 @@ public class OWLlinkGetSubObjectPropertiesElementHandler extends AbstractOWLProp
         }
     }
 
+    @Override
     public GetSubObjectProperties getOWLObject() throws OWLXMLParserException {
         return new GetSubObjectProperties(super.kb, (OWLObjectPropertyExpression) super.o, direct);
     }

@@ -41,6 +41,7 @@ public class GetDisjointDataProperties extends AbstractGetDisjointProperties<
         super(kb, object);
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

@@ -37,6 +37,7 @@ public class OWLlinkGetAllAnnotationPropertiesElementHandler extends AbstractOWL
         super(handler);
     }
 
+    @Override
     public GetAllAnnotationProperties getOWLObject() throws OWLXMLParserException {
         return new GetAllAnnotationProperties(getKB());
     }

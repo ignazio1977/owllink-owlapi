@@ -36,6 +36,7 @@ public class OWLlinkGetDisjointClassesElementHandler extends AbstractOWLClassReq
         super(handler);
     }
 
+    @Override
     public GetDisjointClasses getOWLObject() throws OWLXMLParserException {
         return new GetDisjointClasses(super.kb, super.o);
     }

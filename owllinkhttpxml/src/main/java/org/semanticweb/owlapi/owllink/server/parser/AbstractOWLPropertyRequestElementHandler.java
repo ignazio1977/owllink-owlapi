@@ -42,10 +42,12 @@ public abstract class AbstractOWLPropertyRequestElementHandler<R extends KBReque
         super(handler);
     }
 
+    @Override
     public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
         this.o = handler.getOWLObject();
     }
 
+    @Override
     public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
         this.o = handler.getOWLObject();
     }

@@ -39,11 +39,13 @@ public class OWLlinkGetSubClassesElementHandler extends AbstractOWLClassRequestE
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         direct = false;
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
@@ -51,6 +53,7 @@ public class OWLlinkGetSubClassesElementHandler extends AbstractOWLClassRequestE
         }
     }
 
+    @Override
     public GetSubClasses getOWLObject() throws OWLXMLParserException {
         return new GetSubClasses(super.kb, super.o, direct);
     }

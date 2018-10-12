@@ -23,88 +23,35 @@
 
 package org.semanticweb.owllink.protege;
 
-import org.protege.editor.owl.model.inference.ProtegeOWLReasonerFactoryAdapter;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.owllink.OWLlinkReasonerConfiguration;
-import org.semanticweb.owlapi.owllink.OWLlinkReasonerIOException;
-import org.semanticweb.owlapi.owllink.OWLlinkReasonerRuntimeException;
-import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkUnsatisfiableKBErrorResponseException;
-import org.semanticweb.owlapi.reasoner.InconsistentOntologyException;
-import org.semanticweb.owlapi.reasoner.IndividualNodeSetPolicy;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.ReasonerProgressMonitor;
-
-import javax.swing.*;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.protege.editor.owl.model.inference.AbstractProtegeOWLReasonerInfo;
+import org.semanticweb.owlapi.reasoner.BufferingMode;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
 /**
  * Author: Olaf Noppens
  * Date: 14.05.2010
  */
-public class OWLlinkHTTPXMLReasonerFactory extends ProtegeOWLReasonerFactoryAdapter {
+public class OWLlinkHTTPXMLReasonerFactory extends AbstractProtegeOWLReasonerInfo {
 
     private org.semanticweb.owlapi.owllink.OWLlinkHTTPXMLReasonerFactory factory;
 
-
-    public void dispose() throws Exception {
+    @Override
+    public void dispose() {
         this.factory = null;
     }
 
-    public void initialise() throws Exception {
+    @Override
+    public void initialise() {
         this.factory = new org.semanticweb.owlapi.owllink.OWLlinkHTTPXMLReasonerFactory();
     }
 
-    public OWLReasoner createReasoner(OWLOntology owlOntology, ReasonerProgressMonitor progressMonitor) {
-        System.out.println("createReasoner");
-        OWLlinkHTTPXMLReasonerPreferences prefs = OWLlinkHTTPXMLReasonerPreferences.getInstance();
-        try {
-            URL reasonerURL = new URL(prefs.getServerEndpointURL() + ":" + prefs.getServerEndpointPort());
-            OWLlinkReasonerConfiguration configuration = new OWLlinkReasonerConfiguration(progressMonitor, reasonerURL, IndividualNodeSetPolicy.BY_SAME_AS);
-            return factory.createNonBufferingReasoner(owlOntology, configuration);
-        } catch (OWLlinkUnsatisfiableKBErrorResponseException e) {
-            throw new InconsistentOntologyException();
-        } catch (OWLlinkReasonerIOException e) {
-            if (e.getCause() instanceof IOException) {
-                JOptionPane.showMessageDialog(null,
-                        "Connection to the OWLlink server failed.",
-                        "Connection failed",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (OWLlinkReasonerRuntimeException e) {
+    @Override
+    public OWLReasonerFactory getReasonerFactory() {
+        return factory;
+    }
 
-        } catch (MalformedURLException e) {
-            JOptionPane.showMessageDialog(null,
-                    "The given OWLlink server endpoint URL is not valid.\nUsing defaults (localhost, 8080).",
-                    "OWLlink server endpoint URL not valid",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        return null;
-        /*} catch (MalformedURLException e) {
-            JOptionPane.showMessageDialog(null,
-                    "The given OWLlink server endpoint URL is not valid.\nUsing defaults (localhost, 8080).",
-                    "OWLlink server endpoint URL not valid",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (OWLlinkUnsatisfiableKBErrorResponseException e) {
-            System.err.println("unsatisfiableKB!");
-            throw new InconsistentOntologyException();
-        } catch (OWLlinkReasonerRuntimeException e) {
-            System.out.println("OWLlinkReasonerRuntimeException");
-            if (e.getCause() instanceof IOException) {
-                JOptionPane.showMessageDialog(null,
-                        "Connection to the OWLlink server failed.",
-                        "Connection failed",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            System.out.println("exception!");
-            if (e instanceof OWLlinkReasonerRuntimeException) {
-                System.out.println("wäre!");
-            }
-            e.printStackTrace();
-        }
-        return null;          */
-        // return factory.createNonBufferingReasoner(owlOntology);
+    @Override
+    public BufferingMode getRecommendedBuffering() {
+        return BufferingMode.NON_BUFFERING;
     }
 }

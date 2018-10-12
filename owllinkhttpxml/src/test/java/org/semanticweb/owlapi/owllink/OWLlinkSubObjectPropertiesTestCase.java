@@ -24,7 +24,7 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSubObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSubObjectPropertyHierarchy;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSuperObjectProperties;
@@ -44,163 +44,131 @@ import java.util.Set;
  */
 public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
 
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("A"), getOWLObjectProperty("B")));
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("B"), getOWLObjectProperty("C")));
-        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(getOWLObjectProperty("D"), getOWLObjectProperty("C")));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opb()));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opb(), opc()));
+        axioms.add(getDataFactory().getOWLSubObjectPropertyOfAxiom(opd(), opc()));
 
         return axioms;
     }
 
-    public void testSubsumedBy() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubObjectPropertyOfAxiom(
-                getOWLObjectProperty("A"), getOWLObjectProperty("B")));
+    public void testSubsumedBy() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opb()));
         BooleanResponse response = super.reasoner.answer(query);
         assertTrue(response.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubObjectPropertyOfAxiom(
-                getOWLObjectProperty("A"), getOWLObjectProperty("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opc()));
         response = super.reasoner.answer(query);
         assertTrue(response.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubObjectPropertyOfAxiom(
-                getOWLObjectProperty("D"), getOWLObjectProperty("B")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubObjectPropertyOfAxiom(opd(), opb()));
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
     }
 
-    public void testSubsumedByViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLSubObjectPropertyOfAxiom(
-                getOWLObjectProperty("A"), getOWLObjectProperty("B"));
+    public void testSubsumedByViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opb());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLSubObjectPropertyOfAxiom(
-                getOWLObjectProperty("A"), getOWLObjectProperty("C"));
+        axiom = getDataFactory().getOWLSubObjectPropertyOfAxiom(opa(), opc());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLSubObjectPropertyOfAxiom(
-                getOWLObjectProperty("D"), getOWLObjectProperty("B"));
+        axiom = getDataFactory().getOWLSubObjectPropertyOfAxiom(opd(), opb());
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
 
-    public void testGetSubObjectProperties() throws Exception {
+    public void testGetSubObjectProperties() {
         //indirect case
-        GetSubObjectProperties query = new GetSubObjectProperties(getKBIRI(), getOWLObjectProperty("B"));
+        GetSubObjectProperties query = new GetSubObjectProperties(getKBIRI(), opb());
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
 
-        assertTrue(response.getNodes().size() == 2);
-        Node<OWLObjectProperty> synset = response.iterator().next();
-        assertTrue(synset.getSize() == 1);
-        assertTrue(synset.contains(getOWLObjectProperty("A")));
-
-        Set<OWLObjectProperty> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 2);
-        assertTrue(flattenedClasses.contains(getOWLObjectProperty("A")));
-        assertTrue(flattenedClasses.contains(manager.getOWLDataFactory().getOWLBottomObjectProperty()));
+        assertEquals(2,response.nodes().count());
+        Node<OWLObjectPropertyExpression> synset = response.iterator().next();
+        assertEquals(set(opa()), synset.getEntities());
+        assertEquals(set(opa(), manager.getOWLDataFactory().getOWLBottomObjectProperty()), response.getFlattened());
     }
 
-    public void testGetSubObjectPropertiesViaOWLReasoner() throws Exception {
+    public void testGetSubObjectPropertiesViaOWLReasoner() {
         //indirect case
-        NodeSet<OWLObjectProperty> response = super.reasoner.getSubObjectProperties(getOWLObjectProperty("B"), false);
+        NodeSet<OWLObjectPropertyExpression> response = super.reasoner.getSubObjectProperties(opb(), false);
 
-        assertTrue(response.getNodes().size() == 2);
-        Node<OWLObjectProperty> synset = response.iterator().next();
-        assertTrue(synset.getSize() == 1);
-        assertTrue(synset.contains(getOWLObjectProperty("A")));
-
-        Set<OWLObjectProperty> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 2);
-        assertTrue(flattenedClasses.contains(getOWLObjectProperty("A")));
-        assertTrue(flattenedClasses.contains(manager.getOWLDataFactory().getOWLBottomObjectProperty()));
+        assertEquals(2,response.nodes().count());
+        Node<OWLObjectPropertyExpression> synset = response.iterator().next();
+        assertEquals(set(opa()), synset.getEntities());
+        assertEquals(set(opa(), manager.getOWLDataFactory().getOWLBottomObjectProperty()), response.getFlattened());
     }
 
-    public void testGetDirectSubObjectProperties() throws Exception {
+    public void testGetDirectSubObjectProperties() {
         //direct case
-        GetSubObjectProperties query = new GetSubObjectProperties(getKBIRI(), getOWLObjectProperty("B"), true);
+        GetSubObjectProperties query = new GetSubObjectProperties(getKBIRI(), opb(), true);
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 1);
-        assertTrue(response.getFlattened().size() == 1);
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("A")));
+        assertEquals(1,response.nodes().count());
+        assertEquals(set(opa()), response.getFlattened());
     }
 
-    public void testGetDirectSubObjectPropertiesViaOWLReasoner() throws Exception {
+    public void testGetDirectSubObjectPropertiesViaOWLReasoner() {
         //direct case
-        NodeSet<OWLObjectProperty> response = super.reasoner.getSubObjectProperties(getOWLObjectProperty("B"), true);
-        assertTrue(response.getNodes().size() == 1);
-        assertTrue(response.getFlattened().size() == 1);
-        assertTrue(response.getFlattened().contains(getOWLObjectProperty("A")));
+        NodeSet<OWLObjectPropertyExpression> response = super.reasoner.getSubObjectProperties(opb(), true);
+        assertEquals(1,response.nodes().count());
+        assertEquals(set(opa()), response.getFlattened());
     }
 
 
-    public void testGetSuperProperties() throws Exception {
-        GetSuperObjectProperties query = new GetSuperObjectProperties(getKBIRI(), getOWLObjectProperty("A"));
+    public void testGetSuperProperties() {
+        GetSuperObjectProperties query = new GetSuperObjectProperties(getKBIRI(), opa());
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 3);
-        Node<OWLObjectProperty> synset = new OWLObjectPropertyNode(getOWLObjectProperty("B"));
-        assertTrue(response.getNodes().contains(synset));
-        synset = new OWLObjectPropertyNode(getOWLObjectProperty("C"));
-        assertTrue(response.getNodes().contains(synset));
-        synset = new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty());
-        assertTrue(response.getNodes().contains(synset));
+        assertEquals(3,response.nodes().count());
+        assertEquals(set(new OWLObjectPropertyNode(opb()), new OWLObjectPropertyNode(opc()), new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty())),response.getNodes());
     }
 
-    public void testGetSuperPropertiesViaOWLReasoner() throws Exception {
-        NodeSet<OWLObjectProperty> response = super.reasoner.getSuperObjectProperties(getOWLObjectProperty("A"), false);
-        assertTrue(response.getNodes().size() == 3);
-        Node<OWLObjectProperty> synset = new OWLObjectPropertyNode(getOWLObjectProperty("B"));
-        assertTrue(response.getNodes().contains(synset));
-        synset = new OWLObjectPropertyNode(getOWLObjectProperty("C"));
-        assertTrue(response.getNodes().contains(synset));
-        synset = new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty());
-        assertTrue(response.getNodes().contains(synset));
+    public void testGetSuperPropertiesViaOWLReasoner() {
+        NodeSet<OWLObjectPropertyExpression> response = super.reasoner.getSuperObjectProperties(opa(), false);
+        assertEquals(set(new OWLObjectPropertyNode(opb()), new OWLObjectPropertyNode(opc()), new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty())),response.getNodes());
     }
 
-    public void testGetSuperPropertiesDirect() throws Exception {
-        GetSuperObjectProperties query = new GetSuperObjectProperties(getKBIRI(), getOWLObjectProperty("A"), true);
+    public void testGetSuperPropertiesDirect() {
+        GetSuperObjectProperties query = new GetSuperObjectProperties(getKBIRI(), opa(), true);
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 1);
+        assertEquals(1,response.nodes().count());
     }
 
-    public void testGetSuperPropertiesDirectViaOWLReasoner() throws Exception {
-        NodeSet<OWLObjectProperty> response = super.reasoner.getSuperObjectProperties(getOWLObjectProperty("A"), true);
-        assertTrue(response.getNodes().size() == 1);
+    public void testGetSuperPropertiesDirectViaOWLReasoner() {
+        NodeSet<OWLObjectPropertyExpression> response = super.reasoner.getSuperObjectProperties(opa(), true);
+        assertEquals(1,response.nodes().count());
     }
 
-    public void testSubPropertyHierarchy() throws Exception {
+    public void testSubPropertyHierarchy() {
         GetSubObjectPropertyHierarchy query = new GetSubObjectPropertyHierarchy(getKBIRI());
-        Hierarchy<OWLObjectProperty> response = super.reasoner.answer(query);
-        Set<HierarchyPair<OWLObjectProperty>> pairs = response.getPairs();
+        Hierarchy<OWLObjectPropertyExpression> response = super.reasoner.answer(query);
+        Set<HierarchyPair<OWLObjectPropertyExpression>> pairs = response.getPairs();
         assertFalse(pairs.isEmpty());
-        assertTrue(pairs.size() == 3);
+        assertEquals(3, pairs.size());
 
-        Set<HierarchyPair<OWLObjectProperty>> expectedSet = CollectionFactory.createSet();
-        Node<OWLObjectProperty> synset = new OWLObjectPropertyNode(getDataFactory().getOWLTopObjectProperty());
-        Set<Node<OWLObjectProperty>> set = CollectionFactory.createSet();
-        set.add(new OWLObjectPropertyNode(getOWLObjectProperty("C")));
-        SubEntitySynsets<OWLObjectProperty> setOfSynsets = new SubObjectPropertySynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLObjectProperty>(synset, setOfSynsets));
+        Set<HierarchyPair<OWLObjectPropertyExpression>> expectedSet = CollectionFactory.createSet();
+        OWLObjectPropertyNode synset = new OWLObjectPropertyNode(getDataFactory().getOWLTopObjectProperty());
+        Set<Node<OWLObjectPropertyExpression>> set = CollectionFactory.createSet();
+        set.add(new OWLObjectPropertyNode(opc()));
+        SubEntitySynsets<OWLObjectPropertyExpression> setOfSynsets = new SubObjectPropertySynsets(set);
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLObjectPropertyNode(getOWLObjectProperty("C"));
+        synset = new OWLObjectPropertyNode(opc());
         set = CollectionFactory.createSet();
-        set.add(new OWLObjectPropertyNode(getOWLObjectProperty("B")));
-        set.add(new OWLObjectPropertyNode(getOWLObjectProperty("D")));
+        set.add(new OWLObjectPropertyNode(opb()));
+        set.add(new OWLObjectPropertyNode(opd()));
 
         setOfSynsets = new SubObjectPropertySynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLObjectProperty>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLObjectPropertyNode(getOWLObjectProperty("B"));
+        synset = new OWLObjectPropertyNode(opb());
         set = CollectionFactory.createSet();
-        set.add(new OWLObjectPropertyNode(getOWLObjectProperty("A")));
+        set.add(new OWLObjectPropertyNode(opa()));
         setOfSynsets = new SubObjectPropertySynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLObjectProperty>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        for (HierarchyPair pair : pairs) {
-            expectedSet.remove(pair);
-        }
-        assertTrue(expectedSet.isEmpty());
+        assertEquals(expectedSet, pairs);
     }
-
 }

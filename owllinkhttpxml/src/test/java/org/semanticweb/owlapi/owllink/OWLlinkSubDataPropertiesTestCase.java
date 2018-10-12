@@ -44,131 +44,119 @@ import java.util.Set;
  */
 public class OWLlinkSubDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
 
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("B")));
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("B"), getOWLDataProperty("C")));
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("D"), getOWLDataProperty("C")));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpB()));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpB(), dpC()));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpD(), dpC()));
 
         return axioms;
     }
 
-    public void testSubsumedBy() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("B")));
+    public void testSubsumedBy() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpB()));
         BooleanResponse response = super.reasoner.answer(query);
         assertTrue(response.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpC()));
         response = super.reasoner.answer(query);
         assertTrue(response.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("D"), getOWLDataProperty("B")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(dpD(), dpB()));
         response = super.reasoner.answer(query);
         assertFalse(response.getResult());
     }
 
-    public void testSubsumedByViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"));
+    public void testSubsumedByViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpB());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("C"));
+        axiom = getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpC());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("D"), getOWLDataProperty("B"));
+        axiom = getDataFactory().getOWLSubDataPropertyOfAxiom(dpD(), dpB());
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
 
-    public void testGetSubProperties() throws Exception {
-        GetSubDataProperties query = new GetSubDataProperties(getKBIRI(), getOWLDataProperty("B"));
+    public void testGetSubProperties() {
+        GetSubDataProperties query = new GetSubDataProperties(getKBIRI(), dpB());
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
 
-        assertTrue(response.getNodes().size() == 2);
+        assertEquals(2,response.nodes().count());
 
         Set<OWLDataProperty> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 2);
-        assertTrue(flattenedClasses.contains(getOWLDataProperty("A")));
-        assertTrue(flattenedClasses.contains(manager.getOWLDataFactory().getOWLBottomDataProperty()));
+        assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), response.getFlattened());
     }
 
-    public void testGetSubPropertiesViaOWLReasoner() throws Exception {
-        NodeSet<OWLDataProperty> response = super.reasoner.getSubDataProperties(getOWLDataProperty("B"), false);
+    public void testGetSubPropertiesViaOWLReasoner() {
+        NodeSet<OWLDataProperty> response = super.reasoner.getSubDataProperties(dpB(), false);
 
-        assertTrue(response.getNodes().size() == 2);
-
-        Set<OWLDataProperty> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 2);
-        assertTrue(flattenedClasses.contains(getOWLDataProperty("A")));
-        assertTrue(flattenedClasses.contains(manager.getOWLDataFactory().getOWLBottomDataProperty()));
+        assertEquals(2,response.nodes().count());
+        assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), response.getFlattened());
     }
 
-    public void testGetDirectSubProperties() throws Exception {
-        GetSubDataProperties query = new GetSubDataProperties(getKBIRI(), getOWLDataProperty("B"), true);
+    public void testGetDirectSubProperties() {
+        GetSubDataProperties query = new GetSubDataProperties(getKBIRI(), dpB(), true);
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 1);
-        Set<OWLDataProperty> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 1);
-        assertTrue(flattenedClasses.contains(getOWLDataProperty("A")));
+        assertEquals(1,response.nodes().count());
+        assertEquals(set(dpA()), response.getFlattened());
     }
 
-    public void testGetDirectSubPropertiesViaOWLReasoner() throws Exception {
-        NodeSet<OWLDataProperty> response = super.reasoner.getSubDataProperties(getOWLDataProperty("B"), true);
-        assertTrue(response.getNodes().size() == 1);
-        Set<OWLDataProperty> flattenedClasses = response.getFlattened();
-        assertTrue(flattenedClasses.size() == 1);
-        assertTrue(flattenedClasses.contains(getOWLDataProperty("A")));
+    public void testGetDirectSubPropertiesViaOWLReasoner() {
+        NodeSet<OWLDataProperty> response = super.reasoner.getSubDataProperties(dpB(), true);
+        assertEquals(1,response.nodes().count());
+        assertEquals(set(dpA()), response.getFlattened());
     }
 
-    public void testGetSuperProperties() throws Exception {
-        GetSuperDataProperties query = new GetSuperDataProperties(getKBIRI(), getOWLDataProperty("A"));
+    public void testGetSuperProperties() {
+        GetSuperDataProperties query = new GetSuperDataProperties(getKBIRI(), dpA());
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 3);
+        assertEquals(3,response.nodes().count());
 
-        query = new GetSuperDataProperties(getKBIRI(), getOWLDataProperty("A"), true);
+        query = new GetSuperDataProperties(getKBIRI(), dpA(), true);
         response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 1);
+        assertEquals(1,response.nodes().count());
     }
 
-    public void testGetSuperPropertiesViaOWLReasoner() throws Exception {
-        NodeSet<OWLDataProperty> response = super.reasoner.getSuperDataProperties(getOWLDataProperty("A"), false);
-        assertTrue(response.getNodes().size() == 3);
+    public void testGetSuperPropertiesViaOWLReasoner() {
+        NodeSet<OWLDataProperty> response = super.reasoner.getSuperDataProperties(dpA(), false);
+        assertEquals(3,response.nodes().count());
 
-        response = super.reasoner.getSuperDataProperties(getOWLDataProperty("A"), true);
-        assertTrue(response.getNodes().size() == 1);
+        response = super.reasoner.getSuperDataProperties(dpA(), true);
+        assertEquals(1,response.nodes().count());
     }
 
-    public void testSubPropertyHierarchy() throws Exception {
+    public void testSubPropertyHierarchy() {
         GetSubDataPropertyHierarchy query = new GetSubDataPropertyHierarchy(getKBIRI());
         DataPropertyHierarchy response = super.reasoner.answer(query);
         Set<HierarchyPair<OWLDataProperty>> pairs = response.getPairs();
         assertFalse(pairs.isEmpty());
-        assertTrue(pairs.size() == 3);
+        assertEquals(3, pairs.size());
 
         Set<HierarchyPair<OWLDataProperty>> expectedSet = CollectionFactory.createSet();
         Node<OWLDataProperty> synset = new OWLDataPropertyNode(getDataFactory().getOWLTopDataProperty());
         Set<Node<OWLDataProperty>> set = CollectionFactory.createSet();
-        set.add(new OWLDataPropertyNode(getOWLDataProperty("C")));
+        set.add(new OWLDataPropertyNode(dpC()));
         SubEntitySynsets<OWLDataProperty> setOfSynsets = new SubDataPropertySynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLDataProperty>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLDataPropertyNode(getOWLDataProperty("C"));
+        synset = new OWLDataPropertyNode(dpC());
         set = CollectionFactory.createSet();
-        set.add(new OWLDataPropertyNode(getOWLDataProperty("D")));
-        set.add(new OWLDataPropertyNode(getOWLDataProperty("B")));
+        set.add(new OWLDataPropertyNode(dpD()));
+        set.add(new OWLDataPropertyNode(dpB()));
 
         setOfSynsets = new SubDataPropertySynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLDataProperty>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        synset = new OWLDataPropertyNode(getOWLDataProperty("B"));
+        synset = new OWLDataPropertyNode(dpB());
         set = CollectionFactory.createSet();
-        set.add(new OWLDataPropertyNode(getOWLDataProperty("A")));
+        set.add(new OWLDataPropertyNode(dpA()));
         setOfSynsets = new SubDataPropertySynsets(set);
-        expectedSet.add(new HierarchyPairImpl<OWLDataProperty>(synset, setOfSynsets));
+        expectedSet.add(new HierarchyPairImpl<>(synset, setOfSynsets));
 
-        for (HierarchyPair pair : pairs) {
-            expectedSet.remove(pair);
-        }
-        assertTrue(expectedSet.isEmpty());
+        assertEquals(expectedSet, pairs);
     }
 }

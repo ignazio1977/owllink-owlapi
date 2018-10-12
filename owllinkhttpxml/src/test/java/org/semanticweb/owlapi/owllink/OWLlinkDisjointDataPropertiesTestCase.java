@@ -41,46 +41,47 @@ import java.util.Set;
  */
 public class OWLlinkDisjointDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
+    @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("C")));
-        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(getOWLDataProperty("A"), getOWLDataProperty("D")));
+        axioms.add(getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpC()));
+        axioms.add(getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpD()));
         return axioms;
     }
 
-    public void testAreDataPropertiesDisjoint() throws Exception {
-        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B")));
+    public void testAreDataPropertiesDisjoint() {
+        IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB()));
         BooleanResponse answer = super.reasoner.answer(query);
         assertTrue(answer.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("C")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpC()));
         answer = super.reasoner.answer(query);
         assertTrue(answer.getResult());
 
-        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("E")));
+        query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpE()));
         answer = super.reasoner.answer(query);
         assertFalse(answer.getResult());
     }
 
-    public void testAreDataPropertiesDisjointViaOWLReasoner() throws Exception {
-        OWLAxiom axiom = getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"));
+    public void testAreDataPropertiesDisjointViaOWLReasoner() {
+        OWLAxiom axiom = getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("C"));
+        axiom = getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpC());
         assertTrue(super.reasoner.isEntailed(axiom));
 
-        axiom = getDataFactory().getOWLDisjointDataPropertiesAxiom(getOWLDataProperty("A"), getOWLDataProperty("B"), getOWLDataProperty("E"));
+        axiom = getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpE());
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
-    public void testGetDisjointDataProperties() throws Exception {
-        GetDisjointDataProperties query = new GetDisjointDataProperties(getKBIRI(), getOWLDataProperty("B"));
+    public void testGetDisjointDataProperties() {
+        GetDisjointDataProperties query = new GetDisjointDataProperties(getKBIRI(), dpB());
         DataPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getNodes().size() == 2);
+        assertEquals(response.getNodes().toString(), 3,response.nodes().count());
     }
 
-    public void testGetDisjointDataPropertiesViaOWLReasoner() throws Exception {
-        NodeSet<OWLDataProperty> response = super.reasoner.getDisjointDataProperties(getOWLDataProperty("B"), false);
-        assertTrue(response.getNodes().size() == 2);
+    public void testGetDisjointDataPropertiesViaOWLReasoner() {
+        NodeSet<OWLDataProperty> response = super.reasoner.getDisjointDataProperties(dpB());
+        assertEquals(response.getNodes().toString(),3,response.nodes().count());
     }
 }

@@ -39,6 +39,7 @@ public enum OWLlinkNamespaces {
         this.ns = ns;
     }
 
+    @Override
     public String toString() {
         return ns;
     }

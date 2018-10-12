@@ -44,18 +44,22 @@ public class OWLlinkSettingsElementHandler extends AbstractOWLlinkKBResponseElem
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
-        this.settings = new HashSet<Setting>();
+        this.settings = new HashSet<>();
     }
 
+    @Override
     public void handleChild(OWLlinkSettingElementHandler handler) throws OWLXMLParserException {
         this.settings.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public Settings getOWLLinkObject() {
         return new SettingsImpl(this.settings);
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

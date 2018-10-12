@@ -43,14 +43,17 @@ public class OWLlinkRequestMessageElementHandler extends AbstractOWLlinkElementH
         super(handler);
     }
 
+    @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
-        this.requests = new Vector<Request>();
+        this.requests = new Vector<>();
     }
 
+    @Override
     public void handleChild(OWLlinkRequestElementHandler handler) {
         try {
             if (handler.getOWLObject() instanceof Request) {
@@ -62,9 +65,11 @@ public class OWLlinkRequestMessageElementHandler extends AbstractOWLlinkElementH
         }
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
     }
 
+    @Override
     public List<Request> getOWLObject() throws OWLXMLParserException {
         return this.requests;
     }

@@ -60,6 +60,7 @@ public class GetObjectPropertiesBetween extends AbstractKBRequestWithTwoObjects<
         return this.isNegative;
     }
 
+    @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);
     }

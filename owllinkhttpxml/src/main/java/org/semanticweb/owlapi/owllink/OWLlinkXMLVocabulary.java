@@ -25,7 +25,6 @@ package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.IRI;
 
-import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -198,8 +197,8 @@ public enum OWLlinkXMLVocabulary {
         return iri;
     }
 
-    public URI getURI() {
-        return iri.toURI();
+    public IRI getURI() {
+        return iri;
     }
 
 
@@ -208,18 +207,19 @@ public enum OWLlinkXMLVocabulary {
     }
 
 
+    @Override
     public String toString() {
         return iri.toString();
     }
 
 
-    static Set<URI> BUILT_IN_URIS;
+    static Set<IRI> BUILT_IN_URIS;
 
 
     static {
-        BUILT_IN_URIS = new HashSet<URI>();
+        BUILT_IN_URIS = new HashSet<>();
         for (OWLlinkXMLVocabulary v : OWLlinkXMLVocabulary.values()) {
-            BUILT_IN_URIS.add(v.getURI());
+            BUILT_IN_URIS.add(v.getIRI());
         }
     }
 

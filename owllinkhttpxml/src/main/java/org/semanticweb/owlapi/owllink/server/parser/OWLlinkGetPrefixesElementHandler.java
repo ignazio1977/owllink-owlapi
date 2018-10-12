@@ -37,6 +37,7 @@ public class OWLlinkGetPrefixesElementHandler extends AbstractOWLlinkKBRequestEl
         super(handler);
     }
 
+    @Override
     public GetPrefixes getOWLObject() throws OWLXMLParserException {
         return new GetPrefixes(getKB());
     }

@@ -44,7 +44,7 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
     }
 
     protected Set<E> createSet(int size) {
-        return new HashSet<E>(size);
+        return new HashSet<>(size);
     }
 
     public boolean isSingleton() {
@@ -58,20 +58,24 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
         return singleton;
     }
 
+    @Override
     public int size() {
         return isSingleton() ? 1 : delegateSet.size();
     }
 
+    @Override
     public boolean isEmpty() {
         return isSingleton() ? false : delegateSet.isEmpty();
     }
 
+    @Override
     public boolean contains(Object o) {
         if (isSingleton())
             return singleton == o;
         return delegateSet.contains(o);
     }
 
+    @Override
     public boolean containsAll(Collection<?> objects) {
         if (isSingleton()) {
             return objects.size() == 1 && this.singleton == objects.iterator().next();
@@ -79,22 +83,27 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
         return this.delegateSet.containsAll(objects);
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> es) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean retainAll(Collection<?> objects) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean removeAll(Collection<?> objects) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Iterator<E> iterator() {
         if (isSingleton()) {
             return Collections.singleton(singleton).iterator();
@@ -102,6 +111,7 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
         return Collections.unmodifiableCollection(this.delegateSet).iterator();
     }
 
+    @Override
     public Object[] toArray() {
         if (isSingleton()) {
             Object[] o = new Object[1];
@@ -110,6 +120,7 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
         return this.delegateSet.toArray();
     }
 
+    @Override
     public <T> T[] toArray(T[] a) {
         if (isSingleton()) {
             T[] result;
@@ -124,10 +135,12 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
         return this.delegateSet.toArray(a);
     }
 
+    @Override
     public boolean add(E e) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object o) {
         throw new UnsupportedOperationException();
     }

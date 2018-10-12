@@ -39,6 +39,7 @@ public class StringResponseImpl extends KBResponseImpl implements StringResponse
         this(result, null);
     }
 
+    @Override
     public String getResult() {
         return this.result;
     }
@@ -47,6 +48,7 @@ public class StringResponseImpl extends KBResponseImpl implements StringResponse
         return this.result == null;
     }
 
+    @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
     }

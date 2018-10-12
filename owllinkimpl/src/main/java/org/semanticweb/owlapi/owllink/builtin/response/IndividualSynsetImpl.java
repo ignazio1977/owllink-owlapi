@@ -45,7 +45,7 @@ public class IndividualSynsetImpl implements IndividualSynset {
     public IndividualSynsetImpl(Set<OWLIndividual> individuals) {
         if (individuals.isEmpty())
             throw new IllegalArgumentException("IndividualSynsets must not be empty!");
-        this.individuals = new HashSet<OWLIndividual>();
+        this.individuals = new HashSet<>();
         this.individuals.addAll(individuals);
     }
 
@@ -54,37 +54,44 @@ public class IndividualSynsetImpl implements IndividualSynset {
     }
 
     static Set<OWLIndividual> convert(Node<OWLNamedIndividual> node) {
-        Set<OWLIndividual> indis = new HashSet<OWLIndividual>();
+        Set<OWLIndividual> indis = new HashSet<>();
         indis.addAll(node.getEntities());
         return indis;
     }
 
+    @Override
     public Iterator<OWLIndividual> iterator() {
         return this.individuals.iterator();
     }
 
+    @Override
     public boolean isSingleton() {
         return this.individuals.size() == 1;
     }
 
+    @Override
     public OWLIndividual getSingletonElement() {
         return this.individuals.iterator().next();
     }
 
+    @Override
     public Set<OWLIndividual> getIndividuals() {
         return Collections.unmodifiableSet(this.individuals);
     }
 
+    @Override
     public boolean contains(OWLIndividual individual) {
         return this.individuals.contains(individual);
     }
 
+    @Override
     public boolean isNode() {
         for (OWLIndividual indi : this.individuals)
             if (indi.isAnonymous()) return false;
         return true;
     }
 
+    @Override
     public Node<OWLNamedIndividual> asNode() {
         if (!isNode())
             throw new OWLRuntimeException("Contains anonymous individuals. Conversion not possible. See isNode()");

@@ -42,10 +42,12 @@ public class OWLlinkSetOfClassesElementHandler extends AbstractSetOfOWLObjectRes
         super(handler);
     }
 
+    @Override
     public SetOfClasses getOWLLinkObject() {
         return new SetOfClassesImpl(super.elements);
     }
 
+    @Override
     public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
         OWLClassExpression expression = handler.getOWLObject();
         if (!expression.isAnonymous()) {

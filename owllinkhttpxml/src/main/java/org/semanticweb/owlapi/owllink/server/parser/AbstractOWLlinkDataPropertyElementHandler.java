@@ -39,6 +39,7 @@ public abstract class AbstractOWLlinkDataPropertyElementHandler<R extends KBRequ
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
         this.o = handler.getOWLObject().asOWLDataProperty();
     }

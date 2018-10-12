@@ -45,6 +45,7 @@ public class OWLlinkSubClassSynsetsElementHandler extends AbstractSubSynsetsElem
         super.synsets.add(handler.getOWLLinkObject());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);
     }

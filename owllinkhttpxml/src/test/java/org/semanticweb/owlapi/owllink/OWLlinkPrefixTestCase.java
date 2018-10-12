@@ -23,6 +23,7 @@
 
 package org.semanticweb.owlapi.owllink;
 
+import org.junit.Ignore;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.owllink.builtin.requests.CreateKB;
 import org.semanticweb.owlapi.owllink.builtin.requests.Tell;
@@ -37,11 +38,12 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 04.12.2009
  */
+@Ignore("No tests in this class")
 public class OWLlinkPrefixTestCase extends AbstractOWLlinkAxiomsTestCase {
     @Override
     protected Set<? extends OWLAxiom> createAxioms() {
         final Set<OWLAxiom> axioms = CollectionFactory.createSet();
-        axioms.add(getDataFactory().getOWLSubClassOfAxiom(getOWLClass("A"), getOWLClass("B")));
+        axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
         return axioms;
     }
 

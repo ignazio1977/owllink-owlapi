@@ -38,12 +38,14 @@ public class OWLlinkLiteralElementHandler extends AbstractOWLlinkElementHandler<
         super(handler);
     }
 
+    @Override
     public OWLlinkLiteral getOWLObject() {
         return new OWLlinkLiteralImpl(getText());
     }
 
+    @Override
     public void endElement() throws OWLXMLParserException {
-        ((OWLlinkElementHandler) getParentHandler()).handleChild(this);
+        getParentHandler().handleChild(this);
     }
 
     @Override

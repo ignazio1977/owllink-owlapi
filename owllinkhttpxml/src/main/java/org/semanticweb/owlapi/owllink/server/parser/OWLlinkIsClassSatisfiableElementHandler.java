@@ -41,15 +41,18 @@ public class OWLlinkIsClassSatisfiableElementHandler extends AbstractOWLlinkKBRe
         super(handler);
     }
 
+    @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);
         this.expression = null;
     }
 
+    @Override
     public IsClassSatisfiable getOWLObject() throws OWLXMLParserException {
         return new IsClassSatisfiable(super.kb, expression);
     }
 
+    @Override
     public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
         this.expression = handler.getOWLObject();
     }

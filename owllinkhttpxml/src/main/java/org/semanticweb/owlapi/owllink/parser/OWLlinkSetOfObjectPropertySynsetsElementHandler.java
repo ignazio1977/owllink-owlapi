@@ -25,7 +25,7 @@ package org.semanticweb.owlapi.owllink.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertySynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertySynsetsImpl;
 
@@ -34,12 +34,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertySynset
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkSetOfObjectPropertySynsetsElementHandler extends AbstractOWLlinkSetOfSynsetsElementHandler<OWLObjectProperty> {
+public class OWLlinkSetOfObjectPropertySynsetsElementHandler extends AbstractOWLlinkSetOfSynsetsElementHandler<OWLObjectPropertyExpression> {
 
     public OWLlinkSetOfObjectPropertySynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
+    @Override
     public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
         super.synsets.add(handler.getOWLLinkObject());
     }
