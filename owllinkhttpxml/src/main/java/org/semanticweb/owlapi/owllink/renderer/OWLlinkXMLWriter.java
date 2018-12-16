@@ -52,6 +52,11 @@ public class OWLlinkXMLWriter implements OWLlinkWriter {
     Writer baseWriter;
     OWLOntologyWriterConfiguration config;
 
+    /**
+     * @param writer writer 
+     * @param prefixProvider prefixProvider 
+     * @param config config 
+     */
     public OWLlinkXMLWriter(PrintWriter writer, PrefixManagerProvider prefixProvider, OWLOntologyWriterConfiguration config) {
         this.config=config;
         XMLWriterNamespaceManager nsm = new XMLWriterNamespaceManager(OWLlinkNamespaces.OWLLink.toString() + "#");
@@ -70,7 +75,7 @@ public class OWLlinkXMLWriter implements OWLlinkWriter {
             }
         };
         this.writer.setEncoding("UTF-8");
-        OWLXMLWriter owlxmlWriter = new MyOWLXMLWriter(this.writer, null, config);
+        OWLXMLWriter owlxmlWriter = new OWLXMLWriter(this.writer);
         this.defaultRenderer = new OWLXMLObjectRenderer(owlxmlWriter);
         this.baseWriter = writer;
         rendererByIRI = CollectionFactory.createMap();
@@ -90,6 +95,9 @@ public class OWLlinkXMLWriter implements OWLlinkWriter {
         writer.endDocument();
     }
 
+    /**
+     * @param v v
+     */
     public final void writeStartElement(OWLlinkXMLVocabulary v) {
         this.writeStartElement(v.getURI());
     }
@@ -141,15 +149,14 @@ public class OWLlinkXMLWriter implements OWLlinkWriter {
         } else {
             OWLXMLObjectRenderer renderer = rendererByIRI.get(KB);
             if (renderer == null) {
-                //OWLXMLWriter writer = new OWLXMLWriter(baseWriter, null);
-                OWLXMLWriter writer = new MyOWLXMLWriter(this.writer, null, config);
+                OWLXMLWriter w = new OWLXMLWriter(this.writer);
                 if (prefixProvider.contains(KB)) {
                     Map<String, String> map = prefixProvider.getPrefixes(KB).getPrefixName2PrefixMap();
                     for (Map.Entry<String, String> entry : map.entrySet()) {
-                        writer.getIRIPrefixMap().put(entry.getValue(), entry.getKey());
+                        w.getIRIPrefixMap().put(entry.getValue(), entry.getKey());
                     }
                 }
-                renderer = new OWLXMLObjectRenderer(writer);
+                renderer = new OWLXMLObjectRenderer(w);
                 rendererByIRI.put(KB, renderer);
             }
             object.accept(renderer);

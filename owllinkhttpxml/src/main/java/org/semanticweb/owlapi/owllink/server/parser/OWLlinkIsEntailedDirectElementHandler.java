@@ -28,14 +28,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsEntailedDirect;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 24.11.2009
  */
-public class OWLlinkIsEntailedDirectElementHandler extends AbstractOWLlinkKBRequestElementHandler<IsEntailedDirect> {
+public class OWLlinkIsEntailedDirectElementHandler extends AbstractOWLlinkKBRequestElementHandler<BooleanResponse, IsEntailedDirect> {
     protected OWLAxiom axiom;
 
+    /** @param handler handler */
     public OWLlinkIsEntailedDirectElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -60,30 +62,30 @@ public class OWLlinkIsEntailedDirectElementHandler extends AbstractOWLlinkKBRequ
         throw new IllegalArgumentException();
     }
 
-    protected boolean isOWLSubClassAxiom(OWLAxiom axiom) {
-        return axiom.isOfType(org.semanticweb.owlapi.model.AxiomType.SUBCLASS_OF);
+    protected boolean isOWLSubClassAxiom(OWLAxiom ax) {
+        return ax.isOfType(org.semanticweb.owlapi.model.AxiomType.SUBCLASS_OF);
     }
 
-    protected boolean isOWLSubObjectPropertyOfAxiom(OWLAxiom axiom) {
-        return axiom.isOfType(org.semanticweb.owlapi.model.AxiomType.SUB_OBJECT_PROPERTY);
+    protected boolean isOWLSubObjectPropertyOfAxiom(OWLAxiom ax) {
+        return ax.isOfType(org.semanticweb.owlapi.model.AxiomType.SUB_OBJECT_PROPERTY);
     }
 
-    protected boolean isOWLSubDataPropertyOfAxiom(OWLAxiom axiom) {
-        return axiom.isOfType(org.semanticweb.owlapi.model.AxiomType.SUB_DATA_PROPERTY);
+    protected boolean isOWLSubDataPropertyOfAxiom(OWLAxiom ax) {
+        return ax.isOfType(org.semanticweb.owlapi.model.AxiomType.SUB_DATA_PROPERTY);
     }
 
-    protected boolean isOWLClassAssertionAxiom(OWLAxiom axiom) {
-        return axiom.isOfType(org.semanticweb.owlapi.model.AxiomType.CLASS_ASSERTION);
+    protected boolean isOWLClassAssertionAxiom(OWLAxiom ax) {
+        return ax.isOfType(org.semanticweb.owlapi.model.AxiomType.CLASS_ASSERTION);
     }
 
-    protected boolean isLegalAxiom(OWLAxiom axiom) {
-        return isOWLSubClassAxiom(axiom) || isOWLSubObjectPropertyOfAxiom(axiom) ||
-                isOWLSubDataPropertyOfAxiom(axiom) || isOWLClassAssertionAxiom(axiom);
+    protected boolean isLegalAxiom(OWLAxiom ax) {
+        return isOWLSubClassAxiom(ax) || isOWLSubObjectPropertyOfAxiom(ax) ||
+                isOWLSubDataPropertyOfAxiom(ax) || isOWLClassAssertionAxiom(ax);
     }
 
     @Override
-    public void handleChild(AbstractOWLAxiomElementHandler handler) throws OWLXMLParserException {
-        this.axiom = handler.getOWLObject();
+    public void handleChild(AbstractOWLAxiomElementHandler h) throws OWLXMLParserException {
+        this.axiom = h.getOWLObject();
         if (!isLegalAxiom(axiom)) {
             throw new OWLXMLParserException("Illegal axiom. Only SubClassOf, SubObjectPropertyOf, SubDataPropertyOf, ClassAssertion axioms are allowed", getLineNumber(), getColumnNumber());
         }

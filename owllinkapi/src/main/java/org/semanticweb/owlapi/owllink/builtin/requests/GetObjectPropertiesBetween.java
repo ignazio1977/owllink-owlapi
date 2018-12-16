@@ -38,24 +38,34 @@ public class GetObjectPropertiesBetween extends AbstractKBRequestWithTwoObjects<
         OWLIndividual> {
     final boolean isNegative;
 
+    /** @param kb knowledge base 
+     * @param source source 
+     * @param target target */
     public GetObjectPropertiesBetween(IRI kb, OWLIndividual source, OWLIndividual target) {
         super(kb, source, target);
         this.isNegative = false;
     }
 
+    /** @param kb knowledge base 
+     * @param source source 
+     * @param target target 
+     * @param isNegative isNegative */
     public GetObjectPropertiesBetween(IRI kb, OWLIndividual source, OWLIndividual target, boolean isNegative) {
         super(kb, source, target);
         this.isNegative = isNegative;
     }
 
+    /** @return target individual */
     public OWLIndividual getTargetIndividual() {
         return super.secondObject;
     }
 
+    /** @return source individual*/
     public OWLIndividual getSourceIndividual() {
         return super.firstObject;
     }
 
+    /** @return true if negative*/
     public boolean isNegative() {
         return this.isNegative;
     }

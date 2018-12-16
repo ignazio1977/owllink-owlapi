@@ -38,14 +38,18 @@ public class GetSubDataPropertyHierarchy extends
         AbstractKBRequestWithOneObject<DataPropertyHierarchy,
                 OWLDataProperty> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetSubDataPropertyHierarchy(IRI kb, OWLDataProperty object) {
         super(kb, object);
     }
 
+    /** @param kb knowledge base */
     public GetSubDataPropertyHierarchy(IRI kb) {
         this(kb, null);
     }
 
+    /** @return data property */
     public OWLDataProperty getOWLProperty() {
         return super.getObject();
     }

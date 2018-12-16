@@ -30,20 +30,20 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsetsImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
 public class OWLlinkSetOfDataPropertySynsetsElementHandler extends AbstractOWLlinkSetOfSynsetsElementHandler<OWLDataProperty> {
 
+    /** @param handler handler */
     public OWLlinkSetOfDataPropertySynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
 
     @Override
-    public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
-        super.synsets.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkDataPropertySynsetElementHandler h) throws OWLXMLParserException {
+        super.synsets.add(h.getOWLLinkObject());
     }
 
     @Override

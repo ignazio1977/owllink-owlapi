@@ -35,10 +35,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkEquivalentDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -53,20 +53,20 @@ public class OWLlinkEquivalentDataPropertiesTestCase extends AbstractOWLlinkAxio
 
     public void testAreDataPropertiesEquivalent() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpA(), dpB()));
-        BooleanResponse result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        BooleanResponse answer = super.reasoner.answer(query);
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpA(), dpB(), dpC()));
-        result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        answer = super.reasoner.answer(query);
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE(), dpA()));
-        result = super.reasoner.answer(query);
-        assertFalse(result.getResult());
+        answer = super.reasoner.answer(query);
+        falseResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentDataPropertiesAxiom(dpD(), dpE()));
-        result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        answer = super.reasoner.answer(query);
+        trueResponse(answer);
     }
 
     public void testAreDataPropertiesEquivalentViaOWLReasoner() {

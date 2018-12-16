@@ -39,10 +39,10 @@ import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 03.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIsInstanceOfTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -58,16 +58,16 @@ public class OWLlinkIsInstanceOfTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     public void testIsInstanceOf() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(a(), i()));
-        assertTrue(super.reasoner.answer(query).getResult());
+        trueResponse(super.reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(top(), i()));
-        assertTrue(super.reasoner.answer(query).getResult());
+        trueResponse(super.reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(b(), j()));
-        assertTrue(super.reasoner.answer(query).getResult());
+        trueResponse(super.reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLClassAssertionAxiom(a(), j()));
-        assertFalse(super.reasoner.answer(query).getResult());
+        falseResponse(super.reasoner.answer(query));
     }
 
     public void testIsInstanceOfViaOWLReasoner() {

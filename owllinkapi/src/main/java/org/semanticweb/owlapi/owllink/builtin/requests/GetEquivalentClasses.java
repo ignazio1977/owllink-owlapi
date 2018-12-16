@@ -38,6 +38,8 @@ public class GetEquivalentClasses extends AbstractKBRequestWithOneObject<
         SetOfClasses,
         OWLClassExpression> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetEquivalentClasses(IRI kb, OWLClassExpression object) {
         super(kb, object);
     }

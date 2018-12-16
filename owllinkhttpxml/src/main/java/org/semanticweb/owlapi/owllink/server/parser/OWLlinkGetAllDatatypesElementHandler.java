@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetAllDatatypes;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfDatatypes;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetAllDatatypesElementHandler extends AbstractOWLlinkKBRequestElementHandler<GetAllDatatypes> {
+public class OWLlinkGetAllDatatypesElementHandler extends AbstractOWLlinkKBRequestElementHandler<SetOfDatatypes, GetAllDatatypes> {
 
+    /** @param handler handler */
     public OWLlinkGetAllDatatypesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

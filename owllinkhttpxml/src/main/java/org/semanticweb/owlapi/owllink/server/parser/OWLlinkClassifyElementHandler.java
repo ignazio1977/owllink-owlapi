@@ -26,17 +26,18 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.Classify;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkClassifyElementHandler extends AbstractOWLlinkKBRequestElementHandler<Classify> {
+public class OWLlinkClassifyElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, Classify> {
 
+    /** @param handler handler */
     public OWLlinkClassifyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
-
 
     @Override
     public Classify getOWLObject() throws OWLXMLParserException {

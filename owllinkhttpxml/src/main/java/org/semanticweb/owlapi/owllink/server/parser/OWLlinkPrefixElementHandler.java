@@ -41,13 +41,14 @@ public class OWLlinkPrefixElementHandler extends AbstractOWLlinkElementHandler<O
         return new Prefix(name, iri);
     }
 
+    /** @param handler handler */
     public OWLlinkPrefixElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void startElement(String name) throws OWLXMLParserException {
-        super.startElement(name);
+    public void startElement(String elementName) throws OWLXMLParserException {
+        super.startElement(elementName);
         this.name = null;
 
     }
@@ -68,14 +69,22 @@ public class OWLlinkPrefixElementHandler extends AbstractOWLlinkElementHandler<O
         getParentHandler().handleChild(this);
     }
 
+    /** @return prefix */
     public Prefix getOWLLinkObject() {
         return new Prefix(name, iri);
     }
 
+    /** Prefix. */
     public static class Prefix {
+        /** Name. */
         public final String name;
+        /** Iri. */
         public final IRI iri;
 
+        /**
+         * @param name name 
+         * @param iri iri 
+         */
         public Prefix(String name, IRI iri) {
             this.name = name;
             this.iri = iri;

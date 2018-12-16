@@ -35,6 +35,7 @@ import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 public class OWLlinkOntologyIRIElementHandler extends AbstractOWLlinkElementHandler<IRI> {
     IRI iri;
 
+    /** @param handler handler */
     public OWLlinkOntologyIRIElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

@@ -35,6 +35,9 @@ import java.util.Set;
 public class SettingsImpl extends KBResponseImpl implements Settings {
     final Set<Setting> settings;
 
+    /**
+     * @param settings settings 
+     */
     public SettingsImpl(Set<Setting> settings) {
         if (settings == null || settings.isEmpty())
             this.settings = Collections.emptySet();

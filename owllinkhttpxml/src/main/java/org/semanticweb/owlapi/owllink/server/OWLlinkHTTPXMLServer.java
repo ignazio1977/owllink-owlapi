@@ -33,7 +33,6 @@ import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.AbstractHttpHandler;
 import org.mortbay.util.MultiException;
-import org.semanticweb.owlapi.owllink.OWLlinkReasonerConfigurationImpl;
 import org.semanticweb.owlapi.reasoner.OWLReasonerConfiguration;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 
@@ -43,23 +42,38 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 public class OWLlinkHTTPXMLServer extends AbstractHttpHandler
     implements HttpHandler, OWLlinkServer {
     private static final long serialVersionUID = 5605350732186236386L;
+    /** Default port. */
     public static int DEFAULT_PORT = 8080;
 
     private int port;
     private OWLlinkReasonerBridge bridge;
     private HttpServer server;
 
+    /**
+     * @param reasonerFactory reasonerFactory 
+     * @param configuration configuration 
+     * @param port port 
+     */
     public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory,
         OWLReasonerConfiguration configuration, int port) {
         this(reasonerFactory, new AbstractOWLlinkReasonerConfiguration(configuration), port);
     }
 
+    /**
+     * @param reasonerFactory reasonerFactory 
+     * @param configuration configuration 
+     * @param port port 
+     */
     public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory,
         OWLlinkReasonerConfiguration configuration, int port) {
         bridge = new OWLlinkReasonerBridge(reasonerFactory, configuration);
         this.port = port;
     }
 
+    /**
+     * @param reasonerFactory reasonerFactory 
+     * @param configuration configuration 
+     */
     public OWLlinkHTTPXMLServer(OWLReasonerFactory reasonerFactory,
         OWLReasonerConfiguration configuration) {
         this(reasonerFactory, configuration, DEFAULT_PORT);

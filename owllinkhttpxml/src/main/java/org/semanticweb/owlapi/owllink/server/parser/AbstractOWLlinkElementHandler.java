@@ -30,19 +30,22 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <O> object type
  */
 public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElementHandler<O> implements OWLlinkElementHandler<O> {
+
+    /** @param handler handler */
     public AbstractOWLlinkElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    protected OWLlinkElementHandler getParentHandler() {
-        return (OWLlinkElementHandler) super.getParentHandler();
+    protected OWLlinkElementHandler<?> getParentHandler() {
+        return (OWLlinkElementHandler<?>) super.getParentHandler();
     }
 
     @Override
-    public void handleChild(OWLlinkRequestElementHandler handler) {
+    public void handleChild(OWLlinkRequestElementHandler<?, ?> handler) {
     }
 
     @Override
@@ -50,7 +53,7 @@ public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElemen
     }
 
     @Override
-    public void handleChild(OWLlinkElementHandler handler) {
+    public void handleChild(OWLlinkElementHandler<?> handler) {
     }
 
     @Override
@@ -67,12 +70,7 @@ public abstract class AbstractOWLlinkElementHandler<O> extends AbstractOWLElemen
 
     @Override
     public O getOWLlinkObject() {
-        try {
-            return getOWLObject();
-        } catch (OWLXMLParserException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return null;
+        return getOWLObject();
     }
 
     @Override

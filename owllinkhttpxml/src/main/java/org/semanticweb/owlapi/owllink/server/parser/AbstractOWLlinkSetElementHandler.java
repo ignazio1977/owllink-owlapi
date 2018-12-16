@@ -26,6 +26,7 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.Request;
+import org.semanticweb.owlapi.owllink.Response;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,10 +34,14 @@ import java.util.Set;
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <O> object type
+ * @param <R> request type
+ * @param <T> response type
  */
-public abstract class AbstractOWLlinkSetElementHandler<R extends Request, O> extends AbstractOWLlinkElementHandler<R> {
+public abstract class AbstractOWLlinkSetElementHandler<T extends Response, R extends Request<T>, O> extends AbstractOWLlinkElementHandler<R> {
     Set<O> elements;
 
+    /** @param handler handler */
     public AbstractOWLlinkSetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

@@ -27,12 +27,12 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkSyntaxErrorException;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 26.10.2009
  */
 public class OWLlinkSyntaxErrorElementHandler extends AbstractOWLlinkErrorHandler<OWLlinkSyntaxErrorException> {
 
+    /** @param handler handler */
     public OWLlinkSyntaxErrorElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

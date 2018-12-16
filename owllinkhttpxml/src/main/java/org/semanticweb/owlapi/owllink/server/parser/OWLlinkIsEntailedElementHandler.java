@@ -28,14 +28,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsEntailed;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkIsEntailedElementHandler extends AbstractOWLlinkKBRequestElementHandler<IsEntailed> {
+public class OWLlinkIsEntailedElementHandler extends AbstractOWLlinkKBRequestElementHandler<BooleanResponse, IsEntailed> {
     OWLAxiom axiom;
 
+    /** @param handler handler */
     public OWLlinkIsEntailedElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -52,7 +54,7 @@ public class OWLlinkIsEntailedElementHandler extends AbstractOWLlinkKBRequestEle
     }
 
     @Override
-    public void handleChild(AbstractOWLAxiomElementHandler handler) throws OWLXMLParserException {
-        this.axiom = handler.getOWLObject();
+    public void handleChild(AbstractOWLAxiomElementHandler h) throws OWLXMLParserException {
+        this.axiom = h.getOWLObject();
     }
 }

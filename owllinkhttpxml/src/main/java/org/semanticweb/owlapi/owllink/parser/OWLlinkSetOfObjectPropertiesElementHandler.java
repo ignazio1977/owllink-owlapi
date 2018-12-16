@@ -31,12 +31,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertiesImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSetOfObjectPropertiesElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLObjectPropertyExpression> {
 
+    /** @param handler handler */
     public OWLlinkSetOfObjectPropertiesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -47,8 +47,8 @@ public class OWLlinkSetOfObjectPropertiesElementHandler extends AbstractSetOfOWL
     }
 
     @Override
-    public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
-        OWLObjectPropertyExpression expr = handler.getOWLObject();
+    public void handleChild(AbstractOWLObjectPropertyElementHandler h) throws OWLXMLParserException {
+        OWLObjectPropertyExpression expr = h.getOWLObject();
         if (!expr.isAnonymous()) {
             super.elements.add(expr.asOWLObjectProperty());
         }

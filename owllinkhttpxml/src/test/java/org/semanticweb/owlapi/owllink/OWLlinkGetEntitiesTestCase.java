@@ -24,9 +24,7 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLIndividual;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetAllClasses;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetAllDataProperties;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetAllIndividuals;
@@ -40,14 +38,13 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.add;
 import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkGetEntitiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override

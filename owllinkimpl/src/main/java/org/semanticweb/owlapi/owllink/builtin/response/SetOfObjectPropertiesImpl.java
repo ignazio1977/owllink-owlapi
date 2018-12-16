@@ -33,18 +33,32 @@ import java.util.Collection;
  */
 public class SetOfObjectPropertiesImpl extends SetOfImpl<OWLObjectPropertyExpression> implements SetOfObjectProperties {
 
+    /**
+     * @param owlObjectProperty owlObjectProperty 
+     */
     public SetOfObjectPropertiesImpl(OWLObjectPropertyExpression owlObjectProperty) {
         super(owlObjectProperty);
     }
 
+    /**
+     * @param owlObjectProperty owlObjectProperty 
+     * @param warning warning 
+     */
     public SetOfObjectPropertiesImpl(OWLObjectPropertyExpression owlObjectProperty, String warning) {
         super(owlObjectProperty, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfObjectPropertiesImpl(Collection<OWLObjectPropertyExpression> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfObjectPropertiesImpl(Collection<OWLObjectPropertyExpression> elements, String warning) {
         super(elements, warning);
     }

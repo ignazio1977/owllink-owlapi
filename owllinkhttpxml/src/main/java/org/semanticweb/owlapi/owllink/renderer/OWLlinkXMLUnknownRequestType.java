@@ -30,7 +30,10 @@ import org.semanticweb.owlapi.owllink.Request;
  * @author Olaf Noppens
  */
 public class OWLlinkXMLUnknownRequestType extends OWLRendererException {
-    public OWLlinkXMLUnknownRequestType(Request request) {
+    /**
+     * @param request request 
+     */
+    public OWLlinkXMLUnknownRequestType(Request<?> request) {
         super("Unknown request type for " + request.getClass().getName());
     }
 }

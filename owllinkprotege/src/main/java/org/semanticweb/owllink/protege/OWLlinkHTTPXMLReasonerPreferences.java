@@ -32,42 +32,50 @@ import org.protege.editor.core.prefs.PreferencesManager;
  */
 public class OWLlinkHTTPXMLReasonerPreferences {
     private static String KEY = "org.semanticweb.owllink";
-    private static OWLlinkHTTPXMLReasonerPreferences INSTANCE;
+    private static OWLlinkHTTPXMLReasonerPreferences INSTANCE = new OWLlinkHTTPXMLReasonerPreferences();
 
+    /** @return instance*/
     public static synchronized OWLlinkHTTPXMLReasonerPreferences getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new OWLlinkHTTPXMLReasonerPreferences();
-        }
         return INSTANCE;
     }
 
-
-    private Preferences getPreferences() {
+    private static Preferences getPreferences() {
         return PreferencesManager.getInstance().getApplicationPreferences(KEY);
     }
 
+    /** @return true if compression*/
     public boolean isUseCompression() {
         return getPreferences().getBoolean("useCompression", true);
     }
 
+    /**
+     * @param useCompression useCompression 
+     */
     public void setUseCompression(boolean useCompression) {
         getPreferences().getBoolean("useCompression", useCompression);
     }
 
+    /**
+     * @param url url 
+     */
     public void setServerEndpointURL(String url) {
         getPreferences().getString("serverURL", url);
     }
 
+    /** @return server url */
     public String getServerEndpointURL() {
         return getPreferences().getString("serverURL", "http://localhost");
     }
 
+    /** @return server port */
     public int getServerEndpointPort() {
         return getPreferences().getInt("serverPort", 8080);
     }
 
+    /**
+     * @param port port 
+     */
     public void setServerEndpointPort(int port) {
         getPreferences().putInt("serverPort", port);
     }
-
 }

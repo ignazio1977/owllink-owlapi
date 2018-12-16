@@ -31,6 +31,7 @@ import org.semanticweb.owlapi.reasoner.Node;
  * <p/>
  * Author: Olaf Noppens
  * Date: 17.02.2010
+ * @param <E> object type
  */
 public interface EntitySynonyms<E extends OWLLogicalEntity> extends Node<E>, KBResponse {
 }

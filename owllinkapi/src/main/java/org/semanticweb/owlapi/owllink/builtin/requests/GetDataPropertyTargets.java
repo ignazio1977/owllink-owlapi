@@ -38,15 +38,20 @@ public class GetDataPropertyTargets extends AbstractKBRequestWithOneObject<
         OWLDataProperty> {
     final OWLIndividual individual;
 
+    /** @param kb knowledge base 
+     * @param individual individual 
+     * @param property property */
     public GetDataPropertyTargets(IRI kb, OWLIndividual individual, OWLDataProperty property) {
         super(kb, property);
         this.individual = individual;
     }
 
+    /** @return source individual */
     public OWLIndividual getSourceIndividual() {
         return this.individual;
     }
 
+    /** @return data property*/
     public OWLDataProperty getOWLProperty() {
         return super.getObject();
     }

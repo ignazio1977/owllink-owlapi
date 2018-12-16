@@ -28,6 +28,7 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.owllink.builtin.requests.Tell;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,10 +37,11 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkTellElementHandler extends AbstractOWLlinkKBRequestElementHandler<Tell> {
+public class OWLlinkTellElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, Tell> {
 
     protected Set<OWLAxiom> axioms;
 
+    /** @param handler handler */
     public OWLlinkTellElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -56,7 +58,7 @@ public class OWLlinkTellElementHandler extends AbstractOWLlinkKBRequestElementHa
     }
 
     @Override
-    public void handleChild(AbstractOWLAxiomElementHandler handler) throws OWLXMLParserException {
-        axioms.add(handler.getOWLObject());
+    public void handleChild(AbstractOWLAxiomElementHandler h) throws OWLXMLParserException {
+        axioms.add(h.getOWLObject());
     }
 }

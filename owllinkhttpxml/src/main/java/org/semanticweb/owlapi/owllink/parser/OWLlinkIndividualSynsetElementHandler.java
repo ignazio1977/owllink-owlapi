@@ -35,13 +35,13 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
 public class OWLlinkIndividualSynsetElementHandler extends AbstractOWLlinkElementHandler<IndividualSynset> {
     protected Set<OWLIndividual> elements;
 
+    /** @param handler handler */
     public OWLlinkIndividualSynsetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -58,13 +58,13 @@ public class OWLlinkIndividualSynsetElementHandler extends AbstractOWLlinkElemen
     }
 
     @Override
-    public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
-        elements.add(handler.getOWLObject());
+    public void handleChild(OWLIndividualElementHandler h) throws OWLXMLParserException {
+        elements.add(h.getOWLObject());
     }
 
     @Override
-    public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
-        elements.add(handler.getOWLObject());
+    public void handleChild(OWLAnonymousIndividualElementHandler h) throws OWLXMLParserException {
+        elements.add(h.getOWLObject());
     }
 
 

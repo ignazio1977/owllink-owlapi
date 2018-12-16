@@ -34,13 +34,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 14.12.2009
  */
 public class OWLlinkClassesElementHandler extends AbstractOWLlinkKBResponseElementHandler<Classes> {
     protected Set<OWLClass> classes;
 
+    /** @param handler handler */
     public OWLlinkClassesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -52,9 +52,9 @@ public class OWLlinkClassesElementHandler extends AbstractOWLlinkKBResponseEleme
     }
 
     @Override
-    public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
-        if (!handler.getOWLObject().isAnonymous())
-            classes.add(handler.getOWLObject().asOWLClass());
+    public void handleChild(AbstractClassExpressionElementHandler h) throws OWLXMLParserException {
+        if (!h.getOWLObject().isAnonymous())
+            classes.add(h.getOWLObject().asOWLClass());
     }
 
     @Override

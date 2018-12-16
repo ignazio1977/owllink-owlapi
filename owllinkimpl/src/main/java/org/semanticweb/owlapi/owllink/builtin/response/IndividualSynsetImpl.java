@@ -42,6 +42,9 @@ import java.util.Set;
 public class IndividualSynsetImpl implements IndividualSynset {
     Set<OWLIndividual> individuals;
 
+    /**
+     * @param individuals individuals 
+     */
     public IndividualSynsetImpl(Set<OWLIndividual> individuals) {
         if (individuals.isEmpty())
             throw new IllegalArgumentException("IndividualSynsets must not be empty!");
@@ -49,6 +52,9 @@ public class IndividualSynsetImpl implements IndividualSynset {
         this.individuals.addAll(individuals);
     }
 
+    /**
+     * @param node node 
+     */
     public IndividualSynsetImpl(Node<OWLNamedIndividual> node) {
         this(convert(node));
     }

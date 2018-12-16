@@ -33,7 +33,6 @@ public class OWLXMLRenderer extends AbstractOWLRenderer {
      * @param ontology ontology
      * @param writer writer
      * @param format format
-     * @throws OWLRendererException renderer error
      */
     public void render(OWLOntology ontology, PrintWriter writer, OWLDocumentFormat format) {
         OWLXMLWriter w = new OWLXMLWriter(writer, ontology, config);

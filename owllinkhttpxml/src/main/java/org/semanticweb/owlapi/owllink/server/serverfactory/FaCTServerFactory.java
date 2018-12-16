@@ -54,8 +54,9 @@ public class FaCTServerFactory implements OWLlinkServerFactory {
                 OWL2Datatype.OWL_REAL.getIRI());
 
         try {
-            Class factoryClass = Class.forName(FACTORY_NAME);
-            OWLReasonerFactory factory = (OWLReasonerFactory) factoryClass.newInstance();
+            @SuppressWarnings("unchecked")
+            Class<? extends OWLReasonerFactory> factoryClass = (Class<? extends OWLReasonerFactory>) Class.forName(FACTORY_NAME);
+            OWLReasonerFactory factory = factoryClass.newInstance();
             OWLlinkHTTPXMLServer server = new OWLlinkHTTPXMLServer(factory, config, port);
             return server;
         } catch (ClassNotFoundException e) {
@@ -78,7 +79,9 @@ public class FaCTServerFactory implements OWLlinkServerFactory {
         System.out.println("Make sure that the FaCT++ binaries are in your classpath or set it via \"-cp\"");
     }
 
-
+    /**
+     * @param args arguments
+     */
     public static void main(String args[]) {
         int port = 8080;
         for (int i = 0; i < args.length; i++) {
@@ -92,6 +95,7 @@ public class FaCTServerFactory implements OWLlinkServerFactory {
                     port = Integer.parseInt(args[++i]);
                 } catch (NumberFormatException e1) {
                     System.err.println("Invalid port number: " + args[i]);
+                    e1.printStackTrace();
                     System.exit(1);
                 }
             } else {

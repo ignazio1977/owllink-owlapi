@@ -36,18 +36,25 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 public class GetFlattenedInstances extends AbstractKBRequestWithOneObjectAndBooleanValue<
         SetOfIndividuals, OWLClassExpression> {
 
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public GetFlattenedInstances(IRI iri, OWLClassExpression object, boolean bool) {
         super(iri, object, bool);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public GetFlattenedInstances(IRI iri, OWLClassExpression object) {
         this(iri, object, false);
     }
 
+    /** @return true if direct */
     public boolean isDirect() {
         return super.bool;
     }
 
+    /** @return class expression*/
     public OWLClassExpression getClassExpression() {
         return super.object;
     }

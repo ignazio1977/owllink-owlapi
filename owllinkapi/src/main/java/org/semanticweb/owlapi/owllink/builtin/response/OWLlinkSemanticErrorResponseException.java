@@ -31,6 +31,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 26.10.2009
  */
 public class OWLlinkSemanticErrorResponseException extends OWLlinkErrorResponseException {
+    /**
+     * @param error error 
+     */
     public OWLlinkSemanticErrorResponseException(String error) {
         super(error);
     }

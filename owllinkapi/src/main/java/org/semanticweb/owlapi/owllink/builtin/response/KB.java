@@ -34,5 +34,6 @@ import org.semanticweb.owlapi.model.IRI;
  */
 public interface KB extends Confirmation {
 
+    /** @return kb iri */
     IRI getKB();
 }

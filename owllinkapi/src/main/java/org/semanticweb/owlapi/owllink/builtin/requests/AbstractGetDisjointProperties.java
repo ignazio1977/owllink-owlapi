@@ -30,13 +30,22 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 /**
  * Author: Olaf Noppens
  * Date: 24.10.2009
+ * @param <P> property type
+ * @param <R> response type
  */
 public abstract class AbstractGetDisjointProperties<R extends KBResponse, P extends OWLPropertyExpression> extends AbstractKBRequestWithOneObject<R, P> {
 
+    /**
+     * @param kb knowledge base
+     * @param object property
+     */
     public AbstractGetDisjointProperties(IRI kb, P object) {
         super(kb, object);
     }
 
+    /**
+     * @return property
+     */
     public P getOWLProperty() {
         return super.getObject();
     }

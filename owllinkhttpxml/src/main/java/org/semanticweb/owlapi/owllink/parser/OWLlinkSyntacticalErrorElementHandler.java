@@ -28,19 +28,18 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
 public class OWLlinkSyntacticalErrorElementHandler extends AbstractOWLlinkResponseElementHandler<KBResponse> {
 
+    /** @param handler handler */
     public OWLlinkSyntacticalErrorElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
-        int i;
     }
 
     @Override

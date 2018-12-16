@@ -26,13 +26,17 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.Request;
+import org.semanticweb.owlapi.owllink.Response;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
+ * @param <R> request type
+ * @param <T> response type
  */
-public abstract class AbstractOWLlinkRequestElementHandler<R extends Request> extends AbstractOWLlinkElementHandler<R> implements OWLlinkRequestElementHandler<R> {
+public abstract class AbstractOWLlinkRequestElementHandler<T extends Response, R extends Request<T>> extends AbstractOWLlinkElementHandler<R> implements OWLlinkRequestElementHandler<T, R> {
 
+    /** @param handler handler */
     public AbstractOWLlinkRequestElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

@@ -40,44 +40,81 @@ public class OWLlinkReasonerConfigurationImpl extends SimpleConfiguration {
         try {
             defaultURL = new URL("http://localhost:8080");
         } catch (MalformedURLException e) {
-            defaultURL = null;
+            // dead code
+            e.printStackTrace();
         }
     }
 
+    /**
+     * @param progressMonitor progressMonitor 
+     * @param policy policy 
+     * @param timeout timeout 
+     * @param individualNodeSetPolicy individualNodeSetPolicy 
+     * @param reasonerURL reasonerURL 
+     */
     public OWLlinkReasonerConfigurationImpl(ReasonerProgressMonitor progressMonitor,FreshEntityPolicy policy, long timeout, IndividualNodeSetPolicy individualNodeSetPolicy, URL reasonerURL) {
         super(progressMonitor, policy, timeout, individualNodeSetPolicy);
         this.reasonerURL = reasonerURL;
     }
 
+    /**
+     * @param progressMonitor progressMonitor 
+     * @param policy policy 
+     * @param timeout timeout 
+     * @param individualNodeSetPolicy individualNodeSetPolicy 
+     */
     public OWLlinkReasonerConfigurationImpl(ReasonerProgressMonitor progressMonitor,FreshEntityPolicy policy, long timeout, IndividualNodeSetPolicy individualNodeSetPolicy) {
         this(progressMonitor, policy, timeout, individualNodeSetPolicy, defaultURL);
     }
 
+    /**
+     * @param progressMonitor progressMonitor 
+     * @param reasonerURL reasonerURL 
+     * @param individualNodeSetPolicy individualNodeSetPolicy 
+     */
     public OWLlinkReasonerConfigurationImpl(ReasonerProgressMonitor progressMonitor, URL reasonerURL, IndividualNodeSetPolicy individualNodeSetPolicy) {
         super(progressMonitor, FreshEntityPolicy.DISALLOW, Long.MAX_VALUE, individualNodeSetPolicy);
         this.reasonerURL = reasonerURL;
     }
 
+    /**
+     * @param progressMonitor progressMonitor 
+     * @param policy policy 
+     */
     public OWLlinkReasonerConfigurationImpl(ReasonerProgressMonitor progressMonitor, IndividualNodeSetPolicy policy) {
         this(progressMonitor, defaultURL, policy);
     }
 
+    /**
+     * @param reasonerURL reasonerURL 
+     * @param policy policy 
+     */
     public OWLlinkReasonerConfigurationImpl(URL reasonerURL, IndividualNodeSetPolicy policy) {
         this(new NullReasonerProgressMonitor(), reasonerURL, policy);
     }
 
+    /**
+     * @param policy policy 
+     */
     public OWLlinkReasonerConfigurationImpl(IndividualNodeSetPolicy policy) {
         this(defaultURL, policy);
     }
 
-     public OWLlinkReasonerConfigurationImpl(URL reasonerURL) {
+     /**
+     * @param reasonerURL reasonerURL 
+     */
+    public OWLlinkReasonerConfigurationImpl(URL reasonerURL) {
         this(reasonerURL, IndividualNodeSetPolicy.BY_SAME_AS);
     }
 
+    /**
+     * Same as setting.
+     */
     public OWLlinkReasonerConfigurationImpl() {
         this(IndividualNodeSetPolicy.BY_SAME_AS);
     }
 
+    /** @return reasoner url */
     public URL getReasonerURL() {
         return this.reasonerURL;
     }

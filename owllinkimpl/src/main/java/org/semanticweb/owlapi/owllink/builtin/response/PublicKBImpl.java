@@ -33,11 +33,18 @@ public class PublicKBImpl implements PublicKB {
     final IRI kb;
     final String name;
 
+    /**
+     * @param kb kb 
+     * @param name name 
+     */
     public PublicKBImpl(IRI kb, String name) {
         this.kb = kb;
         this.name = name;
     }
 
+    /**
+     * @param kb kb 
+     */
     public PublicKBImpl(IRI kb) {
         this(kb, null);
     }

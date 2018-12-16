@@ -32,7 +32,6 @@ import org.semanticweb.owlapi.owllink.builtin.response.PublicKB;
 import org.semanticweb.owlapi.owllink.builtin.response.PublicKBImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * User: noppens
  * Date: 21.10.2009
  * Time: 17:48:07
@@ -42,13 +41,14 @@ public class OWLlinkPublicKBElementHandler extends AbstractOWLlinkElementHandler
     private String name;
     private IRI kb;
 
+    /** @param handler handler */
     public OWLlinkPublicKBElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void startElement(String name) throws OWLXMLParserException {
-        super.startElement(name);
+    public void startElement(String elementName) throws OWLXMLParserException {
+        super.startElement(elementName);
         this.name = null;
         this.kb = null;
     }

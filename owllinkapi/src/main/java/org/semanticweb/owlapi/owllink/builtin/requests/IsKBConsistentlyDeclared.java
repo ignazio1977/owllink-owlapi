@@ -34,6 +34,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
  * Date: 23.10.2009
  */
 public class IsKBConsistentlyDeclared extends AbstractKBRequest<BooleanResponse> {
+
+    /** @param kb knowledge base */
     public IsKBConsistentlyDeclared(IRI kb) {
         super(kb);
     }

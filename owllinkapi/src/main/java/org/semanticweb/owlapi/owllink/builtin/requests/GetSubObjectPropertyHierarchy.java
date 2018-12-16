@@ -37,19 +37,24 @@ import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertyHierarchy;
 public class GetSubObjectPropertyHierarchy extends AbstractKBRequest<ObjectPropertyHierarchy> {
     private OWLObjectProperty property;
 
+    /** @param kb knowledge base */
     public GetSubObjectPropertyHierarchy(IRI kb) {
         this(kb, null);
     }
 
+    /** @param kb knowledge base 
+     * @param expression expression */
     public GetSubObjectPropertyHierarchy(IRI kb, OWLObjectProperty expression) {
         super(kb);
         this.property = expression;
     }
 
+    /** @return object property */
     public OWLObjectProperty getObjectProperty() {
         return this.property;
     }
 
+    /** @return true if object property */
     public boolean hasObjectProperty() {
         return this.property != null;
     }

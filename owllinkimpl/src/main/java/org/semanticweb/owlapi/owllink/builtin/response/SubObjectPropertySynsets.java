@@ -35,14 +35,23 @@ import java.util.Set;
  */
 public class SubObjectPropertySynsets extends OWLObjectPropertyNodeSet implements SubEntitySynsets<OWLObjectPropertyExpression> {
 
+    /**
+     * @param entity entity 
+     */
     public SubObjectPropertySynsets(OWLObjectPropertyExpression entity) {
         super(entity);
     }
 
+    /**
+     * @param owlObjectPropertyNode owlObjectPropertyNode 
+     */
     public SubObjectPropertySynsets(Node<OWLObjectPropertyExpression> owlObjectPropertyNode) {
         super(owlObjectPropertyNode);
     }
 
+    /**
+     * @param nodes nodes 
+     */
     public SubObjectPropertySynsets(Set<Node<OWLObjectPropertyExpression>> nodes) {
         super(nodes);
     }

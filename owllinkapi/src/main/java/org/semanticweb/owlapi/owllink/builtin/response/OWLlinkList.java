@@ -33,5 +33,6 @@ import org.semanticweb.owlapi.model.IRI;
  * Date: 24.10.2009
  */
 public interface OWLlinkList extends OWLlinkDataRange {
+    /** @return type */
     IRI getType();
 }

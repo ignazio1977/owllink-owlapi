@@ -34,10 +34,19 @@ import java.util.Set;
  */
 public class ClassHierarchyImpl extends HierarchyImpl<OWLClass> implements ClassHierarchy {
 
+    /**
+     * @param hierarchyPairs hierarchyPairs 
+     * @param unsatisfiables unsatisfiables 
+     * @param warning warning 
+     */
     public ClassHierarchyImpl(Set<HierarchyPair<OWLClass>> hierarchyPairs, Node<OWLClass> unsatisfiables, String warning) {
         super(hierarchyPairs, unsatisfiables, warning);
     }
 
+    /**
+     * @param hierarchyPairs hierarchyPairs 
+     * @param unsatisfiables unsatisfiables 
+     */
     public ClassHierarchyImpl(Set<HierarchyPair<OWLClass>> hierarchyPairs, Node<OWLClass> unsatisfiables) {
         super(hierarchyPairs, unsatisfiables);
     }

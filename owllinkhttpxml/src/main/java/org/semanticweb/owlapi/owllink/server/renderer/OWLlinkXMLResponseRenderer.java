@@ -46,16 +46,18 @@ import java.util.Map;
 public class OWLlinkXMLResponseRenderer {
 
     IRI defaultKB;
-    ResponseRenderer renderer;
+    ResponseRenderer renderer = new ResponseRenderer();
     OWLOntologyWriterConfiguration config=new OWLOntologyWriterConfiguration();
 
-    public OWLlinkXMLResponseRenderer() {
-        this.renderer = new ResponseRenderer();
-    }
-
+    /**
+     * @param writer writer 
+     * @param prov prov 
+     * @param dfKB dfKB 
+     * @param responses responses 
+     */
     @Deprecated
-    public void render(PrintWriter writer, PrefixManagerProvider prov, IRI defaultKB, Response... responses) {
-        this.defaultKB = defaultKB;
+    public void render(PrintWriter writer, PrefixManagerProvider prov, IRI dfKB, Response... responses) {
+        this.defaultKB = dfKB;
         OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
         w.startDocument(false);
         renderer.setWriter(w);
@@ -71,7 +73,13 @@ public class OWLlinkXMLResponseRenderer {
     }
 
 
-    public void render(PrintWriter writer, PrefixManagerProvider prov, List<Request> requests, List<Response> responses) {
+    /**
+     * @param writer writer 
+     * @param prov prov 
+     * @param requests requests 
+     * @param responses responses 
+     */
+    public void render(PrintWriter writer, PrefixManagerProvider prov, List<Request<?>> requests, List<Response> responses) {
         OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
         w.startDocument(false);
         renderer.setWriter(w);
@@ -79,7 +87,7 @@ public class OWLlinkXMLResponseRenderer {
         for (int i = 0; i < count; i++) {
             Response response = responses.get(i);
             if (response instanceof KBResponse) {
-                this.defaultKB = ((KBRequest) requests.get(i)).getKB();
+                this.defaultKB = ((KBRequest<?>) requests.get(i)).getKB();
             }
             response.accept(renderer);
         }

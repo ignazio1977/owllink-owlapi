@@ -39,10 +39,17 @@ import java.util.Set;
 public class SetOfIndividualSynsetsImpl extends KBResponseImpl implements SetOfIndividualSynsets {
     Set<IndividualSynset> synsets;
 
+    /**
+     * @param synonymsets synonymsets 
+     */
     public SetOfIndividualSynsetsImpl(Set<IndividualSynset> synonymsets) {
         this(synonymsets, null);
     }
 
+    /**
+     * @param synonymsets synonymsets 
+     * @param warning warning 
+     */
     public SetOfIndividualSynsetsImpl(Set<IndividualSynset> synonymsets, String warning) {
         super(warning);
         this.synsets = new HashSet<>(synonymsets.size());

@@ -31,12 +31,12 @@ import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.OWLClassNode;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkClassSynsetElementHandler extends AbstractOWLlinkEntitySynsetElementHandler<OWLClass> {
 
+    /** @param handler handler */
     public OWLlinkClassSynsetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -47,9 +47,9 @@ public class OWLlinkClassSynsetElementHandler extends AbstractOWLlinkEntitySynse
     }
 
     @Override
-    public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
-        if (!handler.getOWLObject().isAnonymous())
-            super.elements.add(handler.getOWLObject().asOWLClass());
+    public void handleChild(AbstractClassExpressionElementHandler h) throws OWLXMLParserException {
+        if (!h.getOWLObject().isAnonymous())
+            super.elements.add(h.getOWLObject().asOWLClass());
     }
 
     @Override

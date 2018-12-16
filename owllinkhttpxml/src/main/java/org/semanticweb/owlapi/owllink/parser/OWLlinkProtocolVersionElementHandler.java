@@ -30,7 +30,6 @@ import org.semanticweb.owlapi.owllink.builtin.response.ProtocolVersion;
 import org.semanticweb.owlapi.owllink.builtin.response.ProtocolVersionImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
@@ -38,6 +37,7 @@ public class OWLlinkProtocolVersionElementHandler extends AbstractOWLlinkElement
     protected int major;
     protected int minor;
 
+    /** @param handler handler */
     public OWLlinkProtocolVersionElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

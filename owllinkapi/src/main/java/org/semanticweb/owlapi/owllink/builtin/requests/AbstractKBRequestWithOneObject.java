@@ -29,15 +29,20 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 /**
  * Author: Olaf Noppens
  * Date: 23.10.2009
+ * @param <O> object type
+ * @param <R> response type
  */
 public abstract class AbstractKBRequestWithOneObject<R extends KBResponse, O> extends AbstractKBRequest<R> {
     private O object;
 
+    /** @param kb knowledge base 
+     * @param object object */
     public AbstractKBRequestWithOneObject(IRI kb, O object) {
         super(kb);
         this.object = object;
     }
 
+    /** @return object */
     public O getObject() {
         return this.object;
     }

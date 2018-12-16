@@ -29,7 +29,6 @@ import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.response.ReasonerVersionImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
@@ -39,6 +38,7 @@ public class OWLlinkReasonerVersionElementHandler extends AbstractOWLlinkElement
     protected Integer minor;
     protected Integer build;
 
+    /** @param handler handler */
     public OWLlinkReasonerVersionElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -46,11 +46,11 @@ public class OWLlinkReasonerVersionElementHandler extends AbstractOWLlinkElement
     @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.MAJOR_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
-            this.major = Integer.parseInt(value);
+            this.major = Integer.valueOf(value);
         } else if (OWLlinkXMLVocabulary.MINOR_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
-            this.minor = Integer.parseInt(value);
+            this.minor = Integer.valueOf(value);
         } else if (OWLlinkXMLVocabulary.BUILD_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
-            this.build = Integer.parseInt(value);
+            this.build = Integer.valueOf(value);
         }
     }
 

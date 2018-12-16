@@ -45,8 +45,8 @@ public interface SetOfIndividualSynsets extends KBResponse {
      */
     Set<OWLIndividual> getFlattened();
 
+    /** @return true if empty*/
     boolean isEmpty();
-
 
     /**
      * Determines if this <code>NodeSet</code> is a singleton.  A <code>NodeSet</code> is a singleton if it contains
@@ -56,11 +56,15 @@ public interface SetOfIndividualSynsets extends KBResponse {
      */
     boolean isSingleton();
 
+    /** @return set of synonyms*/
     Set<IndividualSynset> getSynsets();
 
+    /** @return true if node*/
     boolean isNode();
 
+    /** @return cast as node*/
     NodeSet<OWLNamedIndividual> asNode();
 
+    /** @return size*/
     int getSize();
 }

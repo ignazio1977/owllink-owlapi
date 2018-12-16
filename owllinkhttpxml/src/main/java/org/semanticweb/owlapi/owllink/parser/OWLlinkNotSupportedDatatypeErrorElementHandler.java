@@ -33,6 +33,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkNotSupportedDataty
  */
 public class OWLlinkNotSupportedDatatypeErrorElementHandler extends AbstractOWLlinkErrorHandler<OWLlinkNotSupportedDatatypeErrorResponseException>{
 
+    /** @param handler handler */
     public OWLlinkNotSupportedDatatypeErrorElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

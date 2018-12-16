@@ -32,18 +32,32 @@ import java.util.Collection;
  * Date: 24.11.2009
  */
 public class SetOfAnnotationPropertiesImpl extends SetOfImpl<OWLAnnotationProperty> implements SetOfAnnotationProperties {
+    /**
+     * @param owlAnnotationProperty owlAnnotationProperty 
+     */
     public SetOfAnnotationPropertiesImpl(OWLAnnotationProperty owlAnnotationProperty) {
         super(owlAnnotationProperty);
     }
 
+    /**
+     * @param owlAnnotationProperty owlAnnotationProperty 
+     * @param warning warning 
+     */
     public SetOfAnnotationPropertiesImpl(OWLAnnotationProperty owlAnnotationProperty, String warning) {
         super(owlAnnotationProperty, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfAnnotationPropertiesImpl(Collection<OWLAnnotationProperty> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfAnnotationPropertiesImpl(Collection<OWLAnnotationProperty> elements, String warning) {
         super(elements, warning);
     }

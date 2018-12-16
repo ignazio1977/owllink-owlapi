@@ -35,10 +35,12 @@ import java.util.Set;
 /**
  * Author: Olaf Noppens
  * Date: 17.02.2010
+ * @param <S> object type
  */
 public abstract class AbstractOWLlinkEntitySynsetsElementHandler<S extends OWLObject> extends AbstractOWLlinkKBResponseElementHandler<Synsets<S>> {
     protected Set<Node<S>> synsets;
 
+    /** @param handler handler */
     public AbstractOWLlinkEntitySynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

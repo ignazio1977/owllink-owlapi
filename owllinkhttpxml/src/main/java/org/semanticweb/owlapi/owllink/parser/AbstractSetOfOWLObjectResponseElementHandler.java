@@ -32,13 +32,14 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
+ * @param <O> object type
  */
 public abstract class AbstractSetOfOWLObjectResponseElementHandler<O extends OWLObject> extends AbstractOWLlinkKBResponseElementHandler<SetOfX<O>> {
     protected Set<O> elements;
 
+    /** @param handler handler */
     public AbstractSetOfOWLObjectResponseElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

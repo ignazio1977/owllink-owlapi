@@ -31,12 +31,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfLiterals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfLiteralsImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
 public class OWLlinkSetOfLiteralsElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLLiteral> {
 
+    /** @param handler handler */
     public OWLlinkSetOfLiteralsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -47,8 +47,8 @@ public class OWLlinkSetOfLiteralsElementHandler extends AbstractSetOfOWLObjectRe
     }
 
     @Override
-    public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
-        super.elements.add(handler.getOWLObject());
+    public void handleChild(OWLLiteralElementHandler h) throws OWLXMLParserException {
+        super.elements.add(h.getOWLObject());
     }
 
 

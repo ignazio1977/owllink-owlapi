@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.ReleaseKB;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkReleaseKBElementHandler extends AbstractOWLlinkKBRequestElementHandler<ReleaseKB> {
+public class OWLlinkReleaseKBElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, ReleaseKB> {
 
+    /** @param handler handler */
     public OWLlinkReleaseKBElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

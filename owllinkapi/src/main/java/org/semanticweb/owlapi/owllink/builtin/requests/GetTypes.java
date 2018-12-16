@@ -37,18 +37,25 @@ import org.semanticweb.owlapi.owllink.builtin.response.ClassSynsets;
 public class GetTypes extends AbstractKBRequestWithOneObjectAndBooleanValue<
         ClassSynsets, OWLIndividual> {
 
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public GetTypes(IRI iri, OWLIndividual object, boolean bool) {
         super(iri, object, bool);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public GetTypes(IRI iri, OWLIndividual object) {
         super(iri, object);
     }
 
+    /** @return true if direct */
     public boolean isDirect() {
         return super.bool;
     }
 
+    /** @return individual */
     public OWLIndividual getIndividual() {
         return super.object;
     }

@@ -28,14 +28,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSuperObjectProperties;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertySynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkGetSuperObjectPropertiesElementHandler extends AbstractOWLPropertyRequestElementHandler<GetSuperObjectProperties> {
+public class OWLlinkGetSuperObjectPropertiesElementHandler extends AbstractOWLPropertyRequestElementHandler<SetOfObjectPropertySynsets, GetSuperObjectProperties> {
     boolean direct = false;
 
+    /** @param handler handler */
     public OWLlinkGetSuperObjectPropertiesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -50,7 +52,7 @@ public class OWLlinkGetSuperObjectPropertiesElementHandler extends AbstractOWLPr
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
-            this.direct = Boolean.valueOf(value);
+            this.direct = Boolean.parseBoolean(value);
         }
     }
 

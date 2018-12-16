@@ -29,12 +29,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkLiteral;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkLiteralImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkLiteralElementHandler extends AbstractOWLlinkElementHandler<OWLlinkLiteral> {
 
+    /** @param handler handler */
     public OWLlinkLiteralElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

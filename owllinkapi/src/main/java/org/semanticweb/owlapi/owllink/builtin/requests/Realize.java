@@ -35,6 +35,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OK;
  */
 public class Realize extends AbstractKBRequest<OK> {
 
+    /** @param kb knowledge base */
     public Realize(IRI kb) {
         super(kb);
     }

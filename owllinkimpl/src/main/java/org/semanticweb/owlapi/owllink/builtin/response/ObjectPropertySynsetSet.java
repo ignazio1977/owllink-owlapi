@@ -36,17 +36,26 @@ import java.util.Set;
  */
 public abstract class ObjectPropertySynsetSet extends OWLObjectPropertyNodeSet implements Synsets<OWLObjectPropertyExpression> {
 
+    /**
+     * @param nodes nodes 
+     */
     public ObjectPropertySynsetSet(Set<Node<OWLObjectPropertyExpression>> nodes) {
         super(nodes);
         if (nodes.isEmpty()) throw new IllegalArgumentException("set must not be empty");
     }
 
+    /**
+     * @param owlClassNode owlClassNode 
+     */
     public ObjectPropertySynsetSet(Node<OWLObjectPropertyExpression> owlClassNode) {
         super(owlClassNode);
         if (owlClassNode.getSize() == 0) throw new IllegalArgumentException("set must not be empty");
 
     }
 
+    /**
+     * @param entity entity 
+     */
     public ObjectPropertySynsetSet(OWLObjectProperty entity) {
         super(entity);
     }

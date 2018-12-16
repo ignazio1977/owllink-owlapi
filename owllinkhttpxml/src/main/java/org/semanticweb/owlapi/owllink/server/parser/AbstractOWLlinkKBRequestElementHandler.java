@@ -30,15 +30,19 @@ import org.semanticweb.owlapi.model.PrefixManager;
 import org.semanticweb.owlapi.owllink.KBRequest;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.PrefixManagerProvider;
+import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <R> request type
+ * @param <T> response type
  */
-public abstract class AbstractOWLlinkKBRequestElementHandler<R extends KBRequest> extends AbstractOWLlinkElementHandler<R> implements OWLlinkRequestElementHandler<R> {
+public abstract class AbstractOWLlinkKBRequestElementHandler<T extends KBResponse, R extends KBRequest<T>> extends AbstractOWLlinkElementHandler<R> implements OWLlinkRequestElementHandler<T, R> {
     IRI kb;
     OWLlinkXMLRequestParserHandler handler;
 
+    /** @param handler handler */
     public AbstractOWLlinkKBRequestElementHandler(OWLXMLParserHandler handler) {
         super(handler);
         this.handler = (OWLlinkXMLRequestParserHandler) handler;
@@ -62,6 +66,7 @@ public abstract class AbstractOWLlinkKBRequestElementHandler<R extends KBRequest
 
     }
 
+    /** @return kb iri */
     public IRI getKB() {
         return this.kb;
     }

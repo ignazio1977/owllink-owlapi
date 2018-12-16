@@ -30,13 +30,13 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSupportedExtensionElemenetHandler extends AbstractOWLlinkElementHandler<IRI> {
     private IRI fullIRI;
 
+    /** @param handler handler */
     public OWLlinkSupportedExtensionElemenetHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

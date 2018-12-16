@@ -33,9 +33,15 @@ import org.semanticweb.owlapi.model.IRI;
  * Date: 20.11.2009
  */
 public class IRIMapping {
+    /** Key. */
     public final String key;
+    /** Value.*/
     public final IRI value;
 
+    /**
+     * @param key key 
+     * @param value value 
+     */
     public IRIMapping(final String key, final IRI value) {
         this.key = key;
         this.value = value;

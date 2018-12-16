@@ -37,6 +37,7 @@ public class OWLlinkIRIMappingElementHandler extends AbstractOWLlinkElementHandl
     String key;
     IRI iri;
 
+    /** @param handler handler */
     public OWLlinkIRIMappingElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

@@ -32,18 +32,32 @@ import java.util.Collection;
  * Date: 24.11.2009
  */
 public class SetOfClassesImpl extends SetOfImpl<OWLClass> implements SetOfClasses {
+    /**
+     * @param owlClass owlClass 
+     */
     public SetOfClassesImpl(OWLClass owlClass) {
         super(owlClass);
     }
 
+    /**
+     * @param owlClass owlClass 
+     * @param warning warning 
+     */
     public SetOfClassesImpl(OWLClass owlClass, String warning) {
         super(owlClass, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfClassesImpl(Collection<OWLClass> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfClassesImpl(Collection<OWLClass> elements, String warning) {
         super(elements, warning);
     }

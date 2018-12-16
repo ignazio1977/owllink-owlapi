@@ -26,12 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetKBLanguage;
+import org.semanticweb.owlapi.owllink.builtin.response.StringResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetKBLanguageElementHandler extends AbstractOWLlinkKBRequestElementHandler<GetKBLanguage> {
+public class OWLlinkGetKBLanguageElementHandler extends AbstractOWLlinkKBRequestElementHandler<StringResponse, GetKBLanguage> {
+
+    /** @param handler handler */
     public OWLlinkGetKBLanguageElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

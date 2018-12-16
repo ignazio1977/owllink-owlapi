@@ -30,17 +30,21 @@ import java.util.Set;
  * Date: 24.10.2009
  */
 public interface Configuration {
+    /** @return key */
     String getKey();
 
+    /** @return type*/
     OWLlinkDataRange getType();
 
+    /** @return values*/
     Set<OWLlinkLiteral> getValues();
 
+    /** @return true if setting*/
     boolean isSetting();
 
+    /** @return as setting*/
     Setting asSetting();
 
+    /** @return as property*/
     Property asProperty();
-
-
 }

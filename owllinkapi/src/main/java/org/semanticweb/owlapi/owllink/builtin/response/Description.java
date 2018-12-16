@@ -35,20 +35,28 @@ import java.util.Set;
  * Date: 23.10.2009
  */
 public interface Description extends Confirmation {
+
+    /** @return name*/
     String getName();
 
+    /** @return message*/
     String getMessage();
 
+    /** @return true if message*/
     boolean hasMessage();
 
+    /** @return public knowledge bases*/
     Set<PublicKB> getPublicKBs();
 
+    /** @return defaults*/
     Set<Configuration> getDefaults();
 
+    /** @return supported extension*/
     Set<IRI> getSupportedExtensions();
 
+    /** @return protocol version*/
     ProtocolVersion getProtocolVersion();
 
+    /** @return reasoner version*/
     ReasonerVersion getReasonerVersion();
-
 }

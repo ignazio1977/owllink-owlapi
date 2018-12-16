@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSameIndividuals;
+import org.semanticweb.owlapi.owllink.builtin.response.IndividualSynonyms;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetSameIndividualsElementHandler extends AbstractOWLIndividualElementHandler<GetSameIndividuals> {
+public class OWLlinkGetSameIndividualsElementHandler extends AbstractOWLIndividualElementHandler<IndividualSynonyms, GetSameIndividuals> {
 
+    /** @param handler handler */
     public OWLlinkGetSameIndividualsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

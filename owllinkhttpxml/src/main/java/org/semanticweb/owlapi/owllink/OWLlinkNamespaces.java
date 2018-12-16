@@ -29,8 +29,10 @@ package org.semanticweb.owlapi.owllink;
  */
 public enum OWLlinkNamespaces {
 
+    /** OWLLink. */
     OWLLink("http://www.owllink.org/owllink"),
 
+    /** Retraction. */
     OWLLinkRetraction("http://www.owllink.org/owllink-xml/ext/retraction");
 
     String ns;

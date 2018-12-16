@@ -34,17 +34,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * User: noppens
  * Date: 21.10.2009
  * Time: 17:48:24
- * To change this template use File | Settings | File Templates.
+ * @param <C> response type
  */
 public abstract class OWLlinkConfigurationElementHandler<C extends Configuration> extends AbstractOWLlinkElementHandler<C> {
     protected String key;
     protected Set<OWLlinkLiteral> values;
     protected OWLlinkDataRange type;
 
+    /** @param handler handler */
     public OWLlinkConfigurationElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -65,13 +65,13 @@ public abstract class OWLlinkConfigurationElementHandler<C extends Configuration
     }
 
     @Override
-    public void handleChild(OWLlinkDataRangeElementHandler handler) throws OWLXMLParserException {
-        this.type = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkDataRangeElementHandler<?> h) throws OWLXMLParserException {
+        this.type = h.getOWLLinkObject();
     }
 
     @Override
-    public void handleChild(OWLlinkLiteralElementHandler handler) throws OWLXMLParserException {
-        this.values.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkLiteralElementHandler h) throws OWLXMLParserException {
+        this.values.add(h.getOWLLinkObject());
     }
 
     @Override

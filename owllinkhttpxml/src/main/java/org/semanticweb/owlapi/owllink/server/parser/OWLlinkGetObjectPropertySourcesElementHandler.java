@@ -30,15 +30,17 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetObjectPropertySources;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetObjectPropertySourcesElementHandler extends AbstractOWLlinkObjectPropertyExpressionElementHandler<GetObjectPropertySources> {
+public class OWLlinkGetObjectPropertySourcesElementHandler extends AbstractOWLlinkObjectPropertyExpressionElementHandler<SetOfIndividualSynsets, GetObjectPropertySources> {
     boolean isNegative = false;
     OWLIndividual targetIndividual;
 
+    /** @param handler handler */
     public OWLlinkGetObjectPropertySourcesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -54,17 +56,17 @@ public class OWLlinkGetObjectPropertySourcesElementHandler extends AbstractOWLli
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName))
-            isNegative = Boolean.valueOf(value);
+            isNegative = Boolean.parseBoolean(value);
     }
 
     @Override
-    public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
-        this.targetIndividual = handler.getOWLObject();
+    public void handleChild(OWLIndividualElementHandler h) throws OWLXMLParserException {
+        this.targetIndividual = h.getOWLObject();
     }
 
     @Override
-    public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
-        this.targetIndividual = handler.getOWLObject();
+    public void handleChild(OWLAnonymousIndividualElementHandler h) throws OWLXMLParserException {
+        this.targetIndividual = h.getOWLObject();
     }
 
     @Override

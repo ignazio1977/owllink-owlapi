@@ -28,20 +28,27 @@ import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <O> object type
+ * @param <R> response type
  */
 public abstract class AbstractKBRequestWithOneObjectAndNegativeAttribute<R extends KBResponse, O extends OWLObject> extends AbstractKBRequestWithOneObjectAndBooleanValue<R, O> {
 
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public AbstractKBRequestWithOneObjectAndNegativeAttribute(IRI iri, O object, boolean bool) {
         super(iri, object, bool);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public AbstractKBRequestWithOneObjectAndNegativeAttribute(IRI iri, O object) {
         super(iri, object);
     }
 
+    /** @return true if negative */
     public final boolean isNegative() {
         return super.bool;
     }

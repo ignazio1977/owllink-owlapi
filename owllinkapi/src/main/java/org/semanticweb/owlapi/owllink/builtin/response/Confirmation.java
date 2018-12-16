@@ -41,5 +41,6 @@ public interface Confirmation extends Response {
      */
     boolean hasWarning();
 
+    /** @return warning */
     String getWarning();
 }

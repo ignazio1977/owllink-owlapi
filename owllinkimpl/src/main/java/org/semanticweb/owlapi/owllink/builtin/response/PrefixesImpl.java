@@ -33,11 +33,12 @@ import java.util.Map;
 public class PrefixesImpl extends KBResponseImpl implements Prefixes {
     Map<String, String> prefixes;
 
-
+    /**
+     * @param prefixes prefixes 
+     */
     public PrefixesImpl(Map<String, String> prefixes) {
         this.prefixes = prefixes;
     }
-
 
     @Override
     public Map<String, String> getPrefixes() {

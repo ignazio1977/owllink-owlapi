@@ -31,21 +31,18 @@ import org.semanticweb.owlapi.reasoner.Node;
  * 
  * Author: Olaf Noppens
  * Date: 02.11.2009
+ * @param <O> object type
  */
 public interface HierarchyPair<O extends OWLObject> {
     /**
-     * Returns the {@link org.semanticweb.owlapi.reasoner.Node Node}
+     * @return the {@link org.semanticweb.owlapi.reasoner.Node Node}
      * of super elements.
-     *
-     * @return
      */
     Node<O> getSuper();
 
     /**
-     * Returns the {@link Synsets SynsetSet}
+     * @return the {@link Synsets SynsetSet}
      * of the sub elements.
-     *
-     * @return
      */
     SubEntitySynsets<O> getSubs();
 

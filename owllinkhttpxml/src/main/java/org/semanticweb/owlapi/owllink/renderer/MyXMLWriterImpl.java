@@ -31,6 +31,8 @@ import org.semanticweb.owlapi.rdf.rdfxml.renderer.XMLWriter;
 import org.semanticweb.owlapi.rdf.rdfxml.renderer.XMLWriterNamespaceManager;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
+import static org.semanticweb.owlapi.util.OWLAPIPreconditions.verifyNotNull;
+
 import java.io.PrintWriter;
 import java.net.URI;
 import java.util.*;
@@ -44,7 +46,7 @@ public class MyXMLWriterImpl implements XMLWriter {
 
     private Stack<XMLElement> elementStack;
 
-    private PrintWriter writer;
+    protected PrintWriter writer;
 
     private String encoding;
 
@@ -62,13 +64,24 @@ public class MyXMLWriterImpl implements XMLWriter {
 
     private static final String PERCENT_ENTITY = "&#37;";
 
-    private OWLOntologyWriterConfiguration config;
+    protected OWLOntologyWriterConfiguration config;
 
+    /**
+     * @param writer writer 
+     * @param xmlWriterNamespaceManager xmlWriterNamespaceManager 
+     * @param config config 
+     */
     public MyXMLWriterImpl(PrintWriter writer, XMLWriterNamespaceManager xmlWriterNamespaceManager, OWLOntologyWriterConfiguration config) {
         this(writer, xmlWriterNamespaceManager, "UTF-8", config);
     }
 
 
+    /**
+     * @param writer writer 
+     * @param xmlWriterNamespaceManager xmlWriterNamespaceManager 
+     * @param xmlBase xmlBase 
+     * @param config config 
+     */
     public MyXMLWriterImpl(PrintWriter writer, XMLWriterNamespaceManager xmlWriterNamespaceManager, String xmlBase, OWLOntologyWriterConfiguration config) {
         this.writer = writer;
         this.xmlWriterNamespaceManager = xmlWriterNamespaceManager;
@@ -100,14 +113,14 @@ public class MyXMLWriterImpl implements XMLWriter {
                 curPrefix = xmlWriterNamespaceManager.getPrefixForNamespace(curNamespace);
 
             }
-            if (curPrefix.length() > 0) {
+            if (curPrefix!=null && !curPrefix.isEmpty()) {
                 entities.put(curNamespace, "&" + curPrefix + ";");
             }
         }
     }
 
 
-    private String swapForEntity(String value) {
+    protected String swapForEntity(String value) {
         for (String curEntity : entities.keySet()) {
             String entityVal = entities.get(curEntity);
             if (value.length() > curEntity.length()) {
@@ -120,17 +133,17 @@ public class MyXMLWriterImpl implements XMLWriter {
         return value;
     }
 
-
+    /** @return default namespace */
     public String getDefaultNamespace() {
         return xmlWriterNamespaceManager.getDefaultNamespace();
     }
-
 
     @Override
     public String getXMLBase() {
         return xmlBase;
     }
 
+    /** @return base xml uri*/
     public URI getXMLBaseAsURI() {
         return xmlBaseURI;
     }
@@ -140,13 +153,12 @@ public class MyXMLWriterImpl implements XMLWriter {
         return xmlWriterNamespaceManager;
     }
 
-
     @Override
     public void setEncoding(String encoding) {
         this.encoding = encoding;
     }
 
-    private boolean isValidQName(String name) {
+    private static boolean isValidQName(String name) {
         if (name == null) {
             return false;
         }
@@ -163,7 +175,6 @@ public class MyXMLWriterImpl implements XMLWriter {
         return valid;
     }
 
-
     @Override
     public void setWrapAttributes(boolean b) {
         if (!elementStack.isEmpty()) {
@@ -172,14 +183,15 @@ public class MyXMLWriterImpl implements XMLWriter {
         }
     }
 
-@Override
-public void writeAttribute(IRI attr, String val) {
- writeAttribute(attr.toString(), val);
-    
-}
-@Override
-public void writeStartElement(IRI iri) {
-    String name=iri.toString();   
+    @Override
+    public void writeAttribute(IRI attr, String val) {
+     writeAttribute(attr.toString(), val);
+        
+    }
+
+    @Override
+    public void writeStartElement(IRI iri) {
+        String name=iri.toString();   
         String qName = xmlWriterNamespaceManager.getQName(name);
         if (qName == null || qName.equals(name)) {
             if (!isValidQName(name)) {
@@ -278,7 +290,7 @@ public void writeStartElement(IRI iri) {
 
     @Override
     public void startDocument(IRI rootElement) {
-String rootElementName=rootElement.toString();
+        String rootElementName=rootElement.toString();
         String encodingString = "";
         if (encoding.length() > 0) {
             encodingString = " encoding=\"" + encoding + "\"";
@@ -298,8 +310,8 @@ String rootElementName=rootElement.toString();
             writeAttribute("xml:base", xmlBase);
         }
         for (String curPrefix : xmlWriterNamespaceManager.getPrefixes()) {
-            if (curPrefix.length() > 0) {
-                writeAttribute("xmlns:" + curPrefix, xmlWriterNamespaceManager.getNamespaceForPrefix(curPrefix));
+            if (!curPrefix.isEmpty()) {
+                writeAttribute("xmlns:" + curPrefix, verifyNotNull(xmlWriterNamespaceManager.getNamespaceForPrefix(curPrefix)));
             }
         }
     }
@@ -315,6 +327,9 @@ String rootElementName=rootElement.toString();
     }
 
 
+    /**
+     * XML element.
+     */
     public class XMLElement {
 
         private String name;
@@ -329,13 +344,18 @@ String rootElementName=rootElement.toString();
 
         private boolean wrapAttributes;
 
-
+        /**
+         * @param name name 
+         */
         public XMLElement(String name) {
             this(name, 0);
             wrapAttributes = false;
         }
 
-
+        /**
+         * @param name name 
+         * @param indentation indentation 
+         */
         public XMLElement(String name, int indentation) {
             this.name = name;
             attributes = new LinkedHashMap<>();
@@ -344,22 +364,33 @@ String rootElementName=rootElement.toString();
             startWritten = false;
         }
 
-
+        /**
+         * @param b b 
+         */
         public void setWrapAttributes(boolean b) {
-            wrapAttributes = true;
+            wrapAttributes = b;
         }
 
-
+        /**
+         * @param attribute attribute 
+         * @param value value 
+         */
         public void setAttribute(String attribute, String value) {
             attributes.put(attribute, value);
         }
 
 
+        /**
+         * @param content content 
+         */
         public void setText(String content) {
             textContent = content;
         }
 
 
+        /**
+         * @param close close 
+         */
         public void writeElementStart(boolean close) {
             if (!startWritten) {
                 startWritten = true;
@@ -413,6 +444,9 @@ String rootElementName=rootElement.toString();
         }
 
 
+        /**
+         * Write end.
+         */
         public void writeElementEnd() {
             if (name != null) {
                 if (!startWritten) {
@@ -444,8 +478,8 @@ String rootElementName=rootElement.toString();
 
 
         private void writeAttributes() {
-            for (Iterator it = attributes.keySet().iterator(); it.hasNext();) {
-                String attr = (String) it.next();
+            for (Iterator<String> it = attributes.keySet().iterator(); it.hasNext();) {
+                String attr = it.next();
                 String val = attributes.get(attr);
                 writer.write(' ');
                 writeAttribute(attr, val);

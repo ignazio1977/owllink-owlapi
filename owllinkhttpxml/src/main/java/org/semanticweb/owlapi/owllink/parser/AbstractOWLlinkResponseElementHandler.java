@@ -28,12 +28,13 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.Response;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <R> response type
  */
 public abstract class AbstractOWLlinkResponseElementHandler<R extends Response> extends AbstractOWLlinkElementHandler<R> implements OWLlinkResponseElementHandler<R> {
 
+    /** @param handler handler */
     public AbstractOWLlinkResponseElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

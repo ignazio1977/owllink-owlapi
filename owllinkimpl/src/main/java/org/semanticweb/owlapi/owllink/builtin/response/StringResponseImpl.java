@@ -30,11 +30,18 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 public class StringResponseImpl extends KBResponseImpl implements StringResponse {
     private final String result;
 
+    /**
+     * @param result result 
+     * @param warning warning 
+     */
     public StringResponseImpl(String result, String warning) {
         super(warning);
         this.result = result;
     }
 
+    /**
+     * @param result result 
+     */
     public StringResponseImpl(String result) {
         this(result, null);
     }
@@ -44,6 +51,7 @@ public class StringResponseImpl extends KBResponseImpl implements StringResponse
         return this.result;
     }
 
+    /** @return true if unknown */
     public boolean isUnknown() {
         return this.result == null;
     }

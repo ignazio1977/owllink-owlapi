@@ -32,17 +32,27 @@ import java.util.Set;
 /**
  * Author: Olaf Noppens
  * Date: 02.11.2009
+ * @param <O> object type
  */
 public abstract class HierarchyImpl<O extends OWLObject> extends KBResponseImpl implements Hierarchy<O> {
     final Set<HierarchyPair<O>> pairs;
     final Node<O> unsatisfiables;
 
+    /**
+     * @param pairs pairs 
+     * @param unsatisfiables unsatisfiables 
+     * @param warning warning 
+     */
     public HierarchyImpl(Set<HierarchyPair<O>> pairs, Node<O> unsatisfiables, String warning) {
         super(warning);
         this.pairs = Collections.unmodifiableSet(pairs);
         this.unsatisfiables = unsatisfiables;
     }
 
+    /**
+     * @param pairs pairs 
+     * @param unsatisfiables unsatisfiables 
+     */
     public HierarchyImpl(Set<HierarchyPair<O>> pairs, Node<O> unsatisfiables) {
         this(pairs, unsatisfiables, null);
     }
@@ -61,12 +71,8 @@ public abstract class HierarchyImpl<O extends OWLObject> extends KBResponseImpl 
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof HierarchyImpl)) return false;
-
-        HierarchyImpl hierarchy = (HierarchyImpl) o;
-
-        if (!pairs.equals(hierarchy.pairs)) return false;
-
-        return true;
+        HierarchyImpl<?> hierarchy = (HierarchyImpl<?>) o;
+        return pairs.equals(hierarchy.pairs);
     }
 
     @Override

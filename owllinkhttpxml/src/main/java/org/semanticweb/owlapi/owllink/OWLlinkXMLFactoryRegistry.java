@@ -27,60 +27,58 @@ import org.semanticweb.owlapi.owllink.parser.OWLlinkElementHandlerFactory;
 import org.semanticweb.owlapi.owllink.renderer.OWLlinkRequestRendererFactory;
 import org.semanticweb.owlapi.owllink.retraction.OWLlinkXMLRetractionRequestRendererFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.04.2010
  */
 public class OWLlinkXMLFactoryRegistry {
-    private static OWLlinkXMLFactoryRegistry instance;
+    private static OWLlinkXMLFactoryRegistry instance = new OWLlinkXMLFactoryRegistry();
 
-    List<OWLlinkRequestRendererFactory> rendererFactories;
-    List<OWLlinkElementHandlerFactory> parserFactories;
+    final List<OWLlinkRequestRendererFactory> rendererFactories = new ArrayList<>();
+    final List<OWLlinkElementHandlerFactory> parserFactories = new ArrayList<>();
 
     private OWLlinkXMLFactoryRegistry() {
-        this.rendererFactories = new Vector<>();
-        this.parserFactories = new Vector<>();
-
         register(new OWLlinkXMLRetractionRequestRendererFactory());
-
     }
 
-
+    /** @return instance */
     public synchronized static OWLlinkXMLFactoryRegistry getInstance() {
-        if (instance == null)
-            instance = new OWLlinkXMLFactoryRegistry();
         return instance;
     }
 
-
+    /** @return request renderers */
     public synchronized List<OWLlinkRequestRendererFactory> getRequestRendererFactories() {
         return Collections.unmodifiableList(rendererFactories);
     }
 
+    /** @return element factories */
     public synchronized List<OWLlinkElementHandlerFactory> getParserFactories() {
         return Collections.unmodifiableList(parserFactories);
     }
 
+    /** @param factory factory */
     public synchronized void register(OWLlinkRequestRendererFactory factory) {
         if (!rendererFactories.contains(factory))
             rendererFactories.add(factory);
     }
 
+    /** @param factory factory */
     public synchronized void register(OWLlinkElementHandlerFactory factory) {
         if (!parserFactories.contains(factory))
             parserFactories.add(factory);
     }
 
+    /** @param factory factory */
     public synchronized void unregister(OWLlinkRequestRendererFactory factory) {
         rendererFactories.remove(factory);
     }
 
+    /** @param factory factory */
     public synchronized void unregister(OWLlinkElementHandlerFactory factory) {
         parserFactories.remove(factory);
     }
-
 }

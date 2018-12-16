@@ -39,19 +39,33 @@ import java.util.*;
 public class IndividualSynonymsImpl extends KBResponseImpl implements IndividualSynonyms {
     private Set<OWLIndividual> individuals = new HashSet<>();
 
+    /**
+     * @param owlIndividual owlIndividual 
+     */
     public IndividualSynonymsImpl(OWLIndividual owlIndividual) {
         this(owlIndividual, null);
     }
 
+    /**
+     * @param owlIndividual owlIndividual 
+     * @param warning warning 
+     */
     public IndividualSynonymsImpl(OWLIndividual owlIndividual, String warning) {
         super(warning);
         this.individuals.add(owlIndividual);
     }
 
+    /**
+     * @param elements elements 
+     */
     public IndividualSynonymsImpl(Collection<OWLIndividual> elements) {
         this(elements, null);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public IndividualSynonymsImpl(Collection<OWLIndividual> elements, String warning) {
         super(warning);
         if (elements.size() < 1) throw new IllegalArgumentException("size of elements must be greater than zero");

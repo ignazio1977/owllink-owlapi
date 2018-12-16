@@ -33,6 +33,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkUnsatisfiableKBErr
  */
 public class OWLlinkUnsatisfiableKBErrorElementHandler extends AbstractOWLlinkErrorHandler<OWLlinkUnsatisfiableKBErrorResponseException>{
 
+    /** @param handler handler */
     public OWLlinkUnsatisfiableKBErrorElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

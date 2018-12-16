@@ -53,43 +53,50 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
  */
 public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
 
-    protected Map<String, OWLlinkRequestRendererFactory> rendererByRequest;
+    protected Map<String, OWLlinkRequestRendererFactory> rendererByRequest = new HashMap<>();
     private boolean fetchPrefixes = true;
 
     PrefixManagerProvider prov;
     OWLOntologyWriterConfiguration config = new OWLOntologyWriterConfiguration();
 
-    public OWLlinkXMLRenderer() {
-        rendererByRequest = new HashMap<>();
-    }
-
+    /**
+     * @param factory factory 
+     */
     public void addFactory(OWLlinkRequestRendererFactory factory) {
         rendererByRequest.put(factory.getRequestName(), factory);
     }
 
+    /**
+     * @param factories factories 
+     */
     public void addFactories(Collection<OWLlinkRequestRendererFactory> factories) {
         for (OWLlinkRequestRendererFactory factory : factories) {
             addFactory(factory);
         }
     }
 
-
-    public Request[] render(final PrintWriter writer, final PrefixManagerProvider prov,
-        final Request... requests) {
-        final OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
+    /**
+     * @param printwriter printwriter 
+     * @param provider provider 
+     * @param requests requests 
+     * @return requests
+     */
+    public Request<?>[] render(final PrintWriter printwriter, final PrefixManagerProvider provider,
+        final Request<?>... requests) {
+        final OWLlinkXMLWriter w = new OWLlinkXMLWriter(printwriter, provider, config);
         w.startDocument(true);
         int i = 0;
         BitSet additionalQueryIndex = new BitSet();
-        this.prov = prov;
-        List<Request> realRequests = new ArrayList<>();
+        this.prov = provider;
+        List<Request<?>> realRequests = new ArrayList<>();
 
-        for (Request request : requests) {
+        for (Request<?> request : requests) {
             realRequests.add(request);
             if (request instanceof KBRequest) {
                 // check for kb!
-                final KBRequest kbRequest = (KBRequest) request;
+                final KBRequest<?> kbRequest = (KBRequest<?>) request;
                 final IRI kb = kbRequest.getKB();
-                if (!prov.contains(kb) && fetchPrefixes) {
+                if (!provider.contains(kb) && fetchPrefixes) {
                     KBGetPrefixes query = new KBGetPrefixes(kb);
                     render(query, w);
                     additionalQueryIndex.set(i);
@@ -105,7 +112,7 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
     }
 
     @Override
-    public void answer(Request request) {
+    public void answer(Request<?> request) {
         final OWLlinkRequestRendererFactory factory =
             rendererByRequest.get(request.getClass().getName());
         if (factory != null) {
@@ -144,12 +151,15 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
         writer.writeEndElement();
     }
 
+    /** Internal request. */
     public interface InternalRequest {
 
     }
 
+    /** Get prefixes. */
     public class KBGetPrefixes extends GetPrefixes implements InternalRequest {
 
+        /** @param kb knowledge base */
         public KBGetPrefixes(IRI kb) {
             super(kb);
         }

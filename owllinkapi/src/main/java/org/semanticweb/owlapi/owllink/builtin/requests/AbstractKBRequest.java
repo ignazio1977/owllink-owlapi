@@ -30,10 +30,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 /**
  * Author: Olaf Noppens
  * Date: 23.10.2009
+ * @param <R> response type
  */
 public abstract class AbstractKBRequest<R extends KBResponse> implements KBRequest<R> {
     private final IRI kb;
 
+    /** @param kb knowledge base */
     public AbstractKBRequest(IRI kb) {
         this.kb = kb;
     }

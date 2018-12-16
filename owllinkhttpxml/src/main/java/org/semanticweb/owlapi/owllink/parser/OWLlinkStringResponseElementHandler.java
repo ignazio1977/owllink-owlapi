@@ -30,13 +30,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.StringResponse;
 import org.semanticweb.owlapi.owllink.builtin.response.StringResponseImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkStringResponseElementHandler extends AbstractOWLlinkKBResponseElementHandler<StringResponse> {
     private String result;
 
+    /** @param handler handler */
     public OWLlinkStringResponseElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

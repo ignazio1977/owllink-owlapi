@@ -31,8 +31,11 @@ import org.semanticweb.owlapi.owllink.OWLlinkNamespaces;
  */
 public enum BuiltinRequestVocabulary {
 
+    /** Crete KB. */
     CREATEKB("CreateKB"),
+    /** Get description. */
     GetDescription("GetDescription"),
+    /** Tell. */
     TELL("Tell");
 
     private IRI iri;
@@ -45,14 +48,17 @@ public enum BuiltinRequestVocabulary {
         shortName = name;
     }
 
+    /** @return iri */
     public IRI getIRI() {
         return iri;
     }
 
+    /** @return iri*/
     public IRI getURI() {
         return iri;
     }
 
+    /** @return short name*/
     public String getShortName() {
         return shortName;
     }
@@ -61,5 +67,4 @@ public enum BuiltinRequestVocabulary {
     public String toString() {
         return iri.toString();
     }
-
 }

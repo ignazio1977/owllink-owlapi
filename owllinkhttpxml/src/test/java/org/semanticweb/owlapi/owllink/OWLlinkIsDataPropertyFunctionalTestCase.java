@@ -30,10 +30,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIsDataPropertyFunctionalTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -48,13 +48,13 @@ public class OWLlinkIsDataPropertyFunctionalTestCase extends AbstractOWLlinkAxio
 
     public void testIsFunctional() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(dpA()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(dpB()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalDataPropertyAxiom(dpC()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsFunctionalViaOWLReasoner() {

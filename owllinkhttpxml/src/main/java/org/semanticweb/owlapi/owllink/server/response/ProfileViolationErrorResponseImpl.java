@@ -28,6 +28,9 @@ package org.semanticweb.owlapi.owllink.server.response;
  * Date: 10.06.2010
  */
 public class ProfileViolationErrorResponseImpl extends ErrorResponseImpl implements ProfileViolationErrorResponse{
+    /**
+     * @param errorString errorString 
+     */
     public ProfileViolationErrorResponseImpl(String errorString) {
         super(errorString);
     }

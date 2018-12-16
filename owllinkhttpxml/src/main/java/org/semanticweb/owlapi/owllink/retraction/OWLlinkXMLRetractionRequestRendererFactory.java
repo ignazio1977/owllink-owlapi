@@ -32,6 +32,9 @@ import org.semanticweb.owlapi.owllink.renderer.OWLlinkRequestRenderer;
  */
 public class OWLlinkXMLRetractionRequestRendererFactory extends AbstractRequestRendererFactory {
 
+    /**
+     * Retract request.
+     */
     public OWLlinkXMLRetractionRequestRendererFactory() {
         super(RetractRequest.class.getName());
     }

@@ -31,8 +31,9 @@ import org.semanticweb.owlapi.owllink.server.response.ErrorResponse;
 import org.semanticweb.owlapi.reasoner.*;
 import org.semanticweb.owlapi.reasoner.impl.*;
 import org.semanticweb.owlapi.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.net.URL;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,29 +53,34 @@ import java.util.Set;
  */
 public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkReasoner {
 
+    protected static Logger LOGGER = LoggerFactory.getLogger(OWLlinkHTTPXMLReasoner.class);
+    
     protected IRI defaultKnowledgeBase;
     protected PrefixManagerProvider prov = new DefaultPrefixManagerProvider();
-    private URL reasonerURL;
     Description description;
     HTTPSessionImpl session;
 
+    /**
+     * @param rootOntology rootOntology 
+     * @param configuration configuration 
+     * @param bufferingMode bufferingMode 
+     */
     public OWLlinkHTTPXMLReasoner(OWLOntology rootOntology, OWLlinkReasonerConfigurationImpl configuration, BufferingMode bufferingMode) {
         super(rootOntology, configuration, bufferingMode);
         session = new HTTPSessionImpl(rootOntology.getOWLOntologyManager(), configuration.getReasonerURL(), prov);
-        this.reasonerURL = configuration.getReasonerURL();
         createDefaultKB();
         this.description = getReasonerInfo();
         flush();
         Set<OWLAxiom> axioms = new HashSet<>(getReasonerAxioms());
         if (axioms.size() > 0) {
             Tell tell = new Tell(defaultKnowledgeBase, axioms);
-            OK message = performRequestOWLAPI(tell);
+            performRequestOWLAPI(tell);
             try {
                 isConsistent();
             } catch (InconsistentOntologyException e) {
-                throw new InconsistentOntologyException();
+                throw e;
             } catch (Exception e) {
-
+                LOGGER.error("Error checking consistency", e);
             }
         }
     }
@@ -99,6 +105,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
     public void interrupt() {
     }
 
+    /** @return default kb iri */
     public IRI getDefaultKB() {
         return this.defaultKnowledgeBase;
     }
@@ -109,7 +116,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
     }
 
     @Override
-    public ResponseMessage answer(Request... request) {
+    public ResponseMessage answer(Request<?>... request) {
         return performRequests(request);
     }
 
@@ -124,7 +131,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
                 performRequest(retraction);
                 if (!addAxioms.isEmpty()) {
                     Tell tell = new Tell(defaultKnowledgeBase, addAxioms);
-                    ResponseMessage message = performRequests(tell);
+                    performRequests(tell);
                 }
 
             } else {
@@ -150,19 +157,19 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
     public boolean isConsistent() throws ReasonerInterruptedException, TimeOutException {
         IsKBSatisfiable satisfiable = new IsKBSatisfiable(getDefaultKB());
         BooleanResponse response = performRequestOWLAPI(satisfiable);
-        return response.getResult();
+        return response.getResult().booleanValue();
     }
 
     @Override
     public boolean isSatisfiable(OWLClassExpression classExpression) throws ReasonerInterruptedException, TimeOutException, ClassExpressionNotInProfileException, FreshEntitiesException, InconsistentOntologyException {
         IsClassSatisfiable query = new IsClassSatisfiable(defaultKnowledgeBase, classExpression);
-        return performRequestOWLAPI(query).getResult();
+        return performRequestOWLAPI(query).getResult().booleanValue();
     }
 
     @Override
     public boolean isEntailed(OWLAxiom axiom) throws ReasonerInterruptedException, UnsupportedEntailmentTypeException, TimeOutException, AxiomNotInProfileException, FreshEntitiesException {
         IsEntailed query = new IsEntailed(defaultKnowledgeBase, axiom);
-        return performRequestOWLAPI(query).getResult();
+        return performRequestOWLAPI(query).getResult().booleanValue();
     }
 
     @Override
@@ -176,7 +183,7 @@ public class OWLlinkHTTPXMLReasoner extends OWLReasonerBase implements OWLlinkRe
         for (int j = 0; j < queries.length; j++) {
             if (message.get(j) instanceof BooleanResponse) {
                 BooleanResponse answer = (BooleanResponse) message.get(j);
-                if (!answer.getResult()) return false;
+                if (!answer.getResult().booleanValue()) return false;
             } else if (message.get(j) instanceof ErrorResponse) {
                 throw new OWLlinkReasonerRuntimeException(((ErrorResponse) message.get(j)).getErrorString());
             }
@@ -463,11 +470,17 @@ public boolean isPrecomputed(InferenceType inferenceType) {
 public Set<InferenceType> getPrecomputableInferenceTypes() {
     return Collections.emptySet();
 }
+    /**
+     * Classify.
+     */
     public void classify() {
         Classify classify = new Classify(defaultKnowledgeBase);
         performRequestOWLAPI(classify);
     }
 
+    /**
+     * Realise.
+     */
     public void realise() {
         Realize realize = new Realize(defaultKnowledgeBase);
         performRequestOWLAPI(realize);
@@ -482,11 +495,10 @@ public Set<InferenceType> getPrecomputableInferenceTypes() {
 
     protected Description getReasonerInfo() {
         GetDescription getDesc = new GetDescription();
-        Description description = performRequest(getDesc);
-        return description;
+        return performRequest(getDesc);
     }
 
-    protected ResponseMessage performRequests(Request... request) {
+    protected ResponseMessage performRequests(Request<?>... request) {
         //session.setReasonerURL(this.reasonerURL);
         return session.performRequests(request);
     }
@@ -500,15 +512,15 @@ public Set<InferenceType> getPrecomputableInferenceTypes() {
      * If an OWLLink error occurs the error will be tried to be thrown as OWLAPI exception,
      * e.g., OWLlinkUnsatisfiableKBErrorResponseException as InconsistentOntologyException.
      *
-     * @param request
-     * @param <R>
-     * @return
+     * @param request request
+     * @param <R> type of response
+     * @return response
      */
     protected <R extends Response> R performRequestOWLAPI(Request<R> request) {
         try {
             return performRequest(request);
         } catch (OWLlinkUnsatisfiableKBErrorResponseException exception) {
-            throw new InconsistentOntologyException();
+            throw new InconsistentOntologyException(exception);
         }
     }
 }

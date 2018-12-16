@@ -36,10 +36,17 @@ import java.util.Set;
 public class DataPropertySynsetsImpl extends OWLDataPropertyNodeSet implements DataPropertySynsets {
     private String warning;
 
+    /**
+     * @param synonymsets synonymsets 
+     */
     public DataPropertySynsetsImpl(Set<Node<OWLDataProperty>> synonymsets) {
         this(synonymsets, null);
     }
 
+    /**
+     * @param synonymsets synonymsets 
+     * @param warning warning 
+     */
     public DataPropertySynsetsImpl(Set<Node<OWLDataProperty>> synonymsets, String warning) {
         super(synonymsets);
         this.warning = warning;

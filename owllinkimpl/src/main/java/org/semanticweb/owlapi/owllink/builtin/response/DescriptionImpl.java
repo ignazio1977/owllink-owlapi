@@ -42,6 +42,16 @@ public class DescriptionImpl extends ConfirmationImpl implements Description {
     private ProtocolVersion pVersion;
 
 
+    /**
+     * @param warning warning 
+     * @param name name 
+     * @param message message 
+     * @param rVersion rVersion 
+     * @param pVersion pVersion 
+     * @param supportedExtensions supportedExtensions 
+     * @param configurations configurations 
+     * @param publicKBs publicKBs 
+     */
     public DescriptionImpl(String warning, String name, String message, ReasonerVersion rVersion, ProtocolVersion pVersion, Set<IRI> supportedExtensions, Set<Configuration> configurations, Set<PublicKB> publicKBs) {
         super(warning);
         this.name = name;
@@ -53,6 +63,15 @@ public class DescriptionImpl extends ConfirmationImpl implements Description {
         this.rVersion = rVersion;
     }
 
+    /**
+     * @param name name 
+     * @param message message 
+     * @param rVersion rVersion 
+     * @param pVersion pVersion 
+     * @param supportedExtensions supportedExtensions 
+     * @param configurations configurations 
+     * @param publicKBs publicKBs 
+     */
     public DescriptionImpl(String name, String message, ReasonerVersion rVersion, ProtocolVersion pVersion, Set<IRI> supportedExtensions, Set<Configuration> configurations, Set<PublicKB> publicKBs) {
         this.name = name;
         this.message = message;
@@ -63,8 +82,29 @@ public class DescriptionImpl extends ConfirmationImpl implements Description {
         this.rVersion = rVersion;
     }
 
+    /**
+     * @param name name 
+     * @param configurations configurations 
+     * @param rVersion rVersion 
+     * @param pVersion pVersion 
+     * @param supportedExtensions supportedExtensions 
+     * @param publicKBs publicKBs 
+     */
     public DescriptionImpl(String name, Set<Configuration> configurations, ReasonerVersion rVersion, ProtocolVersion pVersion, Set<IRI> supportedExtensions, Set<PublicKB> publicKBs) {
         this(null, name, null, rVersion, pVersion, supportedExtensions, configurations, publicKBs);
+    }
+
+    /**
+     * @param name name 
+     * @param message message 
+     * @param configurations configurations 
+     * @param rVersion rVersion 
+     * @param pVersion pVersion 
+     * @param supportedExtensions supportedExtensions 
+     * @param publicKBs publicKBs 
+     */
+    public DescriptionImpl(String name, String message, Set<Configuration> configurations, ReasonerVersion rVersion, ProtocolVersion pVersion, Set<IRI> supportedExtensions, Set<PublicKB> publicKBs) {
+        this(null, name, message, rVersion, pVersion, supportedExtensions, configurations, publicKBs);
     }
 
     @Override

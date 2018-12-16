@@ -33,27 +33,41 @@ import java.util.*;
  * Date: 27.10.2009
  */
 public class ResponseMessageImpl implements ResponseMessage {
-    private Map<Request, Object> responsesByRequests;
-    private List<Request> requests;
+    private Map<Request<?>, Object> responsesByRequests;
+    protected List<Request<?>> requests;
     private boolean hasError = false;
 
-
-    public ResponseMessageImpl(Request... requests) {
+    /**
+     * @param requests requests 
+     */
+    public ResponseMessageImpl(Request<?>... requests) {
         this.requests = Collections.unmodifiableList(Arrays.asList(requests));
         this.responsesByRequests = new HashMap<>();
-        for (Request request : requests)
+        for (Request<?> request : requests)
             this.responsesByRequests.put(request, null);
     }
 
-
+    /**
+     * @param <R> response type
+     * @param request request 
+     * @param response response 
+     */
     public <R extends Response> void add(Request<R> request, R response) {
         this.responsesByRequests.put(request, response);
     }
 
+    /**
+     * @param response response 
+     * @param index index 
+     */
     public void add(Response response, int index) {
         this.responsesByRequests.put(this.requests.get(index), response);
     }
 
+    /**
+     * @param exception exception 
+     * @param index index 
+     */
     public void add(OWLlinkErrorResponseException exception, int index) {
         this.responsesByRequests.put(this.requests.get(index), exception);
         this.hasError = true;
@@ -62,7 +76,7 @@ public class ResponseMessageImpl implements ResponseMessage {
     @Override
     public Iterator<Response> iterator() {
         return new Iterator<Response>() {
-            Iterator<Request> internal = requests.iterator();
+            Iterator<Request<?>> internal = requests.iterator();
 
             @Override
             public boolean hasNext() {
@@ -71,7 +85,7 @@ public class ResponseMessageImpl implements ResponseMessage {
 
             @Override
             public Response next() {
-                Request request = this.internal.next();
+                Request<?> request = this.internal.next();
                 return _getResponse(request);
             }
 
@@ -87,7 +101,11 @@ public class ResponseMessageImpl implements ResponseMessage {
         return this.hasError;
     }
 
-    public void add(Request request, OWLlinkErrorResponseException exception) {
+    /**
+     * @param request request 
+     * @param exception exception 
+     */
+    public void add(Request<?> request, OWLlinkErrorResponseException exception) {
         this.responsesByRequests.put(request, exception);
         this.hasError = true;
     }
@@ -98,7 +116,7 @@ public class ResponseMessageImpl implements ResponseMessage {
         return (R) this._getResponse(request);
     }
 
-    protected Response _getResponse(Request request) throws OWLlinkErrorResponseException {
+    protected Response _getResponse(Request<?> request) throws OWLlinkErrorResponseException {
         Object response = this.responsesByRequests.get(request);
         if (response instanceof Response) {
             return (Response) response;
@@ -109,7 +127,7 @@ public class ResponseMessageImpl implements ResponseMessage {
     }
 
     @Override
-    public boolean hasErrorResponse(Request request) {
+    public boolean hasErrorResponse(Request<?> request) {
         return responsesByRequests.get(request) instanceof OWLlinkErrorResponseException;
     }
 
@@ -119,7 +137,7 @@ public class ResponseMessageImpl implements ResponseMessage {
     }
 
     @Override
-    public OWLlinkErrorResponseException getError(Request request) {
+    public OWLlinkErrorResponseException getError(Request<?> request) {
         Object error = this.responsesByRequests.get(request);
         if (error instanceof OWLlinkErrorResponseException)
             return (OWLlinkErrorResponseException) error;

@@ -40,6 +40,9 @@ public class GetDataPropertiesBetween extends AbstractKBRequest
     final OWLIndividual sourceIndividual;
     final boolean isNegative;
 
+    /** @param kb knowledge base 
+     * @param sourceIndividual sourceIndividual
+     * @param targetValue targetValue */
     public GetDataPropertiesBetween(IRI kb, OWLIndividual sourceIndividual, OWLLiteral targetValue) {
         super(kb);
         this.sourceIndividual = sourceIndividual;
@@ -47,6 +50,10 @@ public class GetDataPropertiesBetween extends AbstractKBRequest
         isNegative = false;
     }
 
+    /** @param kb knowledge base 
+     * @param sourceIndividual sourceIndividual 
+     * @param targetValue targetValue 
+     * @param isNegative isNegative */
     public GetDataPropertiesBetween(IRI kb, OWLIndividual sourceIndividual, OWLLiteral targetValue, boolean isNegative) {
         super(kb);
         this.sourceIndividual = sourceIndividual;
@@ -54,15 +61,17 @@ public class GetDataPropertiesBetween extends AbstractKBRequest
         this.isNegative = isNegative;
     }
 
-
+    /** @return target value */
     public OWLLiteral getTargetValue() {
         return this.targetValue;
     }
 
+    /** @return source individual*/
     public OWLIndividual getSourceIndividual() {
         return this.sourceIndividual;
     }
 
+    /** @return true if negative*/
     public boolean isNegative() {
         return this.isNegative;
     }

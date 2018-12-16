@@ -27,6 +27,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkErrorResponseExcep
 
 /**
  * Author: Olaf Noppens
+ * @param <O> object type
  */
 public interface OWLlinkErrorElementHandler<O extends OWLlinkErrorResponseException> extends OWLlinkElementHandler<O> {
 }

@@ -37,11 +37,14 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 public class IsEntailed extends AbstractKBRequest<BooleanResponse> {
     final OWLAxiom axiom;
 
+    /** @param kb knowledge base 
+     * @param axiom axiom */
     public IsEntailed(IRI kb, OWLAxiom axiom) {
         super(kb);
         this.axiom = axiom;
     }
 
+    /** @return axiom */
     public final OWLAxiom getAxiom() {
         return this.axiom;
     }

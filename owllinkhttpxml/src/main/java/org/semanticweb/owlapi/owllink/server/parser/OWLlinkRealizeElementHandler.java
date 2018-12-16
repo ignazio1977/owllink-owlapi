@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.Realize;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkRealizeElementHandler extends AbstractOWLlinkKBRequestElementHandler<Realize> {
+public class OWLlinkRealizeElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, Realize> {
 
+    /** @param handler handler */
     public OWLlinkRealizeElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

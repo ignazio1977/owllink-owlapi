@@ -28,14 +28,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDataPropertyTargets;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfLiterals;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetDataPropertyTargetsElementHandler extends AbstractOWLIndividualElementHandler<GetDataPropertyTargets> {
+public class OWLlinkGetDataPropertyTargetsElementHandler extends AbstractOWLIndividualElementHandler<SetOfLiterals, GetDataPropertyTargets> {
     protected OWLDataProperty property;
 
+    /** @param handler handler */
     public OWLlinkGetDataPropertyTargetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -47,8 +49,8 @@ public class OWLlinkGetDataPropertyTargetsElementHandler extends AbstractOWLIndi
     }
 
     @Override
-    public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
-        this.property = handler.getOWLObject().asOWLDataProperty();
+    public void handleChild(OWLDataPropertyElementHandler h) throws OWLXMLParserException {
+        this.property = h.getOWLObject().asOWLDataProperty();
     }
 
     @Override

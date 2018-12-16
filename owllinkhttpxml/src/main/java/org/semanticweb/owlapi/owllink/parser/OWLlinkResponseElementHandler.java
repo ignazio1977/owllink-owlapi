@@ -26,9 +26,9 @@ package org.semanticweb.owlapi.owllink.parser;
 import org.semanticweb.owlapi.owllink.Response;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <O> object type
  */
 public interface OWLlinkResponseElementHandler<O extends Response> extends OWLlinkElementHandler<O> {
 }

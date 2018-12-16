@@ -35,10 +35,10 @@ import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 03.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -101,22 +101,22 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
 
     public void testAreIndividualsRelated() throws Exception {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("i"), getOWLIndividual("j")));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opr(), getOWLIndividual("i"), getOWLIndividual("j")));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("i"), getOWLIndividual("k")));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opq(), getOWLIndividual("i"), getOWLIndividual("k")));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opr(), getOWLIndividual("j"), getOWLIndividual("j")));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLObjectPropertyAssertionAxiom(opp(), getOWLIndividual("j"), getOWLIndividual("i")));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testGetObjectPropertyTargets() throws Exception {

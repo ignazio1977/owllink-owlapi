@@ -23,8 +23,6 @@
 
 package org.semanticweb.owlapi.owllink;
 
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkErrorResponseException;
 import org.semanticweb.owlapi.owllink.builtin.response.ResponseMessage;
@@ -57,39 +55,36 @@ public class HTTPSessionImpl implements HTTPSession {
     private boolean useCompression = true;
 
     private URL reasonerURL;
-
-    private XMLSerializer serializer;
-
-    private OutputFormat format;
     OWLOntologyManager manager;
     PrefixManagerProvider prov;
     private boolean serverAcceptsGzipEncoding = false;
 
     /**
-     * @deprecated Use DIGReasonerPreferences to set logging
+     * @param manager manager 
+     * @param prov prov 
+     * @throws MalformedURLException MalformedURLException 
      */
-    public static boolean log = true;
-
-
     public HTTPSessionImpl(OWLOntologyManager manager, PrefixManagerProvider prov) throws MalformedURLException {
         this(manager, new URL("http://localhost:8080"), prov);
-        serializer = new XMLSerializer(format);
     }
 
+    /**
+     * @param manaager manaager 
+     * @param reasonerURL reasonerURL 
+     * @param prov prov 
+     */
     public HTTPSessionImpl(OWLOntologyManager manaager, URL reasonerURL, PrefixManagerProvider prov) {
         this.reasonerURL = reasonerURL;
         this.manager = manaager;
-        format = new OutputFormat();
-        format.setIndent(4);
-        format.setIndenting(true);
-        format.setPreserveSpace(false);
         this.prov = prov;
     }
 
+    /** @param threshold threshold */
     public void setThresholdForCompressedContent(int threshold) {
         this.gzipThreshold = threshold;
     }
 
+    /** @return threshold */
     public int getThresholdForCompressedContent() {
         return this.gzipThreshold;
     }
@@ -125,21 +120,22 @@ public class HTTPSessionImpl implements HTTPSession {
         return reasonerURL.toString();
     }
 
+    /** @return true if gzip is accepted */
     public boolean serverAcceptsGzipEncoding() {
         return this.serverAcceptsGzipEncoding;
     }
 
-
-    public ResponseMessage performRequests(Request... request)  {
+    /** @param request request 
+     * @return response */
+    public ResponseMessage performRequests(Request<?>... request)  {
         OWLlinkXMLFactoryRegistry registry = OWLlinkXMLFactoryRegistry.getInstance();
-        try {
+        try (StringWriter out = new StringWriter();
+            PrintWriter writer = new PrintWriter( out)) {
             //Handle the request
-            StringWriter out = new StringWriter();
-            PrintWriter writer = new PrintWriter( out);
             OWLlinkXMLRenderer renderer = new OWLlinkXMLRenderer();
             renderer.addFactories(registry.getRequestRendererFactories());
 
-            Request[] askedRequests = renderer.render(writer, prov, request);
+            Request<?>[] askedRequests = renderer.render(writer, prov, request);
 
             HttpURLConnection conn = (HttpURLConnection) reasonerURL.openConnection();
             conn.setRequestProperty("Content-Type", "text/xml");
@@ -147,7 +143,7 @@ public class HTTPSessionImpl implements HTTPSession {
             conn.setDoInput(true);
             conn.setDoOutput(true);
             writer.flush();
-            StringBuffer buffer = out.getBuffer();
+            String buffer = out.toString();
 
             conn.setRequestProperty("Content-Length", "" + buffer.length());   //todo length is wrong when compressing but we don't want to cache all the stuff in a buffer!
             conn.setRequestProperty("Accept-Encoding", "gzip, deflate");
@@ -160,14 +156,14 @@ public class HTTPSessionImpl implements HTTPSession {
                 os = conn.getOutputStream();
             }
             OutputStreamWriter osw = new OutputStreamWriter(os);
-            osw.write(buffer.toString());
+            osw.write(buffer);
             if (os instanceof GZIPOutputStream) {
                 ((GZIPOutputStream) os).finish();
             }
             osw.flush();
             osw.close();
             if (!serverAcceptsGzipEncoding) {
-                Map map = conn.getHeaderFields();
+                Map<String, List<String>> map = conn.getHeaderFields();
                 if (map.containsKey("Accept-Encoding")) {
                     String field = map.get("Accept-Encoding").toString();
                     if (field != null) {
@@ -190,31 +186,32 @@ public class HTTPSessionImpl implements HTTPSession {
             } else {
                 is = conn.getInputStream();
             }
-            Reader reader = new InputStreamReader(is);
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            SAXParser parser = factory.newSAXParser();
-            OWLlinkXMLParserHandler handler = new OWLlinkXMLParserHandler(manager, prov, askedRequests, manager.createOntology());
-            handler.addFactories(registry.getParserFactories());
-            parser.parse(is, handler);
-            reader.close();
-            conn.disconnect();
-            List<Object> responses = handler.getResponses();
-
-            ResponseMessageImpl responseMessage = new ResponseMessageImpl(request);
-            int i = 0;
-            for (Object response : responses) {
-                //if additional inserts prefix query do not add it to responseMessage
-                if (!(request[i] instanceof OWLlinkXMLRenderer.InternalRequest)) {
-                    if (response instanceof Response)
-                        responseMessage.add((Response) response, i);
-                    else if (response instanceof OWLlinkErrorResponseException)
-                        responseMessage.add((OWLlinkErrorResponseException) response, i);
-                } else
-                    throw new IllegalArgumentException();
-                i++;
+            try (Reader reader = new InputStreamReader(is)) {
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+                SAXParser parser = factory.newSAXParser();
+                OWLlinkXMLParserHandler handler = new OWLlinkXMLParserHandler(manager, prov, askedRequests, manager.createOntology());
+                handler.addFactories(registry.getParserFactories());
+                parser.parse(is, handler);
+                reader.close();
+                conn.disconnect();
+                List<Object> responses = handler.getResponses();
+    
+                ResponseMessageImpl responseMessage = new ResponseMessageImpl(request);
+                int i = 0;
+                for (Object response : responses) {
+                    //if additional inserts prefix query do not add it to responseMessage
+                    if (!(request[i] instanceof OWLlinkXMLRenderer.InternalRequest)) {
+                        if (response instanceof Response)
+                            responseMessage.add((Response) response, i);
+                        else if (response instanceof OWLlinkErrorResponseException)
+                            responseMessage.add((OWLlinkErrorResponseException) response, i);
+                    } else
+                        throw new IllegalArgumentException("One request is not an internal request");
+                    i++;
+                }
+                return responseMessage;
             }
-            return responseMessage;
         }
         catch (IOException e) {
             throw new OWLlinkReasonerIOException(e.getMessage(), e);
@@ -222,7 +219,4 @@ public class HTTPSessionImpl implements HTTPSession {
             throw new OWLlinkReasonerRuntimeException(e.getMessage(), e);
         }
     }
-
-
 }
-

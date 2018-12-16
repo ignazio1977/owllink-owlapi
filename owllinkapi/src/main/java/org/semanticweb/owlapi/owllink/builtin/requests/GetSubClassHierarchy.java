@@ -37,19 +37,24 @@ import org.semanticweb.owlapi.owllink.builtin.response.ClassHierarchy;
 public class GetSubClassHierarchy extends AbstractKBRequest<ClassHierarchy> {
     private OWLClass clazz;
 
+    /** @param kb knowledge base */
     public GetSubClassHierarchy(IRI kb) {
         this(kb, null);
     }
 
+    /** @param kb knowledge base 
+     * @param expression expression */
     public GetSubClassHierarchy(IRI kb, OWLClass expression) {
         super(kb);
         this.clazz = expression;
     }
 
+    /** @return class*/
     public OWLClass getOWLClass() {
         return this.clazz;
     }
 
+    /** @return true if has class*/
     public boolean hasOWLClass() {
         return this.clazz != null;
     }

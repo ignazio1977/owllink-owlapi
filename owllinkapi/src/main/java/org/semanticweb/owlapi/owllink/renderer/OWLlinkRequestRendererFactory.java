@@ -34,5 +34,6 @@ public interface OWLlinkRequestRendererFactory {
      */
     OWLlinkRequestRenderer createRenderer();
 
+    /** @return request name */
     String getRequestName();
 }

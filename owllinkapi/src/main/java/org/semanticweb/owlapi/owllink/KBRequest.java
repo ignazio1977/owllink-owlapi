@@ -30,7 +30,9 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ProtocolObjects">KBResponse</a>
  * in the OWLlink specification.
  * @author Olaf Noppens
+ * @param <R> response type
  */
 public interface KBRequest<R extends KBResponse> extends Request<R> {
+    /** @return kb iri */
     IRI getKB();
 }

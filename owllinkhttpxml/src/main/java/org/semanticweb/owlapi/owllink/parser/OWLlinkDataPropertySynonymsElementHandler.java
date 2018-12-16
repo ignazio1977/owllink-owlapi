@@ -34,14 +34,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 11.12.2009
  */
 public class OWLlinkDataPropertySynonymsElementHandler extends AbstractOWLlinkKBResponseElementHandler<DataPropertySynonyms> {
     protected Set<OWLDataProperty> props;
 
-
+    /** @param handler handler */
     public OWLlinkDataPropertySynonymsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -54,8 +53,8 @@ public class OWLlinkDataPropertySynonymsElementHandler extends AbstractOWLlinkKB
 
 
     @Override
-    public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
-        this.props.add(handler.getOWLObject().asOWLDataProperty());
+    public void handleChild(OWLDataPropertyElementHandler h) throws OWLXMLParserException {
+        this.props.add(h.getOWLObject().asOWLDataProperty());
     }
 
     @Override

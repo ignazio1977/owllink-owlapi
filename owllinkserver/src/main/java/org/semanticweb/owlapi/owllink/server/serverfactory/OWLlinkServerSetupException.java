@@ -30,17 +30,30 @@ import org.semanticweb.owlapi.model.OWLRuntimeException;
  * Date: 26.02.2010
  */
 public class OWLlinkServerSetupException extends OWLRuntimeException {
+    /**
+     * Server setup exception.
+     */
     public OWLlinkServerSetupException() {
     }
 
+    /**
+     * @param message message 
+     */
     public OWLlinkServerSetupException(String message) {
         super(message);
     }
 
+    /**
+     * @param message message 
+     * @param cause cause 
+     */
     public OWLlinkServerSetupException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * @param cause cause 
+     */
     public OWLlinkServerSetupException(Throwable cause) {
         super(cause);
     }

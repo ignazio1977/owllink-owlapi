@@ -36,10 +36,17 @@ import java.util.Set;
 public class SetOfObjectPropertySynsetsImpl extends OWLObjectPropertyNodeSet implements SetOfObjectPropertySynsets {
     final String warning;
 
+    /**
+     * @param synonymsets synonymsets 
+     */
     public SetOfObjectPropertySynsetsImpl(Set<Node<OWLObjectPropertyExpression>> synonymsets) {
         this(synonymsets, null);
     }
 
+    /**
+     * @param synonymsets synonymsets 
+     * @param warning warning 
+     */
     public SetOfObjectPropertySynsetsImpl(Set<Node<OWLObjectPropertyExpression>> synonymsets, String warning) {
         super(synonymsets);
         this.warning = warning;

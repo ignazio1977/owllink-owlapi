@@ -33,6 +33,6 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 public interface OWLlinkElementHandlerFactory extends OWLElementHandlerFactory {
 
     @Override
-    public OWLlinkElementHandler createHandler(OWLXMLParserHandler handler);
+    public OWLlinkElementHandler<?> createHandler(OWLXMLParserHandler handler);
 
 }

@@ -29,24 +29,28 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.owllink.KBRequest;
+import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
+ * @param <R> request type
+ * @param <T> response type
  */
-public abstract class AbstractOWLIndividualElementHandler<R extends KBRequest> extends AbstractOWLlinkObjectRequestElementHandler<R, OWLIndividual> {
+public abstract class AbstractOWLIndividualElementHandler<T extends KBResponse, R extends KBRequest<T>> extends AbstractOWLlinkObjectRequestElementHandler<T, R, OWLIndividual> {
 
 
     @Override
-    public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
-        super.o = handler.getOWLObject();
+    public void handleChild(OWLIndividualElementHandler h) throws OWLXMLParserException {
+        super.o = h.getOWLObject();
     }
 
     @Override
-    public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
-        super.o = handler.getOWLObject();
+    public void handleChild(OWLAnonymousIndividualElementHandler h) throws OWLXMLParserException {
+        super.o = h.getOWLObject();
     }
 
+    /** @param handler handler */
     public AbstractOWLIndividualElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

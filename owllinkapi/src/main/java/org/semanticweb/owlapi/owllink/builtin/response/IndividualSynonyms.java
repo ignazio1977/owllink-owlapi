@@ -56,8 +56,11 @@ public interface IndividualSynonyms extends KBResponse, Iterable<OWLIndividual> 
      */
     OWLIndividual getSingletonElement();
 
+    /** @param individual individual 
+     * @return true if contained */
     boolean contains(OWLIndividual individual);
 
+    /** @return individuals*/
     Set<OWLIndividual> getIndividuals();
 
     /**

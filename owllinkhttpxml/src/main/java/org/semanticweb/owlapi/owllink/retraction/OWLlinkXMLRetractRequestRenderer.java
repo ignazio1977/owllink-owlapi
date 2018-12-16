@@ -25,20 +25,18 @@ package org.semanticweb.owlapi.owllink.retraction;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.owllink.Request;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 import org.semanticweb.owlapi.owllink.renderer.OWLlinkRequestRenderer;
 import org.semanticweb.owlapi.owllink.renderer.OWLlinkWriter;
-import org.semanticweb.owlapi.owllink.renderer.OWLlinkXMLWriter;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.04.2010
  */
-public class OWLlinkXMLRetractRequestRenderer implements OWLlinkRequestRenderer<RetractRequest> {
+public class OWLlinkXMLRetractRequestRenderer implements OWLlinkRequestRenderer<OK, RetractRequest> {
 
     @Override
-    public void render(RetractRequest request, OWLlinkWriter w) {
-        OWLlinkXMLWriter writer = (OWLlinkXMLWriter) w;
+    public void render(RetractRequest request, OWLlinkWriter writer) {
         writer.writeStartElement(RetractionVocabulary.Retraction.getURI());
         IRI kb = request.getKB();
         writer.writeKBAttribute(kb);

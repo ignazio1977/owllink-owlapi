@@ -41,7 +41,7 @@ import java.util.Set;
 public class OWLlinkIndividualSynonymsElementHandler extends AbstractOWLlinkKBResponseElementHandler<IndividualSynonyms> {
     protected Set<OWLIndividual> individuals;
 
-
+    /** @param handler handler */
     public OWLlinkIndividualSynonymsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -53,13 +53,13 @@ public class OWLlinkIndividualSynonymsElementHandler extends AbstractOWLlinkKBRe
     }
 
     @Override
-    public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
-        this.individuals.add(handler.getOWLObject());
+    public void handleChild(OWLIndividualElementHandler h) throws OWLXMLParserException {
+        this.individuals.add(h.getOWLObject());
     }
 
     @Override
-    public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
-        this.individuals.add(handler.getOWLObject());
+    public void handleChild(OWLAnonymousIndividualElementHandler h) throws OWLXMLParserException {
+        this.individuals.add(h.getOWLObject());
     }
 
     @Override

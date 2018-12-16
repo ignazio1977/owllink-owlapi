@@ -28,14 +28,24 @@ package org.semanticweb.owlapi.owllink;
  * Date: 18.06.2010
  */
 public class OWLlinkReasonerIOException extends OWLlinkReasonerRuntimeException {
+    /**
+     * @param cause cause 
+     */
     public OWLlinkReasonerIOException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     * @param message message 
+     */
     public OWLlinkReasonerIOException(String message) {
         super(message);
     }
 
+    /**
+     * @param message message 
+     * @param cause cause 
+     */
     public OWLlinkReasonerIOException(String message, Throwable cause) {
         super(message, cause);
     }

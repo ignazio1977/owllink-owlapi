@@ -37,6 +37,10 @@ public class GetDisjointDataProperties extends AbstractGetDisjointProperties<
         DataPropertySynsets,
         OWLDataPropertyExpression> {
 
+    /**
+     * @param kb knowledge base
+     * @param object property
+     */
     public GetDisjointDataProperties(IRI kb, OWLDataPropertyExpression object) {
         super(kb, object);
     }

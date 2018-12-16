@@ -37,19 +37,25 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 public class GetSuperDataProperties extends AbstractKBRequestWithOneObjectAndBooleanValue
         <SetOfDataPropertySynsets, OWLDataProperty> {
 
-
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public GetSuperDataProperties(IRI iri, OWLDataProperty object, boolean bool) {
         super(iri, object, bool);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public GetSuperDataProperties(IRI iri, OWLDataProperty object) {
         this(iri, object, false);
     }
 
+    /** @return true if direct*/
     public boolean isDirect() {
         return super.bool;
     }
 
+    /** @return data property */
     public OWLDataProperty getProperty() {
         return super.object;
     }

@@ -34,5 +34,6 @@ import java.util.Map;
  */
 public interface Prefixes extends KBResponse {
 
+    /** @return prefixes */
     Map<String, String> getPrefixes();
 }

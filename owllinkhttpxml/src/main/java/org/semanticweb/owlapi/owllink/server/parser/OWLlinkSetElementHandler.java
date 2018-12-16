@@ -25,9 +25,9 @@ package org.semanticweb.owlapi.owllink.server.parser;
 
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
-import org.semanticweb.owlapi.owllink.KBRequest;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.Set;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkLiteral;
 
 import java.util.HashSet;
@@ -36,10 +36,11 @@ import java.util.HashSet;
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkSetElementHandler extends AbstractOWLlinkKBRequestElementHandler {
+public class OWLlinkSetElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, Set> {
     java.util.Set<OWLlinkLiteral> literals;
     String key;
 
+    /** @param handler handler */
     public OWLlinkSetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -59,12 +60,12 @@ public class OWLlinkSetElementHandler extends AbstractOWLlinkKBRequestElementHan
     }
 
     @Override
-    public void handleChild(OWLlinkLiteralElementHandler handler) {
-        this.literals.add(handler.getOWLObject());
+    public void handleChild(OWLlinkLiteralElementHandler h) {
+        this.literals.add(h.getOWLObject());
     }
 
     @Override
-    public KBRequest getOWLObject() throws OWLXMLParserException {
+    public Set getOWLObject() throws OWLXMLParserException {
         return new Set(getKB(), this.key, this.literals);
     }
 }

@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDescription;
+import org.semanticweb.owlapi.owllink.builtin.response.Description;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetDescriptionElemenHandler extends AbstractOWLlinkRequestElementHandler<GetDescription> {
+public class OWLlinkGetDescriptionElemenHandler extends AbstractOWLlinkRequestElementHandler<Description, GetDescription> {
 
+    /** @param handler handler */
     public OWLlinkGetDescriptionElemenHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

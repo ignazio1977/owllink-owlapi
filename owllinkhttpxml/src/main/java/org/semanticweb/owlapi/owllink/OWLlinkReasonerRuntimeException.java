@@ -31,17 +31,30 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerRuntimeException;
  */
 public class OWLlinkReasonerRuntimeException extends OWLReasonerRuntimeException {
 
+    /**
+     * Owllink reasoner exception.
+     */
     public OWLlinkReasonerRuntimeException() {
     }
 
+    /**
+     * @param cause cause 
+     */
     public OWLlinkReasonerRuntimeException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     * @param message message 
+     */
     public OWLlinkReasonerRuntimeException(String message) {
         super(message);
     }
 
+    /**
+     * @param message message 
+     * @param cause cause 
+     */
     public OWLlinkReasonerRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }

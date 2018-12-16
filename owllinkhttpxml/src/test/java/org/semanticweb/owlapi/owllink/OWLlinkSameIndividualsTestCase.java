@@ -34,10 +34,10 @@ import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 03.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -50,16 +50,16 @@ public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCas
 
     public void testAreSameIndividuals() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("k")));
-        assertTrue(super.reasoner.answer(query).getResult());
+        trueResponse(super.reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("j")));
-        assertTrue(super.reasoner.answer(query).getResult());
+        trueResponse(super.reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("j"), getOWLIndividual("k")));
-        assertTrue(super.reasoner.answer(query).getResult());
+        trueResponse(super.reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSameIndividualAxiom(getOWLIndividual("i"), getOWLIndividual("l")));
-        assertFalse(super.reasoner.answer(query).getResult());
+        falseResponse(super.reasoner.answer(query));
     }
 
     public void testAreSameIndividualsViaOWLReasoner() {

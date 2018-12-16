@@ -35,10 +35,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkEquivalentObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -54,19 +54,19 @@ public class OWLlinkEquivalentObjectPropertiesTestCase extends AbstractOWLlinkAx
     public void testAreObjectPropertiesEquivalent() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opa(), opb()));
         BooleanResponse result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        trueResponse(result);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opa(), opb(), opc()));
         result = super.reasoner.answer(query);
-        assertFalse(result.getResult());
+        falseResponse(result);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE(), opa()));
         result = super.reasoner.answer(query);
-        assertFalse(result.getResult());
+        falseResponse(result);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE()));
         result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        trueResponse(result);
     }
 
     public void testAreObjectPropertiesEquivalentViaOWLReasoner() {

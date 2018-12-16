@@ -31,6 +31,11 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserElementNotFoundException;
  */
 public class OWLlinkXMLParserElementNotFoundException extends OWLXMLParserElementNotFoundException {
 
+    /**
+     * @param lineNumber lineNumber 
+     * @param columnNumber columnNumber 
+     * @param elementType elementType 
+     */
     public OWLlinkXMLParserElementNotFoundException(int lineNumber, int columnNumber, String elementType) {
         super(lineNumber, columnNumber, elementType);
     }

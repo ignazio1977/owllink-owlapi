@@ -34,11 +34,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 04.12.2009
  */
 @Ignore("No tests in this class")
+@SuppressWarnings("javadoc")
 public class OWLlinkPrefixTestCase extends AbstractOWLlinkAxiomsTestCase {
     @Override
     protected Set<? extends OWLAxiom> createAxioms() {

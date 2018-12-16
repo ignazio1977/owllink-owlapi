@@ -27,8 +27,8 @@ import junit.framework.TestCase;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 import org.semanticweb.owlapi.owllink.server.OWLlinkServer;
-import org.semanticweb.owlapi.owllink.server.serverfactory.HermiTServerFactory;
 import org.semanticweb.owlapi.owllink.server.serverfactory.OWLlinkServerFactory;
 import org.semanticweb.owlapi.owllink.server.serverfactory.OpenlletServerFactory;
 import org.semanticweb.owlapi.reasoner.BufferingMode;
@@ -40,17 +40,28 @@ import java.util.Set;
 /**
  * @author Olaf Noppens
  */
+@SuppressWarnings("javadoc")
 public abstract class AbstractOWLlinkTestCase extends TestCase {
      static class ReasonerServer {
         protected static OWLlinkServerFactory openlletFactory = new OpenlletServerFactory();
         private static OWLlinkServer server;
-       static  void start() throws InterruptedException {
+       static  void start() {
            if(server==null) {
                 server = openlletFactory.createServer(8080);
             server.run();
            }
         }
     }
+
+     protected void trueResponse(BooleanResponse response) {
+         assertFalse(response.isUnknown());
+         assertTrue(response.getResult().booleanValue());
+     }
+
+     protected void falseResponse(BooleanResponse response) {
+         assertFalse(response.isUnknown());
+         assertFalse(response.getResult().booleanValue());
+     }
 
     @SafeVarargs
     protected static final <X> Set<X> set(X... xs ){
@@ -194,15 +205,17 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
         reasonerIRI = uriBase;
     }
 
+    /** @return */
     public IRI getKBIRI() {
         return this.reasonerIRI;
     }
 
-
+    /** @return */
     public OWLOntology getRootOntology() {
         return this.rootOntology;
     }
 
+    /** @return */
     public OWLOntology getOWLOntology(String name) {
         try {
             IRI iri = IRI.create(uriBase + "/" + name);
@@ -231,39 +244,45 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
         return getManager().getOWLDataFactory();
     }
 
-
+    /** @return */
     public OWLClass getOWLClass(String name) {
         return getDataFactory().getOWLClass(IRI.create(uriBase + "#" + name));
     }
 
-
+    /** @return */
     public OWLObjectProperty getOWLObjectProperty(String name) {
         return getDataFactory().getOWLObjectProperty(IRI.create(uriBase + "#" + name));
     }
 
-
+    /** @return */
     public OWLDataProperty getOWLDataProperty(String name) {
         return getDataFactory().getOWLDataProperty(IRI.create(uriBase + "#" + name));
     }
 
-
+    /** @return */
     public OWLNamedIndividual getOWLIndividual(String name) {
         return getDataFactory().getOWLNamedIndividual(IRI.create(uriBase + "#" + name));
     }
 
+    /** @return */
     public OWLDatatype getOWLDatatype(String name) {
         return getDataFactory().getOWLDatatype(IRI.create(uriBase + "#" + name));
     }
 
+    /** @return */
     public OWLAnnotationProperty getOWLAnnotationProperty(String name) {
         return getDataFactory().getOWLAnnotationProperty(IRI.create(uriBase + "#" + name));
     }
 
+    /** @return */
     public OWLLiteral getLiteral(int value) {
         return getDataFactory().getOWLLiteral(value);
     }
 
-
+    /**
+     * @param ont
+     * @param ax
+     */
     public void addAxiom(OWLOntology ont, OWLAxiom ax) {
         try {
             manager.addAxiom(ont, ax);
@@ -272,6 +291,10 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
         }
     }
 
+    /**
+     * @param ont
+     * @param ax
+     */
     public void removeAxiom(OWLOntology ont, OWLAxiom ax) {
         try {
             manager.removeAxiom(ont, ax);
@@ -281,6 +304,4 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
     }
 
     protected abstract Set<? extends OWLAxiom> createAxioms();
-
-
 }

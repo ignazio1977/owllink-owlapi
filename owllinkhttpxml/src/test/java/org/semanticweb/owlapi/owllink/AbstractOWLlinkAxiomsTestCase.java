@@ -35,10 +35,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public abstract class AbstractOWLlinkAxiomsTestCase extends AbstractOWLlinkTestCase {
 
     private Set<OWLAxiom> axioms = new HashSet<>();
@@ -68,7 +68,7 @@ public abstract class AbstractOWLlinkAxiomsTestCase extends AbstractOWLlinkTestC
             OWLOntology ont = getOWLOntology("Ont");
             axioms.clear();
             axioms.addAll(createAxioms());
-            getManager().addAxioms(ont, axioms);
+            ont.addAxioms(axioms);
 
             CreateKB createKB = new CreateKB();
             KB kb = reasoner.answer(createKB);

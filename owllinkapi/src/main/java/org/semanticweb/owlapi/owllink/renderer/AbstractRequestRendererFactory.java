@@ -29,6 +29,9 @@ package org.semanticweb.owlapi.owllink.renderer;
 public abstract class AbstractRequestRendererFactory implements OWLlinkRequestRendererFactory {
     private String requestName;
 
+    /**
+     * @param requestName requestName 
+     */
     public AbstractRequestRendererFactory(String requestName) {
         this.requestName = requestName;
     }

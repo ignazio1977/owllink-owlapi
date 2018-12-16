@@ -36,14 +36,21 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertySynset
 public class GetObjectPropertiesOfTarget extends AbstractKBRequestWithOneObjectAndNegativeAttribute<
         SetOfObjectPropertySynsets,
         OWLIndividual> {
+
+    /** @param kb knowledge base 
+     * @param object object */
     public GetObjectPropertiesOfTarget(IRI kb, OWLIndividual object) {
         super(kb, object, false);
     }
 
+    /** @param kb knowledge base 
+     * @param object object 
+     * @param isNegative isNegative */
     public GetObjectPropertiesOfTarget(IRI kb, OWLIndividual object, boolean isNegative) {
         super(kb, object, isNegative);
     }
 
+    /** @return individual */
     public OWLIndividual getIndividual() {
         return super.object;
     }

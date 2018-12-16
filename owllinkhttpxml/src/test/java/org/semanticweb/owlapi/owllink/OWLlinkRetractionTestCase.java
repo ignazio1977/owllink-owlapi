@@ -37,6 +37,7 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 28.04.2010
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkRetractionTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -57,10 +58,10 @@ public class OWLlinkRetractionTestCase extends AbstractOWLlinkAxiomsTestCase {
 
         IsEntailed entailed = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(A, B));
         BooleanResponse response = reasoner.answer(entailed);
-        assertTrue(response.getResult());
+        trueResponse(response);
         entailed = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(A, C));
         reasoner.answer(entailed);
-        assertTrue(response.getResult());
+        trueResponse(response);
 
         Set<OWLAxiom> axioms = new HashSet<>();
         axioms.add(getDataFactory().getOWLSubClassOfAxiom(A, C));
@@ -69,10 +70,10 @@ public class OWLlinkRetractionTestCase extends AbstractOWLlinkAxiomsTestCase {
 
         entailed = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(A, C));
         response = reasoner.answer(entailed);
-        assertFalse(response.getResult());
+        falseResponse(response);
         entailed = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(A, B));
         response = reasoner.answer(entailed);
-        assertTrue(response.getResult());
+        trueResponse(response);
 
         super.reasoner.answer(request);
     }

@@ -78,13 +78,17 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
         } catch (MalformedURLException e) {
             JOptionPane.showMessageDialog(null,
                     "The given URL is not valid",
-                    "Not valid URL",
+                    "Invalid URL ["+e.getMessage()+"]",
                     JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 int port = Integer.parseInt(this.portNumberField.getText());
                 prefs.setServerEndpointPort(port);
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,
+                    "The port number is not valid",
+                    "Invalid port number ["+e.getMessage()+"]",
+                    JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -144,7 +148,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
         return c;
     }
 
-    private JComponent createPane(String title, int orientation) {
+    private static JComponent createPane(String title, int orientation) {
         JComponent c = new Box(orientation) {
             @Override
             public Dimension getMaximumSize() {
@@ -173,18 +177,21 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
                 reasoner.dispose();
                 JOptionPane.showMessageDialog(null, "Reasoner " + reasonerName + "(" + version.getMajor() + "." + version.getMinor() + ")" + " is available", "OK", JOptionPane.INFORMATION_MESSAGE);
             } catch (OWLOntologyCreationException e) {
-
+                JOptionPane.showMessageDialog(null,
+                    "The ontology could not be created",
+                    "Error ["+e.getMessage()+"]",
+                    JOptionPane.ERROR_MESSAGE);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,
                         "An OWLlink server endpoint could not be found at " + reasonerURL,
-                        "Error",
+                        "Error ["+e.getMessage()+"]",
                         JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (MalformedURLException e) {
             JOptionPane.showMessageDialog(null,
                     "The given URL is not valid",
-                    "Not valid URL",
+                    "Not valid URL ["+e.getMessage()+"]",
                     JOptionPane.ERROR_MESSAGE);
         }
     }

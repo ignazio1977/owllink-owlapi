@@ -35,18 +35,26 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfClassSynsets;
  * Date: 23.10.2009
  */
 public class GetSubClasses extends AbstractKBRequestWithOneObjectAndBooleanValue<SetOfClassSynsets, OWLClassExpression> {
+
+    /** @param kb knowledge base 
+     * @param object object */
     public GetSubClasses(IRI kb, OWLClassExpression object) {
         super(kb, object, false);
     }
 
+    /** @param kb knowledge base 
+     * @param object object 
+     * @param isDirect isDirect */
     public GetSubClasses(IRI kb, OWLClassExpression object, boolean isDirect) {
         super(kb, object, isDirect);
     }
 
+    /** @return class expression */
     public OWLClassExpression getClassExpression() {
         return super.object;
     }
 
+    /** @return true if direct */
     public boolean isDirect() {
         return super.bool;
     }

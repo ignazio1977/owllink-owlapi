@@ -35,10 +35,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkEquivalentClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -52,12 +52,12 @@ public class OWLlinkEquivalentClassesTestCase extends AbstractOWLlinkAxiomsTestC
 
     public void testAreClassesEquivalent() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentClassesAxiom(a(), b()));
-        BooleanResponse result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        BooleanResponse answer = super.reasoner.answer(query);
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLEquivalentClassesAxiom(a(), b(), c()));
-        result = super.reasoner.answer(query);
-        assertTrue(result.getResult());
+        answer = super.reasoner.answer(query);
+        trueResponse(answer);
     }
 
     public void testAreClassesEquivalentViaOWLReasoner() {

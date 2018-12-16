@@ -33,6 +33,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfDatatypes;
  * Date: 23.10.2009
  */
 public class GetAllDatatypes extends AbstractKBRequest<SetOfDatatypes> {
+
+    /** @param kb knowledge base */
     public GetAllDatatypes(IRI kb) {
         super(kb);
     }

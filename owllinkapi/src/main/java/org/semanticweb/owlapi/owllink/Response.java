@@ -35,5 +35,10 @@ import org.semanticweb.owlapi.owllink.builtin.response.ResponseVisitor;
  */
 public interface Response {
 
+    /**
+     * @param <O> visited type
+     * @param visitor visitor 
+     * @return visitor value
+     */
     <O> O accept(ResponseVisitor<O> visitor);
 }

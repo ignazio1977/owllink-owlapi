@@ -31,5 +31,7 @@ import org.semanticweb.owlapi.owllink.server.OWLlinkServer;
  */
 public interface OWLlinkServerFactory {
 
+    /** @param port port 
+     * @return server */
     OWLlinkServer createServer(int port);
 }

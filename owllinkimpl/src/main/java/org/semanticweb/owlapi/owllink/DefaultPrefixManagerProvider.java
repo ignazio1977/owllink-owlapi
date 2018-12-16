@@ -34,11 +34,7 @@ import java.util.Map;
  * Date: 30.11.2009
  */
 public class DefaultPrefixManagerProvider implements PrefixManagerProvider {
-    private Map<IRI, PrefixManager> prefixManagerByKB;
-
-    public DefaultPrefixManagerProvider() {
-        this.prefixManagerByKB = CollectionFactory.createMap();
-    }
+    private Map<IRI, PrefixManager> prefixManagerByKB = CollectionFactory.createMap();
 
     @Override
     public PrefixManager getPrefixes(IRI knowledgeBase) {

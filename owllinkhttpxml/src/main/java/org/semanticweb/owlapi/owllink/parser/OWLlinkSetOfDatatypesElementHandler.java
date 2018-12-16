@@ -32,12 +32,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfDatatypes;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfDatatypesImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSetOfDatatypesElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLDatatype> {
 
+    /** @param handler handler */
     public OWLlinkSetOfDatatypesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -48,8 +48,8 @@ public class OWLlinkSetOfDatatypesElementHandler extends AbstractSetOfOWLObjectR
     }
 
     @Override
-    public void handleChild(AbstractOWLDataRangeHandler handler) throws OWLXMLParserException {
-        OWLDataRange range = handler.getOWLObject();
+    public void handleChild(AbstractOWLDataRangeHandler h) throws OWLXMLParserException {
+        OWLDataRange range = h.getOWLObject();
         if (range instanceof OWLDatatype)
             super.elements.add((OWLDatatype) range);
     }

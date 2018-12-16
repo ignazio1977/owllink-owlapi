@@ -34,6 +34,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectProperties;
  */
 public class GetAllObjectProperties extends AbstractKBRequest<SetOfObjectProperties> {
 
+    /** @param kb knowledge base */
     public GetAllObjectProperties(IRI kb) {
         super(kb);
     }

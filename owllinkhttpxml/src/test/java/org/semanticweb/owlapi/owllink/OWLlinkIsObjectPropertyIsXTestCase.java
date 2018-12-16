@@ -30,10 +30,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTestCase {
     @Override
     protected Set<? extends OWLAxiom> createAxioms() {
@@ -51,11 +51,11 @@ public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTes
     public void testIsFunctional() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalObjectPropertyAxiom
                 (opa()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLFunctionalObjectPropertyAxiom
                 (opb()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsFunctionalViaOWLReasoner() {
@@ -71,11 +71,11 @@ public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTes
     public void testIsInverseFunctional() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().
                 getOWLInverseFunctionalObjectPropertyAxiom(opb()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().
                 getOWLInverseFunctionalObjectPropertyAxiom(opa()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsInverseFunctionalViaOWLReasoner() {
@@ -90,10 +90,10 @@ public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTes
 
     public void testIsReflexive() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLReflexiveObjectPropertyAxiom(opc()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLReflexiveObjectPropertyAxiom(opd()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsReflexiveViaOWLReasoner() {
@@ -106,10 +106,10 @@ public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTes
 
     public void testIsIrreflexive() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opd()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLIrreflexiveObjectPropertyAxiom(opa()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsIrreflexiveViaOWLReasoner() {
@@ -122,10 +122,10 @@ public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTes
 
     public void testIsAsymmetric() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opE()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLAsymmetricObjectPropertyAxiom(opF()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsAsymmetricViaOWLReasoner() {
@@ -138,10 +138,10 @@ public class OWLlinkIsObjectPropertyIsXTestCase extends AbstractOWLlinkAxiomsTes
 
     public void testIsTranstive() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLTransitiveObjectPropertyAxiom(opF()));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLTransitiveObjectPropertyAxiom(opE()));
-        assertFalse(reasoner.answer(query).getResult());
+        falseResponse(reasoner.answer(query));
     }
 
     public void testIsTranstiveViaOWLReasoner() {

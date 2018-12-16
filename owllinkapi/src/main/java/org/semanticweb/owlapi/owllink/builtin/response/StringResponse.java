@@ -31,5 +31,6 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 23.10.2009
  */
 public interface StringResponse extends KBResponse {
+    /** @return result */
     String getResult();
 }

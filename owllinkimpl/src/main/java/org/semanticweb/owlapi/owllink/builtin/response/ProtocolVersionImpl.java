@@ -28,6 +28,10 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 24.10.2009
  */
 public class ProtocolVersionImpl extends Version implements ProtocolVersion {
+    /**
+     * @param major major 
+     * @param minor minor 
+     */
     public ProtocolVersionImpl(int major, int minor) {
         super(major, minor);
     }

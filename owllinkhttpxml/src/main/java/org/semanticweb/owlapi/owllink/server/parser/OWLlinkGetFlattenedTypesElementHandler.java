@@ -27,14 +27,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetFlattenedTypes;
+import org.semanticweb.owlapi.owllink.builtin.response.Classes;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetFlattenedTypesElementHandler extends AbstractOWLIndividualElementHandler<GetFlattenedTypes> {
+public class OWLlinkGetFlattenedTypesElementHandler extends AbstractOWLIndividualElementHandler<Classes, GetFlattenedTypes> {
     boolean isDirect = false;
 
+    /** @param handler handler */
     public OWLlinkGetFlattenedTypesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -49,7 +51,7 @@ public class OWLlinkGetFlattenedTypesElementHandler extends AbstractOWLIndividua
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getShortName().equals(localName)) {
-            this.isDirect = Boolean.valueOf(value);
+            this.isDirect = Boolean.parseBoolean(value);
         }
     }
 

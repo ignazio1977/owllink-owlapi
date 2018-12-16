@@ -30,12 +30,34 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 public class BooleanResponseImpl extends KBResponseImpl implements BooleanResponse {
     private final Boolean result;
 
+    /**
+     * @param result result 
+     * @param warning warning 
+     */
     public BooleanResponseImpl(Boolean result, String warning) {
         super(warning);
         this.result = result;
     }
 
+    /**
+     * @param result result 
+     */
     public BooleanResponseImpl(Boolean result) {
+        this(result, null);
+    }
+
+    /**
+     * @param result result 
+     * @param warning warning 
+     */
+    public BooleanResponseImpl(boolean result, String warning) {
+        this(Boolean.valueOf(result), warning);
+    }
+
+    /**
+     * @param result result 
+     */
+    public BooleanResponseImpl(boolean result) {
         this(result, null);
     }
 

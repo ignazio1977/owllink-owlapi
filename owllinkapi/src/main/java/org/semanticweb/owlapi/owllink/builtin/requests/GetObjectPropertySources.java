@@ -37,17 +37,27 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 public class GetObjectPropertySources extends AbstractKBRequestWithIndividualProperty<
         SetOfIndividualSynsets,
         OWLObjectPropertyExpression> {
+    /** Is negative. */
     public final boolean isNegative;
 
+    /** @param kb knowledge base 
+     * @param individual individual 
+     * @param property property 
+     * @param negative negative */
     public GetObjectPropertySources(IRI kb, OWLIndividual individual, OWLObjectPropertyExpression property, boolean negative) {
         super(kb, individual, property);
         isNegative = negative;
     }
 
+    /** @param kb knowledge base
+     * @param individual individual 
+     * @param property property 
+     */
     public GetObjectPropertySources(IRI kb, OWLIndividual individual, OWLObjectPropertyExpression property) {
         this(kb, individual, property, false);
     }
 
+    /** @return true if negative */
     public boolean isNegative() {
         return this.isNegative;
     }

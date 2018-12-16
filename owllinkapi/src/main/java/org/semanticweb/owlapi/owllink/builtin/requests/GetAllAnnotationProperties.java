@@ -33,6 +33,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfAnnotationProperties
  * Date: 23.10.2009
  */
 public class GetAllAnnotationProperties extends AbstractKBRequest<SetOfAnnotationProperties> {
+
+    /** @param kb knowledge base */
     public GetAllAnnotationProperties(IRI kb) {
         super(kb);
     }

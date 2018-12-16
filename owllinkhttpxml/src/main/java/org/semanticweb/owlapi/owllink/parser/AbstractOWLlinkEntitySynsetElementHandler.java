@@ -34,10 +34,12 @@ import java.util.Set;
 /**
  * Author: Olaf Noppens
  * Date: 17.02.2010
+ * @param <S> object type
  */
 public abstract class AbstractOWLlinkEntitySynsetElementHandler<S extends OWLObject> extends AbstractOWLlinkElementHandler<Node<S>> {
     protected Set<S> elements;
 
+    /** @param handler handler */
     public AbstractOWLlinkEntitySynsetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

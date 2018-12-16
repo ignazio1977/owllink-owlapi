@@ -34,6 +34,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
  * Date: 23.10.2009
  */
 public class IsKBSatisfiable extends AbstractKBRequest<BooleanResponse> {
+
+    /** @param kb knowledge base */
     public IsKBSatisfiable(IRI kb) {
         super(kb);
     }

@@ -37,28 +37,41 @@ import java.util.Set;
  * Date: 27.11.2009
  */
 public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConfiguration {
+    /** Abbreviate IRIs. */
     public static final String ABBREVIATES_IRIS = "abbreviatesIRIs";
     private static final String APPLIEDSEMANTICS = "appliedSemantics";
     private static final String SELECTED_PROFILE = "selectedProfile";
     private static final String SUPPORTED_DATATYPES = "supportedDatatypes";
+    /** Ignores annotations. */
     public static final String IGNORES_ANNOTATIONS = "ignoresAnnotations";
+    /** Ignores declarations. */
     public static final String IGNORES_DECLARATIONS = "ignoresDeclarations";
+    /** Unique name assumption. */
     public static final String UNIQUE_NAMEASSUMPTION = "uniqueNameAssumption";
     private Set<Configuration> configurations;
     private OWLReasonerConfiguration reasonerConfiguration;
 
     private ReasonerVersion reasonerversion;
 
+    /**
+     * @param configuration configuration 
+     */
     public AbstractOWLlinkReasonerConfiguration(OWLReasonerConfiguration configuration) {
         this.reasonerConfiguration = configuration;
         initDefaults();
     }
 
+    /**
+     * Empty configuration.
+     */
     public AbstractOWLlinkReasonerConfiguration( ) {
         this.reasonerConfiguration = null;
         initDefaults();
     }
 
+    /**
+     * @param configuration configuration 
+     */
     public AbstractOWLlinkReasonerConfiguration(OWLlinkReasonerConfiguration configuration) {
         this(configuration.getOWLReasonerConfiguration());
         add(configuration);
@@ -76,35 +89,44 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         setReasonerInfo(1, 1, 0);
     }
 
-
+    /**
+     * @param configuration configuration 
+     */
     public void add(OWLlinkReasonerConfiguration configuration) {
         this.configurations.addAll(configuration.getConfigurations());
     }
 
+    /** @return applied semantics */
     public Configuration getAppliedSemantics() {
         return getConfiguration(APPLIEDSEMANTICS);
     }
 
+    /** @return abbreviated iris*/
     public Configuration getAbbreviatesIRIs() {
         return getConfiguration(ABBREVIATES_IRIS);
     }
 
+    /** @return selected profile*/
     public Configuration getSelectedProfile() {
         return getConfiguration(SELECTED_PROFILE);
     }
 
+    /** @return supported datatypes*/
     public Configuration getSupportedDatatypes() {
         return getConfiguration(SUPPORTED_DATATYPES);
     }
 
+    /** @return ignores annotations*/
     public Configuration getIgnoresAnnotations() {
         return getConfiguration(IGNORES_ANNOTATIONS);
     }
 
+    /** @return ignores declarations*/
     public Configuration getIgnoresDeclarations() {
         return getConfiguration(IGNORES_DECLARATIONS);
     }
 
+    /** @return unique name assumption*/
     public Configuration getUniqueNamesAssumption() {
         return getConfiguration(UNIQUE_NAMEASSUMPTION);
     }
@@ -114,10 +136,19 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         return this.reasonerversion;
     }
 
+    /**
+     * @param major major 
+     * @param minor minor 
+     * @param build build 
+     */
     public void setReasonerInfo(int major, int minor, int build) {
         this.reasonerversion = new ReasonerVersionImpl(major, minor, build);
     }
 
+    /**
+     * @param selected selected 
+     * @param ranges ranges 
+     */
     public void setAppliedSemantics(String selected, String... ranges) {
         Set<OWLlinkLiteral> rangeValues = CollectionFactory.createSet();
         for (String range : ranges)
@@ -130,6 +161,10 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         replaceConfiguration(new PropertyImpl(APPLIEDSEMANTICS, oneOf, selectedValue));
     }
 
+    /**
+     * @param selected selected 
+     * @param ranges ranges 
+     */
     public void setSelectedProfile(String selected, String... ranges) {
         Set<OWLlinkLiteral> rangeValues = CollectionFactory.createSet();
         for (String range : ranges)
@@ -142,6 +177,9 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         replaceConfiguration(new PropertyImpl(SELECTED_PROFILE, oneOf, selectedValue));
     }
 
+    /**
+     * @param iris iris 
+     */
     public void setSupportedDatatypes(IRI... iris) {
         OWLlinkList list = new OWLlinkListImpl(OWL2Datatype.XSD_ANY_URI.getIRI());
         Set<OWLlinkLiteral> literals = CollectionFactory.createSet();
@@ -151,24 +189,36 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         replaceConfiguration(new PropertyImpl(SUPPORTED_DATATYPES, list, literals));
     }
 
+    /**
+     * @param ignores ignores 
+     */
     public void setIgnoresAnnotations(boolean ignores) {
         Set<OWLlinkLiteral> literals = CollectionFactory.createSet();
         literals.add(new OWLlinkLiteralImpl(new Boolean(ignores).toString()));
         replaceConfiguration(new PropertyImpl(IGNORES_ANNOTATIONS, new OWLlinkDatatypeImpl(OWL2Datatype.XSD_BOOLEAN.getIRI()), literals));
     }
 
+    /**
+     * @param ignores ignores 
+     */
     public void setAbbreviatesIRIs(boolean ignores) {
         Set<OWLlinkLiteral> literals = CollectionFactory.createSet();
         literals.add(new OWLlinkLiteralImpl(new Boolean(ignores).toString()));
         replaceConfiguration(new PropertyImpl(ABBREVIATES_IRIS, new OWLlinkDatatypeImpl(OWL2Datatype.XSD_BOOLEAN.getIRI()), literals));
     }
 
+    /**
+     * @param ignores ignores 
+     */
     public void setIgnoresDeclarations(boolean ignores) {
         Set<OWLlinkLiteral> literals = CollectionFactory.createSet();
         literals.add(new OWLlinkLiteralImpl(new Boolean(ignores).toString()));
         replaceConfiguration(new PropertyImpl(IGNORES_DECLARATIONS, new OWLlinkDatatypeImpl(OWL2Datatype.XSD_BOOLEAN.getIRI()), literals));
     }
 
+    /**
+     * @param ignores ignores 
+     */
     public void setUniqueNameAssumption(boolean ignores) {
         Set<OWLlinkLiteral> literals = CollectionFactory.createSet();
         literals.add(new OWLlinkLiteralImpl(new Boolean(ignores).toString()));
@@ -206,6 +256,11 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         this.configurations.add(newConfiguration);
     }
 
+    /**
+     * @param key key 
+     * @param values values 
+     * @return true if changed
+     */
     public boolean set(String key, Set<OWLlinkLiteral> values) {
         Configuration configuration = getConfiguration(key);
         if (configuration != null && configuration.isSetting()) {
@@ -222,6 +277,9 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         return this.reasonerConfiguration;
     }
 
+    /**
+     * @param configuration configuration 
+     */
     public void setReasonerConfiguration(OWLReasonerConfiguration configuration) {
         this.reasonerConfiguration = configuration;
     }

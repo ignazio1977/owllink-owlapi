@@ -30,19 +30,19 @@ import org.semanticweb.owlapi.owllink.builtin.response.SubClassSynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SubEntitySynsets;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 24.11.2009
  */
 public class OWLlinkSubClassSynsetsElementHandler extends AbstractSubSynsetsElementHandler<OWLClass> {
 
+    /** @param handler handler */
     public OWLlinkSubClassSynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException {
-        super.synsets.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkClassSynsetElementHandler h) throws OWLXMLParserException {
+        super.synsets.add(h.getOWLLinkObject());
     }
 
     @Override

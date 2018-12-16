@@ -28,15 +28,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsClassSatisfiable;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkIsClassSatisfiableElementHandler extends AbstractOWLlinkKBRequestElementHandler<IsClassSatisfiable> {
+public class OWLlinkIsClassSatisfiableElementHandler extends AbstractOWLlinkKBRequestElementHandler<BooleanResponse, IsClassSatisfiable> {
     OWLClassExpression expression;
 
-
+    /** @param handler handler */
     public OWLlinkIsClassSatisfiableElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -53,7 +54,7 @@ public class OWLlinkIsClassSatisfiableElementHandler extends AbstractOWLlinkKBRe
     }
 
     @Override
-    public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
-        this.expression = handler.getOWLObject();
+    public void handleChild(AbstractClassExpressionElementHandler h) throws OWLXMLParserException {
+        this.expression = h.getOWLObject();
     }
 }

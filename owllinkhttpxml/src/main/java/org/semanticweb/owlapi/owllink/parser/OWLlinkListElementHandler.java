@@ -31,13 +31,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkList;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkListImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkListElementHandler extends OWLlinkDataRangeElementHandler<OWLlinkList> {
     IRI iri;
 
+    /** @param handler handler */
     public OWLlinkListElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

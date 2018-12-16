@@ -34,14 +34,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
+ * @param <O> object type
  */
 public abstract class AbstractOWLlinkHierarchyElementHandler<O extends OWLObject> extends AbstractOWLlinkKBResponseElementHandler<Hierarchy<O>> {
     protected Set<HierarchyPair<O>> pairs;
     protected Node<O> unsatisfiables;
 
+    /** @param handler handler */
     public AbstractOWLlinkHierarchyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

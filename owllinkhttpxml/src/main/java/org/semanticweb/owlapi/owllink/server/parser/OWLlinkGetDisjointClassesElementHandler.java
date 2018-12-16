@@ -26,12 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDisjointClasses;
+import org.semanticweb.owlapi.owllink.builtin.response.ClassSynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkGetDisjointClassesElementHandler extends AbstractOWLClassRequestElementHandler<GetDisjointClasses> {
+public class OWLlinkGetDisjointClassesElementHandler extends AbstractOWLClassRequestElementHandler<ClassSynsets, GetDisjointClasses> {
+
+    /** @param handler handler */
     public OWLlinkGetDisjointClassesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

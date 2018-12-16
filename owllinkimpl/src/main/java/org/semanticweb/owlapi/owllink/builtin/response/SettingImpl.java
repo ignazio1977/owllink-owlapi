@@ -31,6 +31,11 @@ import java.util.Set;
  */
 public class SettingImpl extends ConfigurationImpl implements Setting {
 
+    /**
+     * @param key key 
+     * @param type type 
+     * @param literals literals 
+     */
     public SettingImpl(String key, OWLlinkDataRange type, Set<OWLlinkLiteral> literals) {
         super(key, type, literals);
     }

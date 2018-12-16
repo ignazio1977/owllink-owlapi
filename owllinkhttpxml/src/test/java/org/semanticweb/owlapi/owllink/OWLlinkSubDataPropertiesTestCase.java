@@ -38,10 +38,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkSubDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -58,15 +58,15 @@ public class OWLlinkSubDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestC
     public void testSubsumedBy() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpB()));
         BooleanResponse response = super.reasoner.answer(query);
-        assertTrue(response.getResult());
+        trueResponse(response);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(dpA(), dpC()));
         response = super.reasoner.answer(query);
-        assertTrue(response.getResult());
+        trueResponse(response);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubDataPropertyOfAxiom(dpD(), dpB()));
         response = super.reasoner.answer(query);
-        assertFalse(response.getResult());
+        falseResponse(response);
     }
 
     public void testSubsumedByViaOWLReasoner() {
@@ -87,7 +87,6 @@ public class OWLlinkSubDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestC
 
         assertEquals(2,response.nodes().count());
 
-        Set<OWLDataProperty> flattenedClasses = response.getFlattened();
         assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), response.getFlattened());
     }
 

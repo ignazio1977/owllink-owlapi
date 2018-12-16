@@ -29,13 +29,14 @@ import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.response.Confirmation;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
+ * @param <C> response type
  */
 public abstract class AbstractConfirmationElementHandler<C extends Confirmation> extends AbstractOWLlinkResponseElementHandler<C> implements OWLlinkResponseElementHandler<C> {
     String warning;
 
+    /** @param handler handler */
     public AbstractConfirmationElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

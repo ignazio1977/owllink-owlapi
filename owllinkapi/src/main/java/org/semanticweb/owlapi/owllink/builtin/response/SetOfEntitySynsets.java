@@ -31,6 +31,7 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
  * <p/>
  * Author: Olaf Noppens
  * Date: 17.02.2010
+ * @param <E> object type
  */
 public interface SetOfEntitySynsets<E extends OWLObject> extends KBResponse, NodeSet<E> {
 

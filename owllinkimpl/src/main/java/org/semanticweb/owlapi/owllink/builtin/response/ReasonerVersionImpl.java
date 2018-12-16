@@ -28,12 +28,22 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 24.10.2009
  */
 public class ReasonerVersionImpl extends Version implements ReasonerVersion {
+    /** Build. */
     public final int build;
 
+    /**
+     * @param major major 
+     * @param minor minor 
+     */
     public ReasonerVersionImpl(int major, int minor) {
         this(major, minor, 0);
     }
 
+    /**
+     * @param major major 
+     * @param minor minor 
+     * @param build build 
+     */
     public ReasonerVersionImpl(int major, int minor, int build) {
         super(major, minor);
         this.build = build;

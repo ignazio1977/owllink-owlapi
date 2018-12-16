@@ -616,13 +616,13 @@ public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVi
     }
 
     @Override
-    public void answer(Request request) {
+    public void answer(Request<?> request) {
     }
 
 
     @Override
-    public void render(Request request, OWLlinkWriter writer) {
-        this.writer = (OWLlinkXMLWriter) writer;
+    public void render(Request request, OWLlinkWriter w) {
+        this.writer = w;
         request.accept(this);
         //this.answer(request);
     }

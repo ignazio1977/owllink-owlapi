@@ -27,7 +27,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 24.10.2009
  */
 public abstract class Version {
+    /** Major. */
     public final int major;
+    /** Minor. */
     public final int minor;
 
     protected Version(int major, int minor) {
@@ -35,10 +37,12 @@ public abstract class Version {
         this.minor = minor;
     }
 
+    /** @return major version */
     public int getMajor() {
         return this.major;
     }
 
+    /** @return minor version */
     public int getMinor() {
         return this.minor;
     }

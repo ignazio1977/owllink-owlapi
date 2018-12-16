@@ -29,10 +29,14 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  */
 public class OKImpl extends KBResponseImpl implements OK {
 
+    /**
+     * @param warning warning 
+     */
     public OKImpl(String warning) {
         super(warning);
     }
 
+    /** OK without warnings. */
     public OKImpl() {
     }
 

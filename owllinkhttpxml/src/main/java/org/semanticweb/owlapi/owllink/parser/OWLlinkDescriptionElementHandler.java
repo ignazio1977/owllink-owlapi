@@ -33,7 +33,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * User: noppens
  * Date: 21.10.2009
  * Time: 17:47:55
@@ -48,13 +47,14 @@ public class OWLlinkDescriptionElementHandler extends AbstractOWLlinkResponseEle
     private ReasonerVersion rVersion;
     private Set<IRI> supportedExtensions;
 
+    /** @param handler handler */
     public OWLlinkDescriptionElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void startElement(String name) throws OWLXMLParserException {
-        super.startElement(name);
+    public void startElement(String elementName) throws OWLXMLParserException {
+        super.startElement(elementName);
         this.name = null;
         this.message = null;
         this.publicKBs = new HashSet<>();
@@ -80,37 +80,37 @@ public class OWLlinkDescriptionElementHandler extends AbstractOWLlinkResponseEle
     }
 
     @Override
-    public void handleChild(OWLlinkSettingElementHandler handler) throws OWLXMLParserException {
-        configurations.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkSettingElementHandler h) throws OWLXMLParserException {
+        configurations.add(h.getOWLLinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkPropertyElementHandler handler) throws OWLXMLParserException {
-        configurations.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkPropertyElementHandler h) throws OWLXMLParserException {
+        configurations.add(h.getOWLLinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkPublicKBElementHandler handler) throws OWLXMLParserException {
-        publicKBs.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkPublicKBElementHandler h) throws OWLXMLParserException {
+        publicKBs.add(h.getOWLLinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkSupportedExtensionElemenetHandler handler) throws OWLXMLParserException {
-        supportedExtensions.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkSupportedExtensionElemenetHandler h) throws OWLXMLParserException {
+        supportedExtensions.add(h.getOWLLinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkReasonerVersionElementHandler handler) throws OWLXMLParserException {
-        this.rVersion = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkReasonerVersionElementHandler h) throws OWLXMLParserException {
+        this.rVersion = h.getOWLLinkObject();
     }
 
     @Override
-    public void handleChild(OWLlinkProtocolVersionElementHandler handler) throws OWLXMLParserException {
-        this.pVersion = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkProtocolVersionElementHandler h) throws OWLXMLParserException {
+        this.pVersion = h.getOWLLinkObject();
     }
 
     @Override
     public Description getOWLLinkObject() {
-        return new DescriptionImpl(name, configurations, rVersion, pVersion, supportedExtensions, publicKBs);
+        return new DescriptionImpl(name, message, configurations, rVersion, pVersion, supportedExtensions, publicKBs);
     }
 }

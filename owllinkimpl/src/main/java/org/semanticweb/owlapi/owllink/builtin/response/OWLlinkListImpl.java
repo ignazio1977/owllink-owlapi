@@ -32,6 +32,9 @@ import org.semanticweb.owlapi.model.IRI;
 public class OWLlinkListImpl extends OWLlinkDataRangeImpl implements OWLlinkList {
     final IRI type;
 
+    /**
+     * @param type type 
+     */
     public OWLlinkListImpl(IRI type) {
         this.type = type;
     }

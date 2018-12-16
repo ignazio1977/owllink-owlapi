@@ -32,13 +32,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkDatatype;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkDatatypeImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkDatatypeElementHandler extends OWLlinkDataRangeElementHandler<OWLlinkDatatype> {
     private IRI iri;
 
+    /** @param handler handler */
     public OWLlinkDatatypeElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

@@ -30,13 +30,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponseImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkBooleanResponseElementHandler extends AbstractOWLlinkKBResponseElementHandler<BooleanResponse> {
     protected Boolean result;
 
+    /** @param handler handler */
     public OWLlinkBooleanResponseElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -51,7 +51,7 @@ public class OWLlinkBooleanResponseElementHandler extends AbstractOWLlinkKBRespo
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.RESULT_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
-            this.result = Boolean.parseBoolean(value);
+            this.result = Boolean.valueOf(value);
         }
     }
 

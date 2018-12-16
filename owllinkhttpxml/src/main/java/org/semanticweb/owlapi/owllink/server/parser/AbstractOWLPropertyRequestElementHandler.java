@@ -29,26 +29,29 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLPropertyExpression;
 import org.semanticweb.owlapi.owllink.KBRequest;
+import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <R> request type
+ * @param <T> response type
  */
-public abstract class AbstractOWLPropertyRequestElementHandler<R extends KBRequest> extends
-        AbstractOWLlinkObjectRequestElementHandler<R, OWLPropertyExpression> {
+public abstract class AbstractOWLPropertyRequestElementHandler<T extends KBResponse, R extends KBRequest<T>> extends
+        AbstractOWLlinkObjectRequestElementHandler<T, R, OWLPropertyExpression> {
 
+    /** @param handler handler */
     public AbstractOWLPropertyRequestElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
-        this.o = handler.getOWLObject();
+    public void handleChild(AbstractOWLObjectPropertyElementHandler h) throws OWLXMLParserException {
+        this.o = h.getOWLObject();
     }
 
     @Override
-    public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
-        this.o = handler.getOWLObject();
+    public void handleChild(OWLDataPropertyElementHandler h) throws OWLXMLParserException {
+        this.o = h.getOWLObject();
     }
 }

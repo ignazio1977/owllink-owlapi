@@ -29,17 +29,26 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 /**
  * Author: Olaf Noppens
  * Date: 24.10.2009
+ * @param <O> object type
+ * @param <R> response type
  */
 public abstract class AbstractKBRequestWithOneObjectAndBooleanValue<R extends KBResponse, O> extends AbstractKBRequest<R> {
     protected final boolean bool;
     protected final O object;
 
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public AbstractKBRequestWithOneObjectAndBooleanValue(IRI iri, O object, boolean bool) {
         super(iri);
         this.bool = bool;
         this.object = object;
     }
 
+    /**
+     * @param iri iri 
+     * @param object object 
+     */
     public AbstractKBRequestWithOneObjectAndBooleanValue(IRI iri, O object) {
         this(iri, object, false);
     }

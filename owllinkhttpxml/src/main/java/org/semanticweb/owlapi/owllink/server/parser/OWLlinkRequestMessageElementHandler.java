@@ -34,11 +34,12 @@ import java.util.Vector;
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkRequestMessageElementHandler extends AbstractOWLlinkElementHandler<List<Request>>
-        implements OWLlinkElementHandler<List<Request>> {
-    private List<Request> requests;
+public class OWLlinkRequestMessageElementHandler extends AbstractOWLlinkElementHandler<List<Request<?>>>
+        implements OWLlinkElementHandler<List<Request<?>>> {
+    private List<Request<?>> requests;
     private OWLLinkRequestListener listener;
 
+    /** @param handler handler */
     public OWLlinkRequestMessageElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -52,16 +53,12 @@ public class OWLlinkRequestMessageElementHandler extends AbstractOWLlinkElementH
         super.startElement(name);
         this.requests = new Vector<>();
     }
-
     @Override
-    public void handleChild(OWLlinkRequestElementHandler handler) {
-        try {
-            if (handler.getOWLObject() instanceof Request) {
-                requests.add((Request) handler.getOWLObject());
-                if (this.listener != null)
-                    this.listener.requestAdded((Request) handler.getOWLlinkObject());
-            }
-        } catch (OWLXMLParserException e) {
+    public void handleChild(OWLlinkRequestElementHandler<?, ?> handler) {
+        if (handler.getOWLObject() != null) {
+            requests.add(handler.getOWLObject());
+            if (this.listener != null)
+                this.listener.requestAdded(handler.getOWLlinkObject());
         }
     }
 
@@ -70,10 +67,13 @@ public class OWLlinkRequestMessageElementHandler extends AbstractOWLlinkElementH
     }
 
     @Override
-    public List<Request> getOWLObject() throws OWLXMLParserException {
+    public List<Request<?>> getOWLObject() throws OWLXMLParserException {
         return this.requests;
     }
 
+    /**
+     * @param listener listener
+     */
     public void setRequestListener(OWLLinkRequestListener listener) {
         this.listener = listener;
     }

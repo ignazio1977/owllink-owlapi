@@ -35,10 +35,13 @@ public class GetDifferentIndividuals extends AbstractKBRequestWithOneObject<
         SetOfIndividualSynsets,
         OWLIndividual> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetDifferentIndividuals(IRI kb, OWLIndividual object) {
         super(kb, object);
     }
 
+    /** @return individual */
     public OWLIndividual getIndividual() {
         return super.getObject();
     }

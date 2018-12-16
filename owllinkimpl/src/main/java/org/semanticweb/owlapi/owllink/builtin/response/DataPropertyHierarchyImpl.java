@@ -34,10 +34,19 @@ import java.util.Set;
  */
 public class DataPropertyHierarchyImpl extends HierarchyImpl<OWLDataProperty> implements DataPropertyHierarchy {
 
+    /**
+     * @param hierarchyPairs hierarchyPairs 
+     * @param unsatisfiables unsatisfiables 
+     * @param warning warning 
+     */
     public DataPropertyHierarchyImpl(Set<HierarchyPair<OWLDataProperty>> hierarchyPairs, Node<OWLDataProperty> unsatisfiables, String warning) {
         super(hierarchyPairs, unsatisfiables, warning);
     }
 
+    /**
+     * @param hierarchyPairs hierarchyPairs 
+     * @param unsatisfiables unsatisfiables 
+     */
     public DataPropertyHierarchyImpl(Set<HierarchyPair<OWLDataProperty>> hierarchyPairs, Node<OWLDataProperty> unsatisfiables) {
         super(hierarchyPairs, unsatisfiables);
     }

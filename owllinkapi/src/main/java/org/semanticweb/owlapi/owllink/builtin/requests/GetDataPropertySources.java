@@ -38,19 +38,28 @@ public class GetDataPropertySources extends AbstractKBRequestWithOneObjectAndNeg
         OWLDataProperty> {
     final OWLLiteral individual;
 
+    /** @param kb knowledge base 
+     * @param property property 
+     * @param literal literal */
     public GetDataPropertySources(IRI kb, OWLDataProperty property, OWLLiteral literal) {
         this(kb, property, literal, false);
     }
 
+    /** @param kb knowledge base 
+     * @param property property 
+     * @param literal literal 
+     * @param isNegative isNegative */
     public GetDataPropertySources(IRI kb, OWLDataProperty property, OWLLiteral literal, boolean isNegative) {
         super(kb, property, isNegative);
         this.individual = literal;
     }
 
+    /** @return target value */
     public OWLLiteral getTargetValue() {
         return this.individual;
     }
 
+    /** @return data property*/
     public OWLDataProperty getOWLProperty() {
         return super.object;
     }

@@ -72,8 +72,11 @@ public interface IndividualSynset extends Iterable<OWLIndividual> {
      */
     OWLIndividual getSingletonElement();
 
+    /** @return individuals */
     Set<OWLIndividual> getIndividuals();
 
+    /** @param individual individual 
+     * @return true if contained*/
     boolean contains(OWLIndividual individual);
 
 }

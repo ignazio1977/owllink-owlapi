@@ -39,10 +39,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -60,15 +60,15 @@ public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
     public void testSubsumedBy() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(a(), b()));
         BooleanResponse response = super.reasoner.answer(query);
-        assertTrue(response.getResult());
+        trueResponse(response);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(a(), c()));
         response = super.reasoner.answer(query);
-        assertTrue(response.getResult());
+        trueResponse(response);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSubClassOfAxiom(d(), b()));
         response = super.reasoner.answer(query);
-        assertFalse(response.getResult());
+        falseResponse(response);
     }
 
     public void testSubsumedByViaOWLReasoner() {

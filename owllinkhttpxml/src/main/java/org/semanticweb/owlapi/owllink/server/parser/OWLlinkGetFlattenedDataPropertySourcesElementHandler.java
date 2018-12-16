@@ -29,15 +29,17 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetFlattenedDataPropertySources;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetFlattenedDataPropertySourcesElementHandler extends AbstractOWLlinkDataPropertyElementHandler<GetFlattenedDataPropertySources> {
+public class OWLlinkGetFlattenedDataPropertySourcesElementHandler extends AbstractOWLlinkDataPropertyElementHandler<SetOfIndividuals, GetFlattenedDataPropertySources> {
     protected boolean isNegative = false;
     protected OWLLiteral literal;
 
+    /** @param handler handler */
     public OWLlinkGetFlattenedDataPropertySourcesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -52,13 +54,13 @@ public class OWLlinkGetFlattenedDataPropertySourcesElementHandler extends Abstra
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.NEGATIVE_ATTRIBUTE.getShortName().equals(localName)) {
-            isNegative = Boolean.valueOf(value);
+            isNegative = Boolean.parseBoolean(value);
         }
     }
 
     @Override
-    public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
-        this.literal = handler.getOWLObject();
+    public void handleChild(OWLLiteralElementHandler h) throws OWLXMLParserException {
+        this.literal = h.getOWLObject();
     }
 
     @Override

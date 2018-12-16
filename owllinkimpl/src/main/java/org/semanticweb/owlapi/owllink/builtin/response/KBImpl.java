@@ -32,6 +32,9 @@ import org.semanticweb.owlapi.model.IRI;
 public class KBImpl extends KBResponseImpl implements KB {
     final IRI kb;
 
+    /**
+     * @param kb kb 
+     */
     public KBImpl(IRI kb) {
         this.kb = kb;
     }

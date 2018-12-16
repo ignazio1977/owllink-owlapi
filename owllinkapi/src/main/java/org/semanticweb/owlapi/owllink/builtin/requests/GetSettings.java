@@ -34,6 +34,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.Settings;
  * Date: 23.10.2009
  */
 public class GetSettings extends AbstractKBRequest<Settings> {
+
+    /** @param kb knowledge base */
     public GetSettings(IRI kb) {
         super(kb);
     }

@@ -36,6 +36,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
  */
 public class IsDataPropertySatisfiable extends AbstractKBRequestWithOneObject<BooleanResponse, OWLDataPropertyExpression> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public IsDataPropertySatisfiable(IRI kb, OWLDataPropertyExpression object) {
         super(kb, object);
     }

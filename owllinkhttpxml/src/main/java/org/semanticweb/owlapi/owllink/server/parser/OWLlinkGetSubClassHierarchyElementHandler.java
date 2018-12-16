@@ -29,14 +29,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSubClassHierarchy;
+import org.semanticweb.owlapi.owllink.builtin.response.ClassHierarchy;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetSubClassHierarchyElementHandler extends AbstractOWLlinkKBRequestElementHandler<GetSubClassHierarchy> {
+public class OWLlinkGetSubClassHierarchyElementHandler extends AbstractOWLlinkKBRequestElementHandler<ClassHierarchy, GetSubClassHierarchy> {
     protected OWLClass clazz;
 
+    /** @param handler handler */
     public OWLlinkGetSubClassHierarchyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -48,10 +50,10 @@ public class OWLlinkGetSubClassHierarchyElementHandler extends AbstractOWLlinkKB
     }
 
     @Override
-    public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
-        OWLClassExpression clazz = handler.getOWLObject();
-        if (!clazz.isAnonymous())
-            this.clazz = clazz.asOWLClass();
+    public void handleChild(AbstractClassExpressionElementHandler h) throws OWLXMLParserException {
+        OWLClassExpression c = h.getOWLObject();
+        if (!c.isAnonymous())
+            this.clazz = c.asOWLClass();
     }
 
     @Override

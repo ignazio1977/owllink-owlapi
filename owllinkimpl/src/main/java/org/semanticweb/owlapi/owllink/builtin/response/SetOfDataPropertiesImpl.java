@@ -32,18 +32,32 @@ import java.util.Collection;
  * Date: 24.11.2009
  */
 public class SetOfDataPropertiesImpl extends SetOfImpl<OWLDataProperty> implements SetOfDataProperties {
+    /**
+     * @param owlDataProperty owlDataProperty 
+     */
     public SetOfDataPropertiesImpl(OWLDataProperty owlDataProperty) {
         super(owlDataProperty);
     }
 
+    /**
+     * @param owlDataProperty owlDataProperty 
+     * @param warning warning 
+     */
     public SetOfDataPropertiesImpl(OWLDataProperty owlDataProperty, String warning) {
         super(owlDataProperty, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfDataPropertiesImpl(Collection<OWLDataProperty> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfDataPropertiesImpl(Collection<OWLDataProperty> elements, String warning) {
         super(elements, warning);
     }

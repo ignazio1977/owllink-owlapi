@@ -25,8 +25,8 @@ package org.semanticweb.owlapi.owllink.builtin.requests;
 
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
-import org.semanticweb.owlapi.util.CollectionFactory;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -35,10 +35,14 @@ import java.util.Iterator;
 /**
  * Author: Olaf Noppens
  * Date: 23.10.2009
+ * @param <O> object type
+ * @param <R> response type
  */
 public abstract class AbstractKBRequestWithTwoOrMoreObjects<R extends KBResponse, O> extends AbstractKBRequest<R> implements Iterable<O> {
     protected java.util.Set<O> elements;
 
+    /** @param kb knowledge base 
+     * @param elements elements */
     public AbstractKBRequestWithTwoOrMoreObjects(IRI kb, Collection<O> elements) {
         super(kb);
         if (elements.size() < 2)
@@ -46,13 +50,13 @@ public abstract class AbstractKBRequestWithTwoOrMoreObjects<R extends KBResponse
         this.elements = Collections.unmodifiableSet(new HashSet<>(elements));
     }
 
+    /** @param kb knowledge base 
+     * @param elem elem */
     public AbstractKBRequestWithTwoOrMoreObjects(IRI kb, O... elem) {
-        super(kb);
-        this.elements = Collections.unmodifiableSet(CollectionFactory.createSet(elem));
-        if (elements.size() < 2)
-            throw new IllegalArgumentException("At least two elements must be in the argument but there are only " + elements.size());
+        this(kb, Arrays.asList(elem));
     }
 
+    /** @return elements */
     public java.util.Set<O> getElements() {
         return this.elements;
     }

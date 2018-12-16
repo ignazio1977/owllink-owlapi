@@ -28,6 +28,9 @@ package org.semanticweb.owlapi.owllink.server.response;
  * Date: 10.12.2009
  */
 public class KBErrorResponseImpl extends ErrorResponseImpl implements KBErrorResponse {
+    /**
+     * @param errorString errorString 
+     */
     public KBErrorResponseImpl(String errorString) {
         super(errorString);
     }

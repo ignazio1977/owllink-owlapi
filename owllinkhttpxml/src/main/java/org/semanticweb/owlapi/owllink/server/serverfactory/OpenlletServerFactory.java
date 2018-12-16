@@ -53,8 +53,9 @@ public class OpenlletServerFactory implements OWLlinkServerFactory {
                 OWL2Datatype.XSD_SHORT.getIRI(),
                 OWL2Datatype.OWL_REAL.getIRI());
         try {
-            Class c = Class.forName("openllet.owlapi.OpenlletReasonerFactory");
-            OWLReasonerFactory factory = (OWLReasonerFactory) c.newInstance();
+            @SuppressWarnings("unchecked")
+            Class<? extends OWLReasonerFactory> c = (Class<? extends OWLReasonerFactory>) Class.forName("openllet.owlapi.OpenlletReasonerFactory");
+            OWLReasonerFactory factory = c.newInstance();
             OWLlinkHTTPXMLServer server = new OWLlinkHTTPXMLServer(factory, config, port);
             return server;
         } catch (Exception e) {
@@ -70,10 +71,12 @@ public class OpenlletServerFactory implements OWLlinkServerFactory {
         System.out.println("   -port portNum           The port number user by the server (default");
         System.out.println("                           port number used is 8080)");
         System.out.println("   -help                   Print this information");
-        System.out.println("Make sure that the openllet binaries are in your classpath or set it via \"-cp\"");
+        System.out.println("Make sure that the Openllet binaries are in your classpath or set it via \"-cp\"");
     }
 
-
+    /**
+     * @param args arguments
+     */
     public static void main(String args[]) {
         int port = 8080;
         for (int i = 0; i < args.length; i++) {
@@ -87,6 +90,7 @@ public class OpenlletServerFactory implements OWLlinkServerFactory {
                     port = Integer.parseInt(args[++i]);
                 } catch (NumberFormatException e1) {
                     System.err.println("Invalid port number: " + args[i]);
+                    e1.printStackTrace();
                     System.exit(1);
                 }
             } else {

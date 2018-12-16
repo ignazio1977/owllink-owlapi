@@ -35,7 +35,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
@@ -43,6 +42,7 @@ public class OWLlinkOneOfElementHandler extends OWLlinkDataRangeElementHandler<O
     private IRI iri;
     Set<OWLlinkLiteral> literals;
 
+    /** @param handler handler */
     public OWLlinkOneOfElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -60,8 +60,8 @@ public class OWLlinkOneOfElementHandler extends OWLlinkDataRangeElementHandler<O
     }
 
     @Override
-    public void handleChild(OWLlinkLiteralElementHandler handler) throws OWLXMLParserException {
-        literals.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkLiteralElementHandler h) throws OWLXMLParserException {
+        literals.add(h.getOWLLinkObject());
     }
 
     @Override

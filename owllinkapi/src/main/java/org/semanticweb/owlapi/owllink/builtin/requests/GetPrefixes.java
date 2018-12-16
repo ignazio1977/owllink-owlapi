@@ -34,6 +34,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.Prefixes;
  */
 public class GetPrefixes extends AbstractKBRequest<Prefixes> {
 
+    /** @param kb knowledge base */
     public GetPrefixes(IRI kb) {
         super(kb);
     }

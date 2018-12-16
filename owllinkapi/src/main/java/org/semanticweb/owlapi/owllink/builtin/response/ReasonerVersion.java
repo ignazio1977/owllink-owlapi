@@ -32,9 +32,12 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  */
 public interface ReasonerVersion {
 
+    /** @return major version */
     int getMajor();
 
+    /** @return minor version*/
     int getMinor();
 
+    /** @return build*/
     int getBuild();
 }

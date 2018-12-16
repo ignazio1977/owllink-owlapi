@@ -30,13 +30,13 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 23.10.2009
  */
 public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElementHandler<List<Object>> {
     protected List<Object> responses;
 
+    /** @param handler handler */
     public OWLlinkResponseMessageElementHandler(OWLlinkXMLParserHandler handler) {
         super(handler);
     }
@@ -56,10 +56,10 @@ public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElement
     }
 
     @Override
-    public void handleChild(OWLlinkElementHandler handler) throws OWLXMLParserException {
+    public void handleChild(OWLlinkElementHandler<?> h) throws OWLXMLParserException {
         try {
-            if (handler.getOWLObject() instanceof Response)
-                this.responses.add(handler.getOWLObject());
+            if (h.getOWLObject() instanceof Response)
+                this.responses.add(h.getOWLObject());
         } catch (OWLXMLParserException e) {
             e.printStackTrace();
         }
@@ -70,14 +70,14 @@ public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElement
     }
 
     @Override
-    public void handleChild(OWLlinkResponseElementHandler handler) throws OWLXMLParserException {
+    public void handleChild(OWLlinkResponseElementHandler<?> h) throws OWLXMLParserException {
         //if response ==> Prefixes ==> which kb? prov.put(kb, prefixes);
-        this.responses.add(handler.getOWLLinkObject());
+        this.responses.add(h.getOWLLinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkErrorElementHandler handler) throws OWLXMLParserException {
-        this.responses.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkErrorElementHandler<?> h) throws OWLXMLParserException {
+        this.responses.add(h.getOWLLinkObject());
     }
 
     protected void handle(Response response) {
@@ -85,26 +85,26 @@ public class OWLlinkResponseMessageElementHandler extends AbstractOWLlinkElement
     }
 
     @Override
-    public void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException {
-    }
-
-
-    @Override
-    public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
+    public void handleChild(OWLlinkClassSynsetElementHandler h) throws OWLXMLParserException {
     }
 
     @Override
-    public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
+    public void handleChild(OWLlinkObjectPropertySynsetElementHandler h) throws OWLXMLParserException {
     }
 
     @Override
-    public void handleChild(OWLlinkBooleanResponseElementHandler handler) {
-        handle(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkDataPropertySynsetElementHandler h) throws OWLXMLParserException {
     }
 
-    public void handleChild(OWLlinkStringResponseElementHandler handler) {
-        handle(handler.getOWLLinkObject());
+    @Override
+    public void handleChild(OWLlinkBooleanResponseElementHandler h) {
+        handle(h.getOWLLinkObject());
     }
 
-
+    /**
+     * @param h h 
+     */
+    public void handleChild(OWLlinkStringResponseElementHandler h) {
+        handle(h.getOWLLinkObject());
+    }
 }

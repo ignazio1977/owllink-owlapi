@@ -35,6 +35,9 @@ import org.semanticweb.owlapi.reasoner.OWLReasonerRuntimeException;
  */
 public class OWLlinkErrorResponseException extends OWLReasonerRuntimeException {
 
+    /**
+     * @param error error 
+     */
     public OWLlinkErrorResponseException(String error) {
         super(error);
     }

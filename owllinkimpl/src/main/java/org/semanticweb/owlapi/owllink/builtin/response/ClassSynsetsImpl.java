@@ -36,11 +36,18 @@ import java.util.Set;
 public class ClassSynsetsImpl extends OWLClassNodeSet implements ClassSynsets {
     private String warning;
 
+    /**
+     * @param synonymsets synonymsets 
+     * @param warning warning 
+     */
     public ClassSynsetsImpl(Set<Node<OWLClass>> synonymsets, String warning) {
         super(synonymsets);
         this.warning = warning;
     }
 
+    /**
+     * @param synonymsets synonymsets 
+     */
     public ClassSynsetsImpl(Set<Node<OWLClass>> synonymsets) {
         this(synonymsets, null);
     }

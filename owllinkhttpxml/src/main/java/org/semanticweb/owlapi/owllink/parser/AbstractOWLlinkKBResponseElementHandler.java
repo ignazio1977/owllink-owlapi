@@ -44,9 +44,11 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
  * <p/>
  * Author: Olaf Noppens
  * Date: 30.11.2009
+ * @param <R> response type
  */
 public abstract class AbstractOWLlinkKBResponseElementHandler<R extends KBResponse> extends AbstractConfirmationElementHandler<R> {
 
+    /** @param handler handler */
     public AbstractOWLlinkKBResponseElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -61,9 +63,9 @@ public abstract class AbstractOWLlinkKBResponseElementHandler<R extends KBRespon
     }
 
     @Override
-    protected KBRequest getRequest() {
+    protected KBRequest<?> getRequest() {
         int index = handler.responseMessageHandler.getOWLLinkObject().size();
-        return (KBRequest) handler.getRequest(index);
+        return (KBRequest<?>) handler.getRequest(index);
     }
 
 }

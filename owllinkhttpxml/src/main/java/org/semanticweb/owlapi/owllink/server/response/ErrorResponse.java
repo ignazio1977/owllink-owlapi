@@ -30,5 +30,6 @@ import org.semanticweb.owlapi.owllink.Response;
  * Date: 30.11.2009
  */
 public interface ErrorResponse extends Response {
+    /** @return error string */
     String getErrorString();
 }

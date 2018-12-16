@@ -30,7 +30,11 @@ import org.semanticweb.owlapi.owllink.builtin.requests.RequestVisitor;
  * OWLlink extension queries) requests for the OWLlink protocol.
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ProtocolObjects">Request</a>
  * in the OWLlink specification.
+ * @param <R> response type
  */
 public interface Request<R extends Response> {
+    /**
+     * @param visitor visitor 
+     */
     void accept(RequestVisitor visitor);
 }

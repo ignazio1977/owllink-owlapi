@@ -28,6 +28,7 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.CreateKB;
+import org.semanticweb.owlapi.owllink.builtin.response.KB;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
 import java.util.Map;
@@ -37,12 +38,13 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElementHandler<CreateKB> {
+public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElementHandler<KB, CreateKB> {
     protected IRI kb;
     protected String name;
     protected Set<OWLlinkPrefixElementHandler.Prefix> prefixes;
     OWLlinkXMLRequestParserHandler handler;
 
+    /** @param handler handler */
     public OWLlinkCreateKBElementHandler(OWLXMLParserHandler handler) {
         super(handler);
         this.handler = (OWLlinkXMLRequestParserHandler) handler;
@@ -58,43 +60,21 @@ public class OWLlinkCreateKBElementHandler extends AbstractOWLlinkRequestElement
     }
 
     @Override
-    public void startElement(String name) throws OWLXMLParserException {
-        super.startElement(name);
+    public void startElement(String elementName) throws OWLXMLParserException {
+        super.startElement(elementName);
         this.kb = null;
         this.name = null;
         this.prefixes = CollectionFactory.createSet();
     }
 
+    /** @return kb iri */
     public IRI getKB() {
         return this.kb;
     }
 
     @Override
-    public void handleChild(OWLlinkPrefixElementHandler handler) {
-        prefixes.add(handler.getOWLlinkObject());
-    }
-
-    @Override
-    public void endElement() throws OWLXMLParserException {
-        /*   DefaultPrefixManager manager = new DefaultPrefixManager();
-       manager.clear();
-       manager.setPrefix("owl:", Namespaces.OWL.toString());
-       manager.setPrefix("xsd:", Namespaces.XSD.toString());
-       manager.setPrefix("rdf:", Namespaces.RDF.toString());
-       manager.setPrefix("rdfs:", Namespaces.RDFS.toString());
-
-       Map<String, String> map = CollectionFactory.createMap();
-       for (OWLlinkPrefixElementHandler.Prefix prefix : prefixes) {
-           if (!prefix.name.endsWith(":"))
-               map.put(prefix.name + ":", prefix.iri.toString());
-           else
-               map.put(prefix.name, prefix.iri.toString());
-       }
-       for (Map.Entry<String, String> entry : map.entrySet())
-           manager.setPrefix(entry.getKey(), entry.getValue());
-
-       handler.prov.putPrefixes(kb, manager);*/
-        super.endElement();
+    public void handleChild(OWLlinkPrefixElementHandler h) {
+        prefixes.add(h.getOWLlinkObject());
     }
 
     @Override

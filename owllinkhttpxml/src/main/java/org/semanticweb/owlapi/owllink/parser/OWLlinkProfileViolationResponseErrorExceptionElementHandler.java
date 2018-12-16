@@ -32,7 +32,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkProfileViolationEr
  * Date: 10.06.2010
  */
 public class OWLlinkProfileViolationResponseErrorExceptionElementHandler extends AbstractOWLlinkErrorHandler<OWLlinkProfileViolationErrorResponseException>{
-    
+
+    /** @param handler handler */
     public OWLlinkProfileViolationResponseErrorExceptionElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

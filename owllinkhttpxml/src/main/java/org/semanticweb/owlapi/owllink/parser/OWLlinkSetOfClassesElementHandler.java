@@ -32,12 +32,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfClasses;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfClassesImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSetOfClassesElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLClass> {
 
+    /** @param handler handler */
     public OWLlinkSetOfClassesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -48,8 +48,8 @@ public class OWLlinkSetOfClassesElementHandler extends AbstractSetOfOWLObjectRes
     }
 
     @Override
-    public void handleChild(AbstractClassExpressionElementHandler handler) throws OWLXMLParserException {
-        OWLClassExpression expression = handler.getOWLObject();
+    public void handleChild(AbstractClassExpressionElementHandler h) throws OWLXMLParserException {
+        OWLClassExpression expression = h.getOWLObject();
         if (!expression.isAnonymous()) {
             super.elements.add(expression.asOWLClass());
         }

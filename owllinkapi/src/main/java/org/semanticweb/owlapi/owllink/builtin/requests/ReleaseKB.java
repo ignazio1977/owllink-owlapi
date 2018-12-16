@@ -35,6 +35,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OK;
  */
 public class ReleaseKB extends AbstractKBRequest<OK> {
 
+    /** @param kb knowledge base */
     public ReleaseKB(IRI kb) {
         super(kb);
     }

@@ -30,10 +30,11 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkDataRange;
  * User: noppens
  * Date: 21.10.2009
  * Time: 17:48:43
- * To change this template use File | Settings | File Templates.
+ * @param <D> type
  */
 public abstract class OWLlinkDataRangeElementHandler<D extends OWLlinkDataRange> extends AbstractOWLlinkElementHandler<D> {
 
+    /** @param handler handler */
     public OWLlinkDataRangeElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

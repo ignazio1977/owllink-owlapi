@@ -32,11 +32,11 @@ import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 03.11.2009
  */
 @Ignore("unsupported")
+@SuppressWarnings("javadoc")
 public class OWLlinkIsDataPropertySatisfiableTestCase extends AbstractOWLlinkAxiomsTestCase {
     @Override
     protected Set<? extends OWLAxiom> createAxioms() {
@@ -48,14 +48,14 @@ public class OWLlinkIsDataPropertySatisfiableTestCase extends AbstractOWLlinkAxi
     public void testIsSatisfiable() throws Exception {
         IsDataPropertySatisfiable query = new IsDataPropertySatisfiable(getKBIRI(), dpA());
         BooleanResponse answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
 
         query = new IsDataPropertySatisfiable(getKBIRI(), getDataFactory().getOWLBottomDataProperty());
         answer = super.reasoner.answer(query);
-        assertFalse(answer.getResult());
+        falseResponse(answer);
 
         query = new IsDataPropertySatisfiable(getKBIRI(), getDataFactory().getOWLTopDataProperty());
         answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
     }
 }

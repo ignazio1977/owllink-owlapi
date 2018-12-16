@@ -32,18 +32,32 @@ import java.util.Collection;
  * Date: 24.11.2009
  */
 public class SetOfDatatypesImpl extends SetOfImpl<OWLDatatype> implements SetOfDatatypes {
+    /**
+     * @param owlDatatype owlDatatype 
+     */
     public SetOfDatatypesImpl(OWLDatatype owlDatatype) {
         super(owlDatatype);
     }
 
+    /**
+     * @param owlDatatype owlDatatype 
+     * @param warning warning 
+     */
     public SetOfDatatypesImpl(OWLDatatype owlDatatype, String warning) {
         super(owlDatatype, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfDatatypesImpl(Collection<OWLDatatype> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfDatatypesImpl(Collection<OWLDatatype> elements, String warning) {
         super(elements, warning);
     }

@@ -30,18 +30,16 @@ import org.semanticweb.owlapi.owllink.builtin.requests.IsClassSatisfiable;
 import org.semanticweb.owlapi.owllink.builtin.requests.ReleaseKB;
 import org.semanticweb.owlapi.owllink.builtin.requests.Tell;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
-import org.semanticweb.owlapi.owllink.builtin.response.KB;
-import org.semanticweb.owlapi.owllink.builtin.response.OK;
 import org.semanticweb.owlapi.owllink.builtin.response.ResponseMessage;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 07.12.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkBundledRequestsTestCase extends AbstractOWLlinkTestCase {
     @Override
     protected Set<? extends OWLAxiom> createAxioms() {
@@ -61,15 +59,7 @@ public class OWLlinkBundledRequestsTestCase extends AbstractOWLlinkTestCase {
         ReleaseKB releaseKB = new ReleaseKB(kbIRI);
 
         ResponseMessage message = reasoner.answer(kb, tell, cs, releaseKB);
-        KB kbAnswer = message.getResponse(kb);
-
-        OK tellOKAnswer = message.getResponse(tell);
-
         BooleanResponse classSatisfiable = message.getResponse(cs);
-        assertTrue(classSatisfiable.getResult());
-
-        OK releaseOKAnswer = message.getResponse(releaseKB);
-
-
+        trueResponse(classSatisfiable);
     }
 }

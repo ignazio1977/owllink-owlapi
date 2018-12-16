@@ -36,10 +36,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkDisjointClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -56,15 +56,15 @@ public class OWLlinkDisjointClassesTestCase extends AbstractOWLlinkAxiomsTestCas
         classes.add(b());
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointClassesAxiom(classes));
         BooleanResponse answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
         classes.add(c());
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointClassesAxiom(classes));
         answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
         classes.add(d());
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointClassesAxiom(classes));
         answer = super.reasoner.answer(query);
-        assertFalse(answer.getResult());
+        falseResponse(answer);
     }
 
     public void testAreClassesDisjointViaOWLReasoner() {

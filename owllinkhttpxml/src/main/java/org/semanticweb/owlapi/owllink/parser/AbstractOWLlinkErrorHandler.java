@@ -30,15 +30,16 @@ import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkErrorResponseException;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 26.10.2009
+ * @param <E> exception type
  */
 public abstract class AbstractOWLlinkErrorHandler<E extends OWLlinkErrorResponseException>
         extends AbstractOWLlinkElementHandler<E> implements OWLlinkErrorElementHandler<E> {
 
     protected String error;
 
+    /** @param handler handler */
     public AbstractOWLlinkErrorHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -58,6 +59,7 @@ public abstract class AbstractOWLlinkErrorHandler<E extends OWLlinkErrorResponse
         getParentHandler().handleChild(this);
     }
 
+    /** @return error string */
     public String getErrorString() {
         return this.error;
     }

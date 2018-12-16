@@ -31,17 +31,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfLiterals;
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
-import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
-
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 03.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -89,16 +85,16 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
 
     public void testIsIndividualRelatedWithLiteral() throws Exception {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(1)));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpr(), getOWLIndividual("i"), getLiteral(1)));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(2)));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpq(), getOWLIndividual("i"), getLiteral(2)));
-        assertTrue(reasoner.answer(query).getResult());
+        trueResponse(reasoner.answer(query));
 
     }
 

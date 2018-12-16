@@ -37,6 +37,8 @@ public class GetEquivalentObjectProperties extends AbstractKBRequestWithOneObjec
         SetOfObjectProperties,
         OWLObjectPropertyExpression> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetEquivalentObjectProperties(IRI kb, OWLObjectPropertyExpression object) {
         super(kb, object);
     }

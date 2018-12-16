@@ -38,20 +38,22 @@ import java.lang.reflect.Field;
  */
 public class HermiTServerFactory implements OWLlinkServerFactory {
 
-    public static final String FACTORY_CLASSNAME = "org.semanticweb.HermiT.ReasonerFactory";
-    public static final String HERMIT_REASONERFACTORY = "org.semanticweb.HermiT.Configuration";
+    static final String FACTORY_CLASSNAME = "org.semanticweb.HermiT.ReasonerFactory";
+    static final String HERMIT_REASONERFACTORY = "org.semanticweb.HermiT.Configuration";
 
     @Override
     public OWLlinkHTTPXMLServer createServer(int port) {
        OWLReasonerConfiguration configuration = null;
         try {
-            Class reasonerFactoryClass = Class.forName(HERMIT_REASONERFACTORY);
-            configuration = (OWLReasonerConfiguration) reasonerFactoryClass.newInstance();
+            @SuppressWarnings("unchecked")
+            Class<? extends OWLReasonerConfiguration> reasonerFactoryClass = (Class<? extends OWLReasonerConfiguration>) Class.forName(HERMIT_REASONERFACTORY);
+            configuration = reasonerFactoryClass.newInstance();
             Field field = reasonerFactoryClass.getDeclaredField("individualNodeSetPolicy");
             field.set(configuration, IndividualNodeSetPolicy.BY_SAME_AS);
 
         } catch (Exception e) {
             System.err.println("Can't set individualNodeSetPolicy to SAME_AS");
+            e.printStackTrace();
         }
 
         AbstractOWLlinkReasonerConfiguration config = new AbstractOWLlinkReasonerConfiguration(configuration);
@@ -62,8 +64,9 @@ public class HermiTServerFactory implements OWLlinkServerFactory {
                 OWL2Datatype.XSD_SHORT.getIRI(),
                 OWL2Datatype.OWL_REAL.getIRI());
         try {
-            Class factoryClass = Class.forName(FACTORY_CLASSNAME);
-            OWLReasonerFactory factory = (OWLReasonerFactory) factoryClass.newInstance();
+            @SuppressWarnings("unchecked")
+            Class<? extends OWLReasonerFactory> factoryClass = (Class<? extends OWLReasonerFactory>) Class.forName(FACTORY_CLASSNAME);
+            OWLReasonerFactory factory = factoryClass.newInstance();
             OWLlinkHTTPXMLServer server = new OWLlinkHTTPXMLServer(factory, config, port);
             return server;
         } catch (ClassNotFoundException e) {
@@ -77,17 +80,20 @@ public class HermiTServerFactory implements OWLlinkServerFactory {
     }
 
     static void usage() {
-        System.out.println("FaCT++ as OWLlink Server");
-        System.out.println("OWLlink server that is backed by FaCT++ reasoner");
+        System.out.println("HermiT as OWLlink Server");
+        System.out.println("OWLlink server that is backed by HermiT reasoner");
         System.out.println("");
         System.out.println("Usage: java FactServerFactory [-port portNum]");
         System.out.println("   -port portNum           The port number user by the server (default");
         System.out.println("                           port number used is 8080)");
         System.out.println("   -help                   Print this information");
-        System.out.println("Make sure that the FaCT++ binaries are in your classpath or set it via \"-cp\"");
+        System.out.println("Make sure that the HermiT binaries are in your classpath or set it via \"-cp\"");
     }
 
 
+    /**
+     * @param args arguments
+     */
     public static void main(String args[]) {
         int port = 8080;
         for (int i = 0; i < args.length; i++) {
@@ -101,6 +107,7 @@ public class HermiTServerFactory implements OWLlinkServerFactory {
                     port = Integer.parseInt(args[++i]);
                 } catch (NumberFormatException e1) {
                     System.err.println("Invalid port number: " + args[i]);
+                    e1.printStackTrace();
                     System.exit(1);
                 }
             } else {

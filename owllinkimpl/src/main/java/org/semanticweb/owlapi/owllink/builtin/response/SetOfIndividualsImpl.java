@@ -30,7 +30,6 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -38,26 +37,47 @@ import java.util.Set;
  * Date: 24.11.2009
  */
 public class SetOfIndividualsImpl extends SetOfImpl<OWLIndividual> implements SetOfIndividuals {
+    /**
+     * @param owlIndividual owlIndividual 
+     */
     public SetOfIndividualsImpl(OWLIndividual owlIndividual) {
         super(owlIndividual);
     }
 
+    /**
+     * @param owlIndividual owlIndividual 
+     * @param warning warning 
+     */
     public SetOfIndividualsImpl(OWLIndividual owlIndividual, String warning) {
         super(owlIndividual, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfIndividualsImpl(Collection<OWLIndividual> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfIndividualsImpl(Collection<OWLIndividual> elements, String warning) {
         super(elements, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfIndividualsImpl(NodeSet<OWLNamedIndividual> elements) {
         this(convertToFlattened(elements));
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfIndividualsImpl(NodeSet<OWLNamedIndividual> elements, String warning) {
         this(convertToFlattened(elements), warning);
     }
@@ -67,6 +87,10 @@ public class SetOfIndividualsImpl extends SetOfImpl<OWLIndividual> implements Se
         return visitor.visit(this);
     }
 
+    /**
+     * @param nodeSet nodeSet 
+     * @return flattened individuals
+     */
     public static Set<OWLIndividual> convertToFlattened(NodeSet<OWLNamedIndividual> nodeSet) {
         return asSet(nodeSet.entities(), OWLIndividual.class);
     }

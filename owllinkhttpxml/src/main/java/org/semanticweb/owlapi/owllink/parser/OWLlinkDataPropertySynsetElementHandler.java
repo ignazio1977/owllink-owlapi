@@ -31,20 +31,20 @@ import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.OWLDataPropertyNode;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkDataPropertySynsetElementHandler extends AbstractOWLlinkEntitySynsetElementHandler<OWLDataProperty> {
 
+    /** @param handler handler */
     public OWLlinkDataPropertySynsetElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void handleChild(OWLDataPropertyElementHandler handler) throws OWLXMLParserException {
-        if (!handler.getOWLObject().isAnonymous())
-            super.elements.add(handler.getOWLObject().asOWLDataProperty());
+    public void handleChild(OWLDataPropertyElementHandler h) throws OWLXMLParserException {
+        if (!h.getOWLObject().isAnonymous())
+            super.elements.add(h.getOWLObject().asOWLDataProperty());
     }
 
 

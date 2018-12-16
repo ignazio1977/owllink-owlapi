@@ -29,6 +29,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.IRIMapping;
 import org.semanticweb.owlapi.owllink.builtin.requests.LoadOntologies;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
 import java.util.List;
@@ -39,11 +40,12 @@ import java.util.Vector;
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkLoadOntologiesElementHandler extends AbstractOWLlinkKBRequestElementHandler<LoadOntologies> {
+public class OWLlinkLoadOntologiesElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, LoadOntologies> {
     boolean considerImports = false;
     Set<IRI> ontologyIRIs;
     List<IRIMapping> mappings;
 
+    /** @param handler handler */
     public OWLlinkLoadOntologiesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -59,18 +61,18 @@ public class OWLlinkLoadOntologiesElementHandler extends AbstractOWLlinkKBReques
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.CONSIDER_IMPORTS_ATTRIBUTE.getShortName().equals(localName)) {
-            this.considerImports = Boolean.valueOf(value);
+            this.considerImports = Boolean.parseBoolean(value);
         }
     }
 
     @Override
-    public void handleChild(OWLlinkOntologyIRIElementHandler handler) {
-        ontologyIRIs.add(handler.getOWLlinkObject());
+    public void handleChild(OWLlinkOntologyIRIElementHandler h) {
+        ontologyIRIs.add(h.getOWLlinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkIRIMappingElementHandler handler) {
-        mappings.add(handler.getOWLlinkObject());
+    public void handleChild(OWLlinkIRIMappingElementHandler h) {
+        mappings.add(h.getOWLlinkObject());
     }
 
     @Override

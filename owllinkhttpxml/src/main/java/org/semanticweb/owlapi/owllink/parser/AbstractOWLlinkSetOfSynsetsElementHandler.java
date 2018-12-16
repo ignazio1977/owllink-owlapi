@@ -33,13 +33,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
+ * @param <S> object type
  */
 public abstract class AbstractOWLlinkSetOfSynsetsElementHandler<S extends OWLObject> extends AbstractOWLlinkKBResponseElementHandler<SetOfEntitySynsets<S>> {
     protected Set<Node<S>> synsets;
 
+    /** @param handler handler */
     public AbstractOWLlinkSetOfSynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

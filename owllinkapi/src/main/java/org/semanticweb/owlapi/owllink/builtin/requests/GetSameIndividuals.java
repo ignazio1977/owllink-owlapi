@@ -38,10 +38,13 @@ public class GetSameIndividuals extends AbstractKBRequestWithOneObject<
         IndividualSynonyms,
         OWLIndividual> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetSameIndividuals(IRI kb, OWLIndividual object) {
         super(kb, object);
     }
 
+    /** @return individual */
     public OWLIndividual getIndividual() {
         return super.getObject();
     }

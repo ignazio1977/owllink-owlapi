@@ -35,19 +35,33 @@ import java.util.Set;
 public class DataPropertySynonymsImpl extends OWLDataPropertyNode implements DataPropertySynonyms {
     private String warning;
 
+    /**
+     * @param prop prop 
+     */
     public DataPropertySynonymsImpl(OWLDataProperty prop) {
         this(prop, null);
     }
 
+    /**
+     * @param prop prop 
+     * @param warning warning 
+     */
     public DataPropertySynonymsImpl(OWLDataProperty prop, String warning) {
         super(prop);
         this.warning = warning;
     }
 
+    /**
+     * @param elements elements 
+     */
     public DataPropertySynonymsImpl(Set<OWLDataProperty> elements) {
         this(elements, null);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public DataPropertySynonymsImpl(Set<OWLDataProperty> elements, String warning) {
         super(elements);
         this.warning = warning;

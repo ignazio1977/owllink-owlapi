@@ -36,18 +36,26 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 public class GetDataPropertiesOfSource extends AbstractKBRequestWithOneObjectAndBooleanValue<
         SetOfDataPropertySynsets,
         OWLIndividual> {
+
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public GetDataPropertiesOfSource(IRI iri, OWLIndividual object, boolean bool) {
         super(iri, object, bool);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public GetDataPropertiesOfSource(IRI iri, OWLIndividual object) {
         this(iri, object, false);
     }
 
+    /** @return true if negative */
     public boolean isNegative() {
         return super.bool;
     }
 
+    /** @return source individual*/
     public OWLIndividual getSourceIndividual() {
         return super.object;
     }

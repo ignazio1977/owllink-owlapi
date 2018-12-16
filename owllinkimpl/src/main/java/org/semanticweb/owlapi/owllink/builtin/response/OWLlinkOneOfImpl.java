@@ -37,10 +37,14 @@ public class OWLlinkOneOfImpl extends OWLlinkDataRangeImpl implements OWLlinkOne
     final IRI type;
     Set<OWLlinkLiteral> literals;
 
+    /**
+     * @param type type 
+     * @param literals literals 
+     */
     public OWLlinkOneOfImpl(IRI type, Set<OWLlinkLiteral> literals) {
         this.type = type;
-        if (literals == null && literals.isEmpty())
-            throw new IllegalArgumentException();
+        if (literals == null || literals.isEmpty())
+            throw new IllegalArgumentException("literals cannot be empty");
         this.literals = new HashSet<>(literals);
     }
 

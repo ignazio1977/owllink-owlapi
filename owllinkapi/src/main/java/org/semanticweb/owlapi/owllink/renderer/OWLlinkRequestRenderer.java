@@ -25,12 +25,20 @@ package org.semanticweb.owlapi.owllink.renderer;
 
 import org.semanticweb.owlapi.io.OWLRendererException;
 import org.semanticweb.owlapi.owllink.Request;
+import org.semanticweb.owlapi.owllink.Response;
 
 /**
  * @author Olaf Noppens
+ * @param <R> request type
+ * @param <T> response type
  */
-public interface OWLlinkRequestRenderer<R extends Request> {
+public interface OWLlinkRequestRenderer<T extends Response, R extends Request<T>> {
 
+    /**
+     * @param request request 
+     * @param writer writer 
+     * @throws OWLRendererException OWLRendererException 
+     */
     void render(R request, OWLlinkWriter writer) throws OWLRendererException;
 
 }

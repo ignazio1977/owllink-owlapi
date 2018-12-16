@@ -28,58 +28,67 @@ import java.util.*;
 /**
  * Author: Olaf Noppens
  * Date: 24.11.2009
+ * @param <E> type
  */
 public abstract class AbstractSetOfImpl<E> implements Set<E> {
-    Set<E> delegateSet;
-    E singleton;
+    final Set<E> delegateSet;
+    final E single;
 
+    /**
+     * @param e e 
+     */
     public AbstractSetOfImpl(E e) {
-        this.singleton = e;
+        delegateSet=Collections.singleton(e);
+        single=e;
     }
 
+    /**
+     * @param elements elements 
+     */
     public AbstractSetOfImpl(Collection<E> elements) {
-        this.delegateSet = (createSet(elements.size()));
-        this.delegateSet.addAll(elements);
-        this.delegateSet = Collections.unmodifiableSet(this.delegateSet);
+        this.delegateSet = Collections.unmodifiableSet(new HashSet<>(elements));
+        single=null;
     }
 
     protected Set<E> createSet(int size) {
         return new HashSet<>(size);
     }
 
+    /** @return true if singleton */
     public boolean isSingleton() {
-        return singleton != null;
+        return single!=null;
     }
 
+    /** @return singleton */
     public E getSingletonElement() {
         if (!isSingleton()) {
             throw new RuntimeException("Not a singleton set");
         }
-        return singleton;
+        return single;
+    }
+
+    /** @return singleton */
+    public Optional<E> singleton() {
+        return Optional.ofNullable(single);
     }
 
     @Override
     public int size() {
-        return isSingleton() ? 1 : delegateSet.size();
+        return delegateSet.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return isSingleton() ? false : delegateSet.isEmpty();
+        return delegateSet.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        if (isSingleton())
-            return singleton == o;
         return delegateSet.contains(o);
     }
 
     @Override
     public boolean containsAll(Collection<?> objects) {
-        if (isSingleton()) {
-            return objects.size() == 1 && this.singleton == objects.iterator().next();
-        }
         return this.delegateSet.containsAll(objects);
     }
 
@@ -105,33 +114,16 @@ public abstract class AbstractSetOfImpl<E> implements Set<E> {
 
     @Override
     public Iterator<E> iterator() {
-        if (isSingleton()) {
-            return Collections.singleton(singleton).iterator();
-        }
-        return Collections.unmodifiableCollection(this.delegateSet).iterator();
+        return delegateSet.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        if (isSingleton()) {
-            Object[] o = new Object[1];
-            o[0] = this.singleton;
-        }
         return this.delegateSet.toArray();
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        if (isSingleton()) {
-            T[] result;
-            if (a.length == 1) {
-                result = a;
-            } else {
-                result = a = (T[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), 1);
-            }
-            result[0] = (T) this.singleton;
-            return result;
-        }
         return this.delegateSet.toArray(a);
     }
 

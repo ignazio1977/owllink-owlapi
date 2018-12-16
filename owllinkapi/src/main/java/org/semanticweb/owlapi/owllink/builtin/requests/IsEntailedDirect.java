@@ -36,64 +36,81 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 public class IsEntailedDirect extends AbstractKBRequest<BooleanResponse> {
     final OWLAxiom axiom;
 
+    /** @param kb knowledge base 
+     * @param axiom axiom */
     public IsEntailedDirect(IRI kb, OWLSubClassOfAxiom axiom) {
         super(kb);
         this.axiom = axiom;
     }
 
+    /** @param kb knowledge base 
+     * @param axiom axiom */
     public IsEntailedDirect(IRI kb, OWLSubObjectPropertyOfAxiom axiom) {
         super(kb);
         this.axiom = axiom;
     }
 
+    /** @param kb knowledge base 
+     * @param axiom axiom */
     public IsEntailedDirect(IRI kb, OWLSubDataPropertyOfAxiom axiom) {
         super(kb);
         this.axiom = axiom;
     }
 
+    /** @param kb knowledge base 
+     * @param axiom axiom */
     public IsEntailedDirect(IRI kb, OWLClassAssertionAxiom axiom) {
         super(kb);
         this.axiom = axiom;
     }
 
+    /** @return axiom*/
     public OWLAxiom getAxiom() {
         return axiom;
     }
 
+    /** @return true if subclass*/
     public boolean isOWLSubClassOfAxiom() {
         return this.axiom.isOfType(AxiomType.SUBCLASS_OF);
     }
 
+    /** @return true if sub object property*/
     public boolean isOWLSubObjectPropertyOfAxiom() {
         return this.axiom.isOfType(AxiomType.SUB_OBJECT_PROPERTY);
     }
 
+    /** @return true if sub data property*/
     public boolean isOWLSubDataPropertyOfAxiom() {
         return this.axiom.isOfType(AxiomType.SUB_DATA_PROPERTY);
     }
 
+    /** @return true if class assertion*/
     public boolean isOWLClassAssertionAxiom() {
         return this.axiom.isOfType(AxiomType.CLASS_ASSERTION);
     }
 
+    /** @return as subclass axiom*/
     public OWLSubClassOfAxiom asOWLSubClassOfAxiom() {
         if (isOWLSubClassOfAxiom())
             return (OWLSubClassOfAxiom) this.axiom;
         throw new OWLRuntimeException("axiom cannot be casted to OWLSubClassOfAxiom");
     }
 
+    /** @return as sub object proeprty*/
     public OWLSubObjectPropertyOfAxiom asOWLSubObjectPropertOfAxiom() {
         if (isOWLSubObjectPropertyOfAxiom())
             return (OWLSubObjectPropertyOfAxiom) this.axiom;
         throw new OWLRuntimeException("axiom cannot be casted to OWLSubObjectPropertyOfAxiom");
     }
 
+    /** @return as sub data property*/
     public OWLSubDataPropertyOfAxiom asOWLSubDataPropertOfAxiom() {
         if (isOWLSubDataPropertyOfAxiom())
             return (OWLSubDataPropertyOfAxiom) this.axiom;
         throw new OWLRuntimeException("axiom cannot be casted to OWLSubDataPropertyOfAxiom");
     }
 
+    /** @return as class assertion*/
     public OWLClassAssertionAxiom asOWLClassAssertionAxiom() {
         if (isOWLClassAssertionAxiom())
             return (OWLClassAssertionAxiom) this.axiom;

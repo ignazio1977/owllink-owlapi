@@ -29,11 +29,16 @@ import org.semanticweb.owlapi.reasoner.Node;
 /**
  * Author: Olaf Noppens
  * Date: 02.11.2009
+ * @param <O> object type
  */
 public class HierarchyPairImpl<O extends OWLObject> implements HierarchyPair<O> {
     private final Node<O> superSynset;
     private final SubEntitySynsets<O> subs;
 
+    /**
+     * @param superSynset superSynset 
+     * @param subs subs 
+     */
     public HierarchyPairImpl(Node<O> superSynset, SubEntitySynsets<O> subs) {
         this.superSynset = superSynset;
         this.subs = subs;
@@ -53,13 +58,8 @@ public class HierarchyPairImpl<O extends OWLObject> implements HierarchyPair<O> 
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof HierarchyPairImpl)) return false;
-
-        HierarchyPairImpl that = (HierarchyPairImpl) o;
-
-        if (!subs.equals(that.subs)) return false;
-        if (!superSynset.equals(that.superSynset)) return false;
-
-        return true;
+        HierarchyPairImpl<?> that = (HierarchyPairImpl<?>) o;
+        return subs.equals(that.subs) && superSynset.equals(that.superSynset);
     }
 
     @Override

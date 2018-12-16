@@ -31,6 +31,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  */
 public class OWLlinkNotSupportedDatatypeErrorResponseException extends OWLlinkSyntaxErrorException{
 
+    /**
+     * @param error error 
+     */
     public OWLlinkNotSupportedDatatypeErrorResponseException(String error) {
         super(error);
     }

@@ -37,18 +37,25 @@ public class GetDataPropertiesOfLiteral extends AbstractKBRequestWithOneObjectAn
         SetOfDataPropertySynsets,
         OWLLiteral> {
 
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param bool bool */
     public GetDataPropertiesOfLiteral(IRI iri, OWLLiteral object, boolean bool) {
         super(iri, object, bool);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public GetDataPropertiesOfLiteral(IRI iri, OWLLiteral object) {
         this(iri, object, false);
     }
 
+    /** @return true if negative */
     public boolean isNegative() {
         return super.bool;
     }
 
+    /** @return target value*/
     public OWLLiteral getTargetValue() {
         return super.object;
     }

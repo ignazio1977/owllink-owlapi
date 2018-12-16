@@ -32,15 +32,15 @@ import org.semanticweb.owlapi.owllink.builtin.response.SubEntitySynsets;
 import org.semanticweb.owlapi.reasoner.Node;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
+ * @param <O> object type
  */
 public abstract class AbstractOWLlinkPairElementHandler<O extends OWLObject> extends AbstractOWLlinkElementHandler<HierarchyPair<O>> {
     protected Node<O> superSynset;
     protected SubEntitySynsets<O> subSetOfSynset;
 
-
+    /** @param handler handler */
     public AbstractOWLlinkPairElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

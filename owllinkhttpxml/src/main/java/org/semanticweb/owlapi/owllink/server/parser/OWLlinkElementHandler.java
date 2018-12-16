@@ -28,20 +28,28 @@ import org.coode.owlapi.owlxmlparser.OWLElementHandler;
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <O> object type
  */
 public interface OWLlinkElementHandler<O> extends OWLElementHandler<O> {
 
-    void handleChild(OWLlinkRequestElementHandler handler);
+    /** @param handler handler */
+    void handleChild(OWLlinkRequestElementHandler<?, ?> handler);
 
+    /** @param handler handler */
     void handleChild(OWLlinkLiteralElementHandler handler);
 
-    void handleChild(OWLlinkElementHandler handler);
+    /** @param handler handler */
+    void handleChild(OWLlinkElementHandler<?> handler);
 
+    /** @param handler handler */
     void handleChild(OWLlinkOntologyIRIElementHandler handler);
 
+    /** @param handler handler */
     void handleChild(OWLlinkIRIMappingElementHandler handler);
 
+    /** @param handler handler */
     void handleChild(OWLlinkPrefixElementHandler handler);
 
+    /** @return object */
     O getOWLlinkObject();
 }

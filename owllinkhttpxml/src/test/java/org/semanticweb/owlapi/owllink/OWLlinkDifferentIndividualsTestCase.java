@@ -35,17 +35,13 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
-import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
-
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkDifferentIndividualsTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -62,16 +58,16 @@ public class OWLlinkDifferentIndividualsTestCase extends AbstractOWLlinkAxiomsTe
         indis.add(ib());
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDifferentIndividualsAxiom(indis));
         BooleanResponse answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
         indis.add(ic());
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDifferentIndividualsAxiom(indis));
         answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLSameIndividualAxiom(indis));
         answer = super.reasoner.answer(query);
-        assertFalse(answer.getResult());
+        falseResponse(answer);
     }
 
     public void testAreIndividualsDisjointViaOWLReasoner() {

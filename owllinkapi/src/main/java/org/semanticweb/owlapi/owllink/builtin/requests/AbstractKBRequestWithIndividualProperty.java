@@ -31,22 +31,29 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 /**
  * Author: Olaf Noppens
  * Date: 24.10.2009
+ * @param <P> property type
+ * @param <R> response type
  */
 public abstract class AbstractKBRequestWithIndividualProperty<R extends KBResponse, P extends OWLPropertyExpression>
         extends AbstractKBRequest<R> {
     final OWLIndividual individual;
     final P property;
 
+    /** @param kb knowledge base 
+     * @param individual individual 
+     * @param property property */
     public AbstractKBRequestWithIndividualProperty(IRI kb, OWLIndividual individual, P property) {
         super(kb);
         this.individual = individual;
         this.property = property;
     }
 
+    /** @return property */
     public P getOWLProperty() {
         return this.property;
     }
 
+    /** @return individual */
     public OWLIndividual getOWLIndividual() {
         return this.individual;
     }

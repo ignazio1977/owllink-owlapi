@@ -26,12 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsDataPropertySatisfiable;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkIsDataPropertySatisfiableElementHandler extends AbstractOWLlinkDataPropertyElementHandler<IsDataPropertySatisfiable> {
+public class OWLlinkIsDataPropertySatisfiableElementHandler extends AbstractOWLlinkDataPropertyElementHandler<BooleanResponse, IsDataPropertySatisfiable> {
+
+    /** @param handler handler */
     public OWLlinkIsDataPropertySatisfiableElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

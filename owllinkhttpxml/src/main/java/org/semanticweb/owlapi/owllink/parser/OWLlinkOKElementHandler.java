@@ -28,12 +28,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.OK;
 import org.semanticweb.owlapi.owllink.builtin.response.OKImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkOKElementHandler extends AbstractOWLlinkKBResponseElementHandler<OK> {
 
+    /** @param handler handler */
     public OWLlinkOKElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

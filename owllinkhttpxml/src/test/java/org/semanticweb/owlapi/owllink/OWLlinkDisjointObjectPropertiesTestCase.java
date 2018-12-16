@@ -24,29 +24,21 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
-import org.semanticweb.owlapi.owllink.AbstractOWLlinkTestCase.ReasonerServer;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDisjointObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsEntailed;
-import org.semanticweb.owlapi.owllink.builtin.requests.ReleaseKB;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertySynsets;
-import org.semanticweb.owlapi.owllink.server.OWLlinkHTTPXMLServer;
-import org.semanticweb.owlapi.owllink.server.serverfactory.HermiTServerFactory;
-import org.semanticweb.owlapi.owllink.server.serverfactory.OpenlletServerFactory;
-import org.semanticweb.owlapi.reasoner.BufferingMode;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
-import java.net.URL;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkDisjointObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -60,20 +52,20 @@ public class OWLlinkDisjointObjectPropertiesTestCase extends AbstractOWLlinkAxio
     public void testAreObjectPropertiesDisjoint() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb()));
         BooleanResponse answer = reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc()));
         answer = reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opE()));
         answer = reasoner.answer(query);
-        assertFalse(answer.getResult());
+        falseResponse(answer);
 
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc()));
         answer = reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
     }
 
     public void testAreObjectPropertiesDisjointViaOWLReasoner() {

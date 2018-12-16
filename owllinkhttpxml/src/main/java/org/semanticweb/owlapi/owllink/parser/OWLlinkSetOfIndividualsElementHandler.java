@@ -32,12 +32,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualsImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSetOfIndividualsElementHandler extends AbstractSetOfOWLObjectResponseElementHandler<OWLIndividual> {
 
+    /** @param handler handler */
     public OWLlinkSetOfIndividualsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -48,12 +48,12 @@ public class OWLlinkSetOfIndividualsElementHandler extends AbstractSetOfOWLObjec
     }
 
     @Override
-    public void handleChild(OWLIndividualElementHandler handler) throws OWLXMLParserException {
-        super.elements.add(handler.getOWLObject());
+    public void handleChild(OWLIndividualElementHandler h) throws OWLXMLParserException {
+        super.elements.add(h.getOWLObject());
     }
 
     @Override
-    public void handleChild(OWLAnonymousIndividualElementHandler handler) throws OWLXMLParserException {
-        super.elements.add(handler.getOWLObject());
+    public void handleChild(OWLAnonymousIndividualElementHandler h) throws OWLXMLParserException {
+        super.elements.add(h.getOWLObject());
     }
 }

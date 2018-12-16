@@ -32,6 +32,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  */
 public class OWLlinkUnsatisfiableKBErrorResponseException extends OWLlinkSemanticErrorResponseException  {
 
+    /**
+     * @param error error 
+     */
     public OWLlinkUnsatisfiableKBErrorResponseException(String error) {
         super(error);
     }

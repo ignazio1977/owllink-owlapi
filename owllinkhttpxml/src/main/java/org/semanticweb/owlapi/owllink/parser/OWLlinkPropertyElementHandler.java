@@ -29,12 +29,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.Property;
 import org.semanticweb.owlapi.owllink.builtin.response.PropertyImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkPropertyElementHandler extends OWLlinkConfigurationElementHandler<Property> {
 
+    /** @param handler handler */
     public OWLlinkPropertyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

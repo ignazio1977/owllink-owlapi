@@ -38,6 +38,7 @@ public interface OWLlinkReasoner extends OWLReasoner {
      * subtype thereof) will be thrown.
      *
      * @param request Request to be performed
+     * @param <R> response type
      * @return Response object of the given request
      * @throws OWLlinkErrorResponseException In case that the OWLlink server answers with
      *                                       an Error response an approproate OWLlinkErrorResponseException will be thrown.
@@ -51,5 +52,5 @@ public interface OWLlinkReasoner extends OWLReasoner {
      * @param request Requests to be answered
      * @return ResponseMessage for the given requests.
      */
-    ResponseMessage answer(Request... request);
+    ResponseMessage answer(Request<?>... request);
 }

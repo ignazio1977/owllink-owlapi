@@ -39,15 +39,23 @@ public class GetFlattenedObjectPropertySources extends AbstractKBRequestWithIndi
         OWLObjectPropertyExpression> {
     final boolean isNegative;
 
+    /** @param kb knowledge base 
+     * @param individual individual 
+     * @param property property 
+     * @param negative negative */
     public GetFlattenedObjectPropertySources(IRI kb, OWLIndividual individual, OWLObjectPropertyExpression property, boolean negative) {
         super(kb, individual, property);
         isNegative = negative;
     }
 
+    /** @param kb knowledge base 
+     * @param individual individual 
+     * @param property property */
     public GetFlattenedObjectPropertySources(IRI kb, OWLIndividual individual, OWLObjectPropertyExpression property) {
         this(kb, individual, property, false);
     }
 
+    /** @return true if negative */
     public boolean isNegative() {
         return this.isNegative;
     }

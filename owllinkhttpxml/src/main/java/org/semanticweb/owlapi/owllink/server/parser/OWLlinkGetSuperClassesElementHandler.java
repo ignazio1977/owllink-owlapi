@@ -27,14 +27,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSuperClasses;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfClassSynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public class OWLlinkGetSuperClassesElementHandler extends AbstractOWLClassRequestElementHandler<GetSuperClasses> {
+public class OWLlinkGetSuperClassesElementHandler extends AbstractOWLClassRequestElementHandler<SetOfClassSynsets, GetSuperClasses> {
     boolean direct = false;
 
+    /** @param handler handler */
     public OWLlinkGetSuperClassesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -49,7 +51,7 @@ public class OWLlinkGetSuperClassesElementHandler extends AbstractOWLClassReques
     public void attribute(String localName, String value) throws OWLXMLParserException {
         super.attribute(localName, value);
         if (OWLlinkXMLVocabulary.DIRECT_ATTRIBUTE.getShortName().equalsIgnoreCase(localName)) {
-            this.direct = Boolean.valueOf(value);
+            this.direct = Boolean.parseBoolean(value);
         }
     }
 

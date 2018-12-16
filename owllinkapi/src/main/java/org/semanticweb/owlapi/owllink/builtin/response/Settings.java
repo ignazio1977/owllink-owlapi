@@ -33,5 +33,6 @@ import java.util.Set;
  * Date: 23.10.2009
  */
 public interface Settings extends KBResponse, Iterable<Setting> {
+    /** @return settings */
     Set<Setting> getSettings();
 }

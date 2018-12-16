@@ -32,29 +32,69 @@ import org.semanticweb.owlapi.owllink.PrefixManagerProvider;
  */
 public interface OWLlinkWriter {
 
+    /**
+     * @param isRequest isRequest 
+     */
     void startDocument(boolean isRequest);
 
+    /**
+     * End document.
+     */
     void endDocument();
 
+    /**
+     * @param name name 
+     */
     void writeStartElement(IRI name);
 
+    /**
+     * End element.
+     */
     void writeEndElement();
 
-    public void writeAttribute(String attribute, String value);
+    /**
+     * @param attribute attribute 
+     * @param value value 
+     */
+    void writeAttribute(String attribute, String value);
 
-    public void writeAttribute(IRI attribute, String value);
+    /**
+     * @param attribute attribute 
+     * @param value value 
+     */
+    void writeAttribute(IRI attribute, String value);
 
-    public void writeNegativeAttribute(boolean isNegative);
+    /**
+     * @param isNegative isNegative 
+     */
+    void writeNegativeAttribute(boolean isNegative);
 
-    public void writeDirectAttribute(boolean isNegative);
+    /**
+     * @param isNegative isNegative 
+     */
+    void writeDirectAttribute(boolean isNegative);
 
-    public void writeKBAttribute(IRI kb);
+    /**
+     * @param kb kb 
+     */
+    void writeKBAttribute(IRI kb);
 
-    public void writeFullIRIAttribute(IRI iri);
+    /**
+     * @param iri iri 
+     */
+    void writeFullIRIAttribute(IRI iri);
 
-    public void writeOWLObject(OWLObject object, IRI KB);
+    /**
+     * @param object object 
+     * @param KB KB 
+     */
+    void writeOWLObject(OWLObject object, IRI KB);
 
-    public void writeTextContent(String text);
+    /**
+     * @param text text 
+     */
+    void writeTextContent(String text);
 
-    public PrefixManagerProvider getPrefixManagerProvider();
+    /** @return prefix manager provider */
+    PrefixManagerProvider getPrefixManagerProvider();
 }

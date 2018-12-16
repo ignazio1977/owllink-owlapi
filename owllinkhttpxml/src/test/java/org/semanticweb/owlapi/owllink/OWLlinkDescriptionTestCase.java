@@ -37,6 +37,7 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 30.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkDescriptionTestCase extends AbstractOWLlinkTestCase {
 
     @Override
@@ -48,9 +49,9 @@ public class OWLlinkDescriptionTestCase extends AbstractOWLlinkTestCase {
         GetDescription desc = new GetDescription();
         Description answer = reasoner.answer(desc);
 
-        assertFalse(answer.getName(), answer.getName().isEmpty());
-        assertTrue(answer.getDefaults()+" should be more than 6",answer.getDefaults().size() > 6);
-        assertEquals(1,answer.getProtocolVersion().getMajor());
+        assertTrue(answer.getName().length() > 0);
+        assertTrue(answer.getDefaults().size() > 6);
+        assertTrue(answer.getProtocolVersion().getMajor() == 1);
     }
 
     public void testSettings() throws Exception {
@@ -72,16 +73,16 @@ public class OWLlinkDescriptionTestCase extends AbstractOWLlinkTestCase {
             if ("abbreviatesIRIs".equalsIgnoreCase(setting.getKey())) {
                 assertTrue(setting.getValues().equals(values));
                 String value = setting.getValues().iterator().next().getValue();
-                boolean abbreviatesIRIs = Boolean.valueOf(value);
+                boolean abbreviatesIRIs = Boolean.parseBoolean(value);
                 OWLlinkLiteral lit = new OWLlinkLiteralImpl(Boolean.toString(!abbreviatesIRIs));
                 org.semanticweb.owlapi.owllink.builtin.requests.Set query = new org.semanticweb.owlapi.owllink.builtin.requests.Set(kb.getKB(), "abbreviatesIRIs", Collections.singleton(lit));
-                OK ok = reasoner.answer(query);
+                reasoner.answer(query);
 
                 settings = reasoner.answer(getSettings);
                 for (Setting newSetting : settings) {
                     if ("abbreviatesIRIs".equalsIgnoreCase(newSetting.getKey())) {
                         String newValue = newSetting.getValues().iterator().next().getValue();
-                        boolean newAbrev = Boolean.valueOf(newValue);
+                        boolean newAbrev = Boolean.parseBoolean(newValue);
                         assertTrue(abbreviatesIRIs != newAbrev);
                         break;
                     }

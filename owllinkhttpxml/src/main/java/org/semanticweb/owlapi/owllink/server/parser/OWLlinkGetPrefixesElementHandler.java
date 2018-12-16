@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetPrefixes;
+import org.semanticweb.owlapi.owllink.builtin.response.Prefixes;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetPrefixesElementHandler extends AbstractOWLlinkKBRequestElementHandler<GetPrefixes> {
+public class OWLlinkGetPrefixesElementHandler extends AbstractOWLlinkKBRequestElementHandler<Prefixes, GetPrefixes> {
 
+    /** @param handler handler */
     public OWLlinkGetPrefixesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

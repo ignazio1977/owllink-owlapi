@@ -33,7 +33,9 @@ import org.semanticweb.owlapi.model.IRI;
  * Date: 24.10.2009
  */
 public interface PublicKB {
+    /** @return name */
     String getName();
 
+    /** @return knowledge base iri*/
     IRI getKB();
 }

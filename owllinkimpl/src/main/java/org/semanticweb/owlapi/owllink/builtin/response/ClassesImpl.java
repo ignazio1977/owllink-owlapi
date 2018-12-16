@@ -35,19 +35,33 @@ import java.util.Set;
 public class ClassesImpl extends OWLClassNode implements Classes {
     String warning;
 
+    /**
+     * @param clazz clazz 
+     */
     public ClassesImpl(OWLClass clazz) {
         this(clazz, null);
     }
 
+    /**
+     * @param clazz clazz 
+     * @param warning warning 
+     */
     public ClassesImpl(OWLClass clazz, String warning) {
         super(clazz);
         this.warning = warning;
     }
 
+    /**
+     * @param classes classes 
+     */
     public ClassesImpl(Set<OWLClass> classes) {
         this(classes, null);
     }
 
+    /**
+     * @param classes classes 
+     * @param warning warning 
+     */
     public ClassesImpl(Set<OWLClass> classes, String warning) {
         super(classes);
         this.warning = warning;

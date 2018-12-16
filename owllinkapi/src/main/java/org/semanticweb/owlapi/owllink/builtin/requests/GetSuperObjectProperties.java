@@ -38,18 +38,25 @@ public class GetSuperObjectProperties extends
         AbstractKBRequestWithOneObjectAndBooleanValue
                 <SetOfObjectPropertySynsets, OWLObjectPropertyExpression> {
 
+    /** @param iri knowledge base 
+     * @param object object 
+     * @param isDirect isDirect */
     public GetSuperObjectProperties(IRI iri, OWLObjectPropertyExpression object, boolean isDirect) {
         super(iri, object, isDirect);
     }
 
+    /** @param iri knowledge base 
+     * @param object object */
     public GetSuperObjectProperties(IRI iri, OWLObjectPropertyExpression object) {
         this(iri, object, false);
     }
 
+    /** @return true if direct*/
     public boolean isDirect() {
         return super.bool;
     }
 
+    /** @return object property */
     public OWLObjectPropertyExpression getProperty() {
         return super.object;
     }

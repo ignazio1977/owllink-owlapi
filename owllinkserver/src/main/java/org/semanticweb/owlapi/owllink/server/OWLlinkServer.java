@@ -30,7 +30,14 @@ package org.semanticweb.owlapi.owllink.server;
  * Date: 26.11.2009
  */
 public interface OWLlinkServer {
+    /**
+     * Run.
+     */
     void run();
 
+    /**
+     * Stop.
+     * @throws InterruptedException InterruptedException 
+     */
     void stop() throws InterruptedException;
 }

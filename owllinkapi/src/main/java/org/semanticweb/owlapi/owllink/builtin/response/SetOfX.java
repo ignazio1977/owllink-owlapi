@@ -31,6 +31,7 @@ import java.util.Set;
  * 
  * Author: Olaf Noppens
  * Date: 24.10.2009
+ * @param <E> object type
  */
 public interface SetOfX<E> extends Set<E>, KBResponse {
     /**

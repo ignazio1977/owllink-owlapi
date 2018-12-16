@@ -36,18 +36,26 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfClassSynsets;
  */
 public class GetSuperClasses extends
         AbstractKBRequestWithOneObjectAndBooleanValue<SetOfClassSynsets, OWLClassExpression> {
+
+    /** @param kb knowledge base 
+     * @param object object */
     public GetSuperClasses(IRI kb, OWLClassExpression object) {
         this(kb, object, false);
     }
 
+    /** @param kb knowledge base 
+     * @param object object 
+     * @param isDirect isDirect */
     public GetSuperClasses(IRI kb, OWLClassExpression object, boolean isDirect) {
         super(kb, object, isDirect);
     }
 
+    /** @return class expression*/
     public OWLClassExpression getOWLClassExpression() {
         return super.object;
     }
 
+    /** @return true if direct*/
     public boolean isDirect() {
         return super.bool;
     }

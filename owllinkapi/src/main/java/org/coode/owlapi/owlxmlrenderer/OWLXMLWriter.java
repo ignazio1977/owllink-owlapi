@@ -1,14 +1,12 @@
 package org.coode.owlapi.owlxmlrenderer;
 
-import java.io.IOException;
+import static org.semanticweb.owlapi.util.OWLAPIPreconditions.verifyNotNull;
+
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.net.URI;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.semanticweb.owlapi.io.OWLRendererException;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.NodeID;
 import org.semanticweb.owlapi.model.OWLDatatype;
@@ -42,35 +40,33 @@ public class OWLXMLWriter {
 
     /**
      * String comparator that takes length into account before natural ordering.
+     * @param o1 first term to compare
+     * @param o2 second term to compare
+     * @return comparator value
      */
-    private static final class StringLengthComparator implements
-            Comparator<String>, Serializable {
-
-        private static final long serialVersionUID = 30406L;
-
-        public StringLengthComparator() {}
-
-        @Override
-        public int compare(String o1, String o2) {
-            int diff = o1.length() - o2.length();
-            if (diff != 0) {
-                return diff;
-            }
-            return o1.compareTo(o2);
+    static int compareStringLength(String o1, String o2) {
+        int diff = o1.length() - o2.length();
+        if (diff != 0) {
+            return diff;
         }
+        return o1.compareTo(o2);
     }
 
-    private static final StringLengthComparator STRING_LENGTH_COMPARATOR = new StringLengthComparator();
-    private XMLWriter writer;
-    private Map<String, String> iriPrefixMap = new TreeMap<>(STRING_LENGTH_COMPARATOR);
+    protected final XMLWriter writer;
+    protected final Map<String, String> iriPrefixMap = new TreeMap<>(OWLXMLWriter::compareStringLength);
 
     /**
      * @param writer
      *        writer
      * @param ontology
      *        ontology
+     * @param config writer config
      */
     public OWLXMLWriter(PrintWriter writer, OWLOntology ontology, OWLOntologyWriterConfiguration config) {
+        this(init(writer, ontology, config));
+    }
+    protected static XMLWriterImpl init(PrintWriter w, OWLOntology ontology,
+        OWLOntologyWriterConfiguration config) {
         XMLWriterNamespaceManager nsm = new XMLWriterNamespaceManager(Namespaces.OWL.toString());
         nsm.setPrefix("xsd", Namespaces.XSD.toString());
         nsm.setPrefix("rdf", Namespaces.RDF.toString());
@@ -80,9 +76,14 @@ public class OWLXMLWriter {
         if (ontology != null && !ontology.isAnonymous()) {
             base = ontology.getOntologyID().getOntologyIRI().toString();
         }
-        if(writer != null) {
-            this.writer = new XMLWriterImpl(writer, nsm, base, config);
-        }
+        return new XMLWriterImpl(verifyNotNull(w), nsm, base, config);
+    }
+    /**
+     * @param writer
+     *        writer
+     */
+    public OWLXMLWriter(XMLWriter writer) {
+        this.writer = verifyNotNull(writer);
     }
 
     /** @return iri to prefix map */
@@ -103,8 +104,6 @@ public class OWLXMLWriter {
      *        prefix)
      * @param iri
      *        The prefix iri
-     * @throws IOException
-     *         io error
      */
     public void writePrefix(String prefixName, String iri) {
         writer.writeStartElement(OWLXMLVocabulary.PREFIX.getIRI());
@@ -141,28 +140,25 @@ public class OWLXMLWriter {
     /**
      * @param ontology
      *        ontology
-     * @throws OWLRendererException
-     *         renderer error
      */
     public void startDocument(OWLOntology ontology) {
         writer.startDocument(OWLXMLVocabulary.ONTOLOGY.getIRI());
         if (!ontology.isAnonymous()) {
             writer.writeAttribute(ONTOLOGY_IRI, ontology.getOntologyID()
-                    .getOntologyIRI().toString());
-            if (ontology.getOntologyID().getVersionIRI() != null) {
+                    .getOntologyIRI().get().toString());
+            if (ontology.getOntologyID().getVersionIRI().isPresent()) {
                 writer.writeAttribute(VERSION_IRI, ontology.getOntologyID()
-                        .getVersionIRI().toString());
+                        .getVersionIRI().get().toString());
             }
         }
     }
 
     /**
-     * 
+     * Called at document end.
      */
     public void endDocument() {
         writer.endDocument();
-        writer.writeComment(VersionInfo.getVersionInfo()
-                .getGeneratedByMessage());
+        writer.writeComment(VersionInfo.getVersionInfo().getGeneratedByMessage());
     }
 
     /**

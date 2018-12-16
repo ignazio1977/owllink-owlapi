@@ -30,10 +30,16 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 public abstract class ConfirmationImpl implements Confirmation {
     private final String warning;
 
+    /**
+     * @param warning warning 
+     */
     public ConfirmationImpl(String warning) {
         this.warning = warning;
     }
 
+    /**
+     * Confirmation without warnings.
+     */
     public ConfirmationImpl() {
         this(null);
     }

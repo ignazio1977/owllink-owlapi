@@ -27,14 +27,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetEquivalentDataProperties;
+import org.semanticweb.owlapi.owllink.builtin.response.DataPropertySynonyms;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
 public class OWLlinkGetEquivalentDataPropertiesElementHandler
-        extends AbstractOWLPropertyRequestElementHandler<GetEquivalentDataProperties> {
+        extends AbstractOWLPropertyRequestElementHandler<DataPropertySynonyms, GetEquivalentDataProperties> {
 
+    /** @param handler handler */
     public OWLlinkGetEquivalentDataPropertiesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

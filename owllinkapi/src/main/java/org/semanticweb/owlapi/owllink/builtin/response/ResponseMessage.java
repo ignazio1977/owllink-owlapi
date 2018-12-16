@@ -46,15 +46,38 @@ public interface ResponseMessage extends Iterable<Response> {
      */
     Response get(int index) throws OWLlinkErrorResponseException;
 
+    /**
+     * @param index index 
+     * @return exception
+     */
     OWLlinkErrorResponseException getError(int index);
 
+    /**
+     * @param index index 
+     * @return true if error
+     */
     boolean isErrorResponse(int index);
 
+    /** @return true if error*/
     boolean hasError();
 
+    /**
+     * @param <R> response type
+     * @param request request 
+     * @return response
+     * @throws OWLlinkErrorResponseException OWLlinkErrorResponseException 
+     */
     <R extends Response> R getResponse(Request<R> request) throws OWLlinkErrorResponseException;
 
-    boolean hasErrorResponse(Request request);
+    /**
+     * @param request request 
+     * @return true if response is error
+     */
+    boolean hasErrorResponse(Request<?> request);
 
-    OWLlinkErrorResponseException getError(Request request);
+    /**
+     * @param request request 
+     * @return error
+     */
+    OWLlinkErrorResponseException getError(Request<?> request);
 }

@@ -30,6 +30,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 public class OWLlinkLiteralImpl extends OWLlinkDataRangeImpl implements OWLlinkLiteral {
     final String value;
 
+    /**
+     * @param value value 
+     */
     public OWLlinkLiteralImpl(String value) {
         this.value = value;
     }

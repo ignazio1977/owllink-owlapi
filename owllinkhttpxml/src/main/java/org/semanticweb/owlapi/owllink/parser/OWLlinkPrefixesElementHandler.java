@@ -34,13 +34,13 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 20.11.2009
  */
 public class OWLlinkPrefixesElementHandler extends AbstractOWLlinkKBResponseElementHandler<Prefixes> {
     protected Map<String, String> mapping;
 
+    /** @param handler handler */
     public OWLlinkPrefixesElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -52,8 +52,8 @@ public class OWLlinkPrefixesElementHandler extends AbstractOWLlinkKBResponseElem
     }
 
     @Override
-    public void handleChild(OWLlinkPrefixElementHandler handler) throws OWLXMLParserException {
-        OWLlinkPrefixElementHandler.Prefix prefix = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkPrefixElementHandler h) throws OWLXMLParserException {
+        OWLlinkPrefixElementHandler.Prefix prefix = h.getOWLLinkObject();
         this.mapping.put(prefix.name, prefix.iri.toString());
     }
 

@@ -32,18 +32,32 @@ import java.util.Collection;
  * Date: 24.11.2009
  */
 public class SetOfLiteralsImpl extends SetOfImpl<OWLLiteral> implements SetOfLiterals {
+    /**
+     * @param owlLiteral owlLiteral 
+     */
     public SetOfLiteralsImpl(OWLLiteral owlLiteral) {
         super(owlLiteral);
     }
 
+    /**
+     * @param owlLiteral owlLiteral 
+     * @param warning warning 
+     */
     public SetOfLiteralsImpl(OWLLiteral owlLiteral, String warning) {
         super(owlLiteral, warning);
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfLiteralsImpl(Collection<OWLLiteral> elements) {
         super(elements);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfLiteralsImpl(Collection<OWLLiteral> elements, String warning) {
         super(elements, warning);
     }

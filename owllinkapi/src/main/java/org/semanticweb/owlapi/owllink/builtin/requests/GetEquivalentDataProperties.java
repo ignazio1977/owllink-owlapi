@@ -37,6 +37,8 @@ public class GetEquivalentDataProperties extends AbstractKBRequestWithOneObject<
         DataPropertySynonyms,
         OWLDataProperty> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetEquivalentDataProperties(IRI kb, OWLDataProperty object) {
         super(kb, object);
     }

@@ -33,13 +33,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSettingsElementHandler extends AbstractOWLlinkKBResponseElementHandler<Settings> implements OWLlinkResponseElementHandler<Settings> {
     private Set<Setting> settings;
 
+    /** @param handler handler */
     public OWLlinkSettingsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -50,8 +50,8 @@ public class OWLlinkSettingsElementHandler extends AbstractOWLlinkKBResponseElem
     }
 
     @Override
-    public void handleChild(OWLlinkSettingElementHandler handler) throws OWLXMLParserException {
-        this.settings.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkSettingElementHandler h) throws OWLXMLParserException {
+        this.settings.add(h.getOWLLinkObject());
     }
 
     @Override

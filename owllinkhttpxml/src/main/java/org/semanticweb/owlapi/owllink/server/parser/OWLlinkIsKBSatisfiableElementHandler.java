@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsKBSatisfiable;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkIsKBSatisfiableElementHandler extends AbstractOWLlinkKBRequestElementHandler<IsKBSatisfiable> {
+public class OWLlinkIsKBSatisfiableElementHandler extends AbstractOWLlinkKBRequestElementHandler<BooleanResponse, IsKBSatisfiable> {
 
+    /** @param handler handler */
     public OWLlinkIsKBSatisfiableElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

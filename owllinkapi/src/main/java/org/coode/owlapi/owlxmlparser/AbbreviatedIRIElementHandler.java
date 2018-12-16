@@ -10,6 +10,8 @@ import org.semanticweb.owlapi.model.UnloadableImportException;
  */
 public class AbbreviatedIRIElementHandler extends AbstractIRIElementHandler {
 
+    private IRI iri;
+
     /**
      * @param handler
      *        owlxml handler
@@ -17,8 +19,6 @@ public class AbbreviatedIRIElementHandler extends AbstractIRIElementHandler {
     public AbbreviatedIRIElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
-
-    private IRI iri;
 
     @Override
     public boolean isTextContentPossible() {

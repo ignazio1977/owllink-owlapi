@@ -36,6 +36,11 @@ public abstract class ConfigurationImpl implements Configuration {
     OWLlinkDataRange type;
     Set<OWLlinkLiteral> literals;
 
+    /**
+     * @param key key 
+     * @param type type 
+     * @param literals literals 
+     */
     public ConfigurationImpl(String key, OWLlinkDataRange type, Set<OWLlinkLiteral> literals) {
         this.key = key;
         this.type = type;

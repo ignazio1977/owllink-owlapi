@@ -29,15 +29,17 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDataPropertiesBetween;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetDataPropertiesBetweenElementHandler extends AbstractOWLIndividualElementHandler<GetDataPropertiesBetween> {
+public class OWLlinkGetDataPropertiesBetweenElementHandler extends AbstractOWLIndividualElementHandler<SetOfDataPropertySynsets, GetDataPropertiesBetween> {
     boolean isNegative = false;
     OWLLiteral literal;
 
+    /** @param handler handler */
     public OWLlinkGetDataPropertiesBetweenElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -57,8 +59,8 @@ public class OWLlinkGetDataPropertiesBetweenElementHandler extends AbstractOWLIn
 
 
     @Override
-    public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
-        this.literal = handler.getOWLObject();
+    public void handleChild(OWLLiteralElementHandler h) throws OWLXMLParserException {
+        this.literal = h.getOWLObject();
     }
 
     @Override

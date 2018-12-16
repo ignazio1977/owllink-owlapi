@@ -31,7 +31,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 24.10.2009
  */
 public interface ProtocolVersion {
+    /** @return major version*/
     int getMajor();
 
+    /** @return minor version */
     int getMinor();
 }

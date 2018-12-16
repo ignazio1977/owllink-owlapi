@@ -44,7 +44,10 @@ public class LoadOntologies extends AbstractKBRequest<OK> {
     protected java.util.Set<IRI> ontologyIRIs;
     protected List<IRIMapping> irimapping;
 
-
+    /** @param kb knowledge base 
+     * @param ontologyIRIs ontologyIRIs 
+     * @param iriMapping iriMapping 
+     * @param considerImports considerImports */
     public LoadOntologies(IRI kb, java.util.Set<IRI> ontologyIRIs, List<IRIMapping> iriMapping, boolean considerImports) {
         super(kb);
         this.ontologyIRIs = Collections.unmodifiableSet(new HashSet<>(ontologyIRIs));
@@ -52,18 +55,28 @@ public class LoadOntologies extends AbstractKBRequest<OK> {
         this.considerImports = considerImports;
     }
 
+    /**
+     * @param kb kb 
+     * @param ontologyIRIs ontologyIRIs 
+     */
     public LoadOntologies(IRI kb, java.util.Set<IRI> ontologyIRIs) {
         this(kb, ontologyIRIs, null, false);
     }
 
+    /**
+     * @param kb kb 
+     * @param ontologyIRIs ontologyIRIs 
+     */
     public LoadOntologies(IRI kb, IRI... ontologyIRIs) {
         this(kb, CollectionFactory.createSet(ontologyIRIs), null, false);
     }
 
+    /** @return true if considering imports */
     public boolean isConsideringImports() {
         return this.considerImports;
     }
 
+    /** @return ontology iris */
     public java.util.Set<IRI> getOntologyIRIs() {
         return this.ontologyIRIs;
     }
@@ -73,6 +86,7 @@ public class LoadOntologies extends AbstractKBRequest<OK> {
         visitor.answer(this);
     }
 
+    /** @return iri mappings */
     public List<IRIMapping> getIRIMapping() {
         final List<IRIMapping> mapping = new ArrayList<>();
         mapping.addAll(this.irimapping);

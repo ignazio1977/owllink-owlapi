@@ -34,10 +34,19 @@ import java.util.Set;
  */
 public class ObjectPropertyHierarchyImpl extends HierarchyImpl<OWLObjectPropertyExpression> implements ObjectPropertyHierarchy {
 
+    /**
+     * @param hierarchyPairs hierarchyPairs 
+     * @param unsatisfiables unsatisfiables 
+     * @param warning warning 
+     */
     public ObjectPropertyHierarchyImpl(Set<HierarchyPair<OWLObjectPropertyExpression>> hierarchyPairs, Node<OWLObjectPropertyExpression> unsatisfiables, String warning) {
         super(hierarchyPairs, unsatisfiables, warning);
     }
 
+    /**
+     * @param hierarchyPairs hierarchyPairs 
+     * @param unsatisfiables unsatisfiables 
+     */
     public ObjectPropertyHierarchyImpl(Set<HierarchyPair<OWLObjectPropertyExpression>> hierarchyPairs, Node<OWLObjectPropertyExpression> unsatisfiables) {
         this(hierarchyPairs, unsatisfiables, null);
     }

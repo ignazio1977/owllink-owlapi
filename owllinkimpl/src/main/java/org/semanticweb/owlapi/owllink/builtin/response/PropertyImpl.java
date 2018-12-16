@@ -31,6 +31,11 @@ import java.util.Set;
  */
 public class PropertyImpl extends ConfigurationImpl implements Property {
 
+    /**
+     * @param key key 
+     * @param type type 
+     * @param literals literals 
+     */
     public PropertyImpl(String key, OWLlinkDataRange type, Set<OWLlinkLiteral> literals) {
         super(key, type, literals);
     }

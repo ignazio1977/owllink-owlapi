@@ -30,5 +30,8 @@ import org.semanticweb.owlapi.owllink.Request;
  * Date: 15.12.2009
  */
 public interface OWLLinkRequestListener {
-    void requestAdded(Request request);
+    /**
+     * @param request request 
+     */
+    void requestAdded(Request<?> request);
 }

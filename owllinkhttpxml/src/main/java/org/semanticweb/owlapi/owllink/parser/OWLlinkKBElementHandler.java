@@ -36,13 +36,13 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkKBElementHandler extends AbstractOWLlinkResponseElementHandler<KB> {
     protected IRI kb;
 
+    /** @param handler handler */
     public OWLlinkKBElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

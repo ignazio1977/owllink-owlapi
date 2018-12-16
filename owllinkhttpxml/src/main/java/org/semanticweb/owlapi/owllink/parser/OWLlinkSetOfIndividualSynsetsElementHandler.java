@@ -33,13 +33,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 24.11.2009
  */
 public class OWLlinkSetOfIndividualSynsetsElementHandler extends AbstractOWLlinkKBResponseElementHandler<SetOfIndividualSynsets> {
     private Set<IndividualSynset> synsets;
 
+    /** @param handler handler */
     public OWLlinkSetOfIndividualSynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -51,8 +51,8 @@ public class OWLlinkSetOfIndividualSynsetsElementHandler extends AbstractOWLlink
     }
 
     @Override
-    public void handleChild(OWLlinkIndividualSynsetElementHandler handler) throws OWLXMLParserException {
-        this.synsets.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkIndividualSynsetElementHandler h) throws OWLXMLParserException {
+        this.synsets.add(h.getOWLLinkObject());
     }
 
 

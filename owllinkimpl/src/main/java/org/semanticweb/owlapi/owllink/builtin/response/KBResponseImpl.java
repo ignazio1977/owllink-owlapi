@@ -29,10 +29,14 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  */
 public abstract class KBResponseImpl extends ConfirmationImpl {
 
+    /**
+     * @param warning warning 
+     */
     public KBResponseImpl(String warning) {
         super(warning);
     }
 
+    /** Response with no warnings. */
     public KBResponseImpl() {
     }
 }

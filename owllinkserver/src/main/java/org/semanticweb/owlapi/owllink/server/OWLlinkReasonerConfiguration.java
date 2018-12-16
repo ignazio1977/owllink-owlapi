@@ -42,8 +42,10 @@ public interface OWLlinkReasonerConfiguration {
      */
     Set<Configuration> getConfigurations();
 
+    /** @return settings */
     Set<Setting> getSettings();
 
+    /** @return reasoner version*/
     ReasonerVersion getReasonerVersion();
 
     // boolean set(Setting setting);

@@ -38,14 +38,18 @@ import java.util.Set;
  * Date: 28.04.2010
  */
 public class RetractRequest extends AbstractKBRequest<OK> implements Iterable<OWLAxiom> {
+    /** Retraction. */
     public static final IRI EXTENSION_IRI = IRI.create("http://www.owllink.org/ext/retraction");
     private Set<OWLAxiom> axioms;
 
+    /** @param kb knowledge base 
+     * @param axioms axioms */
     public RetractRequest(IRI kb, Set<OWLAxiom> axioms) {
         super(kb);
         this.axioms = axioms;
     }
 
+    /** @return axioms*/
     public Set<OWLAxiom> getAxioms() {
         return Collections.unmodifiableSet(this.axioms);
     }

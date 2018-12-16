@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSettings;
+import org.semanticweb.owlapi.owllink.builtin.response.Settings;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetSettingsElementHandler extends AbstractOWLlinkKBRequestElementHandler<GetSettings> {
+public class OWLlinkGetSettingsElementHandler extends AbstractOWLlinkKBRequestElementHandler<Settings, GetSettings> {
 
+    /** @param handler handler */
     public OWLlinkGetSettingsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

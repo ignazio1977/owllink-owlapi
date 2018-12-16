@@ -33,6 +33,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
  * Date: 23.10.2009
  */
 public class GetAllIndividuals extends AbstractKBRequest<SetOfIndividuals> {
+
+    /** @param kb knowledge base */
     public GetAllIndividuals(IRI kb) {
         super(kb);
     }

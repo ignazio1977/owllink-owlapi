@@ -32,6 +32,9 @@ import org.semanticweb.owlapi.owllink.builtin.response.ResponseVisitor;
 public class ErrorResponseImpl implements ErrorResponse {
     String errorString;
 
+    /**
+     * @param errorString errorString 
+     */
     public ErrorResponseImpl(String errorString) {
         this.errorString = errorString;
     }

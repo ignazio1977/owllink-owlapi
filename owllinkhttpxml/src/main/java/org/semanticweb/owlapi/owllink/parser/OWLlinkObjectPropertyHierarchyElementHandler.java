@@ -30,24 +30,24 @@ import org.semanticweb.owlapi.owllink.builtin.response.Hierarchy;
 import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertyHierarchyImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
 public class OWLlinkObjectPropertyHierarchyElementHandler extends AbstractOWLlinkHierarchyElementHandler<OWLObjectPropertyExpression> {
 
+    /** @param handler handler */
     public OWLlinkObjectPropertyHierarchyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void handleChild(OWLlinkObjectPropertySubPropertiesPairElementHandler handler) throws OWLXMLParserException {
-        super.pairs.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkObjectPropertySubPropertiesPairElementHandler h) throws OWLXMLParserException {
+        super.pairs.add(h.getOWLLinkObject());
     }
 
     @Override
-    public void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException {
-        super.unsatisfiables = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkObjectPropertySynsetElementHandler h) throws OWLXMLParserException {
+        super.unsatisfiables = h.getOWLLinkObject();
     }
 
     @Override

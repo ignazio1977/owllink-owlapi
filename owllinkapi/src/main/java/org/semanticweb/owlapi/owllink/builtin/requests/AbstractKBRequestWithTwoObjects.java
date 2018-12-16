@@ -29,11 +29,16 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 /**
  * Author: Olaf Noppens
  * Date: 23.10.2009
+ * @param <O> object type
+ * @param <R> response type
  */
 public abstract class AbstractKBRequestWithTwoObjects<R extends KBResponse, O> extends AbstractKBRequest<R> {
     protected O firstObject;
     protected O secondObject;
 
+    /** @param kb knowledge base 
+     * @param first first 
+     * @param second second */
     public AbstractKBRequestWithTwoObjects(IRI kb, O first, O second) {
         super(kb);
         this.firstObject = first;

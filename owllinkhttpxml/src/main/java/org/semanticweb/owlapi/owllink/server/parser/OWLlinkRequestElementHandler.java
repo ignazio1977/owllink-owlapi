@@ -24,10 +24,13 @@
 package org.semanticweb.owlapi.owllink.server.parser;
 
 import org.semanticweb.owlapi.owllink.Request;
+import org.semanticweb.owlapi.owllink.Response;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
+ * @param <R> request type
+ * @param <T> response type
  */
-public interface OWLlinkRequestElementHandler<R extends Request> extends OWLlinkElementHandler<R> {
+public interface OWLlinkRequestElementHandler<T extends Response, R extends Request<T>> extends OWLlinkElementHandler<R> {
 }

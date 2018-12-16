@@ -29,23 +29,38 @@ import java.util.Collection;
 /**
  * Author: Olaf Noppens
  * Date: 22.10.2009
+ * @param <E> object type
  */
 public abstract class SetOfImpl<E> extends AbstractSetOfImpl<E> implements SetOfX<E> {
     private String warning;
 
+    /**
+     * @param e e 
+     */
     public SetOfImpl(E e) {
         this(e, null);
     }
 
+    /**
+     * @param e e 
+     * @param warning warning 
+     */
     public SetOfImpl(E e, String warning) {
         super(e);
         this.warning = warning;
     }
 
+    /**
+     * @param elements elements 
+     */
     public SetOfImpl(Collection<E> elements) {
         this(elements, null);
     }
 
+    /**
+     * @param elements elements 
+     * @param warning warning 
+     */
     public SetOfImpl(Collection<E> elements, String warning) {
         super(elements);
         this.warning = warning;

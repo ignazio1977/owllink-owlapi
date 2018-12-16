@@ -28,65 +28,123 @@ import org.semanticweb.owlapi.owllink.Response;
 /**
  * Author: Olaf Noppens
  * Date: 24.11.2009
+ * @param <O> object type
  */
 public interface ResponseVisitor<O> {
 
+    /** @param response response to visit
+     * @return value */
     O visit(Response response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(KBResponse response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(BooleanResponse response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(Classes response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(ClassHierarchy response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(ClassSynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(DataPropertyHierarchy response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(DataPropertySynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(DataPropertySynonyms response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(Description response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(IndividualSynonyms response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(KB response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(ObjectPropertyHierarchy response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(ObjectPropertySynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(OK response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(Prefixes response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfAnnotationProperties response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfClasses response);
 
-    O visit(SetOfClassSynsets resposne);
+    /** @param response response to visit
+     * @return value */
+    O visit(SetOfClassSynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfDataProperties response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfDataPropertySynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfDatatypes response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfIndividuals response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfIndividualSynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfLiterals response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfObjectProperties response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(SetOfObjectPropertySynsets response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(Settings response);
 
+    /** @param response response to visit
+     * @return value */
     O visit(StringResponse response);
-
 }

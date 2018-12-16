@@ -28,12 +28,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponseImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
 public class OWLlinkUnknownResponseElementHandler extends AbstractOWLlinkKBResponseElementHandler<BooleanResponse> {
 
+    /** @param handler handler */
     public OWLlinkUnknownResponseElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

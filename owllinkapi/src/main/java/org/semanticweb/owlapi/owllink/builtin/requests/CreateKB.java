@@ -42,45 +42,71 @@ public class CreateKB implements Request<KB> {
     final IRI kb;
     Map<String, String> prefixes;
 
+    /**
+     * Empty KB.
+     */
     public CreateKB() {
         this(null, null, null);
     }
 
+    /**
+     * @param kb kb 
+     * @param name name 
+     */
     public CreateKB(IRI kb, String name) {
         this.kb = kb;
         this.name = name;
     }
 
+    /**
+     * @param kb kb 
+     * @param name name 
+     * @param prefixes prefixes 
+     */
     public CreateKB(IRI kb, String name, Map<String, String> prefixes) {
         this.kb = kb;
         this.name = name;
         this.prefixes = prefixes == null ? Collections.<String, String>emptyMap() : new HashMap<>(prefixes);
     }
 
+    /**
+     * @param kb kb 
+     */
     public CreateKB(IRI kb) {
         this(kb, null, null);
     }
 
+    /**
+     * @param kb kb 
+     * @param prefixes prefixes 
+     */
     public CreateKB(IRI kb, Map<String, String> prefixes) {
         this(kb, null, prefixes);
     }
 
+    /**
+     * @param prefixes prefixes 
+     */
     public CreateKB(Map<String, String> prefixes) {
         this(null, null, prefixes);
     }
 
+    /** @return kb iri */
     public IRI getKB() {
         return this.kb;
     }
 
+    /** @return name*/
     public String getName() {
         return this.name;
     }
 
+    /** @return true if has name*/
     public boolean hasName() {
         return getName() != null;
     }
 
+    /** @return prefixes*/
     public Map<String, String> getPrefixes() {
         return Collections.unmodifiableMap(this.prefixes);
     }

@@ -27,6 +27,7 @@ import org.coode.owlapi.owlxmlparser.AbstractOWLAxiomElementHandler;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.owllink.builtin.response.OK;
 import org.semanticweb.owlapi.owllink.retraction.RetractRequest;
 import org.semanticweb.owlapi.owllink.server.parser.AbstractOWLlinkKBRequestElementHandler;
 
@@ -37,10 +38,11 @@ import java.util.Set;
  * Author: Olaf Noppens
  * Date: 28.04.2010
  */
-public class OWLlinkRetractElementHandler extends AbstractOWLlinkKBRequestElementHandler<RetractRequest> {
+public class OWLlinkRetractElementHandler extends AbstractOWLlinkKBRequestElementHandler<OK, RetractRequest> {
 
     protected Set<OWLAxiom> axioms;
 
+    /** @param handler handler */
     public OWLlinkRetractElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

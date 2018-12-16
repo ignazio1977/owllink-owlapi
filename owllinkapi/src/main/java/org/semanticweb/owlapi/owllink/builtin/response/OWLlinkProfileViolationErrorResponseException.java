@@ -31,6 +31,9 @@ package org.semanticweb.owlapi.owllink.builtin.response;
  * Date: 10.06.2010
  */
 public class OWLlinkProfileViolationErrorResponseException extends OWLlinkSyntaxErrorException {
+    /**
+     * @param error error 
+     */
     public OWLlinkProfileViolationErrorResponseException(String error) {
         super(error);
     }

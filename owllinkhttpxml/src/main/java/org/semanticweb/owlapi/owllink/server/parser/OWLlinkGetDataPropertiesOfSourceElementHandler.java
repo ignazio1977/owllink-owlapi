@@ -27,14 +27,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDataPropertiesOfSource;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetDataPropertiesOfSourceElementHandler extends AbstractOWLIndividualElementHandler<GetDataPropertiesOfSource> {
+public class OWLlinkGetDataPropertiesOfSourceElementHandler extends AbstractOWLIndividualElementHandler<SetOfDataPropertySynsets, GetDataPropertiesOfSource> {
     protected boolean isNegative = false;
 
+    /** @param handler handler */
     public OWLlinkGetDataPropertiesOfSourceElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

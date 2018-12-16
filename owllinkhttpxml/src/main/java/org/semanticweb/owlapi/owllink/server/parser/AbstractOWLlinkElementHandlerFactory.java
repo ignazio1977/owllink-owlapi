@@ -23,31 +23,46 @@
 
 package org.semanticweb.owlapi.owllink.server.parser;
 
+import java.util.function.Function;
+
+import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 
 /**
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */
-public abstract class AbstractOWLlinkElementHandlerFactory implements OWLlinkElementHandlerFactory {
+public class AbstractOWLlinkElementHandlerFactory implements OWLlinkElementHandlerFactory {
 
     private String elementName;
+    private Function<OWLXMLParserHandler, OWLlinkElementHandler<?>> f;
 
-    public AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary v) {
+    /**
+     * @param v v 
+     * @param f f 
+     */
+    public AbstractOWLlinkElementHandlerFactory(OWLlinkXMLVocabulary v, Function<OWLXMLParserHandler, OWLlinkElementHandler<?>> f) {
         this.elementName = v.getShortName();
+        this.f = f;
     }
 
-
-    protected AbstractOWLlinkElementHandlerFactory(String elementName) {
+    /**
+     * @param elementName elementName 
+     * @param f f 
+     */
+    public AbstractOWLlinkElementHandlerFactory(String elementName, Function<OWLXMLParserHandler, OWLlinkElementHandler<?>> f) {
         this.elementName = elementName;
+        this.f = f;
     }
-
 
     @Override
     public String getElementName() {
         return elementName;
     }
 
-
+    @Override
+    public OWLlinkElementHandler<?> createHandler(OWLXMLParserHandler handler) {
+        return f.apply(handler);
+    }
 }
 

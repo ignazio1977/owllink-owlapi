@@ -34,14 +34,23 @@ import java.util.Set;
  * Date: 18.02.2010
  */
 public class SubClassSynsets extends OWLClassNodeSet implements SubEntitySynsets<OWLClass> {
+    /**
+     * @param entity entity 
+     */
     public SubClassSynsets(OWLClass entity) {
         super(entity);
     }
 
+    /**
+     * @param owlClassNode owlClassNode 
+     */
     public SubClassSynsets(Node<OWLClass> owlClassNode) {
         super(owlClassNode);
     }
 
+    /**
+     * @param nodes nodes 
+     */
     public SubClassSynsets(Set<Node<OWLClass>> nodes) {
         super(nodes);
     }

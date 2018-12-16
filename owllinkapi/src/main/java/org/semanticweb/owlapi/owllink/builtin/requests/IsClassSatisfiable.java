@@ -36,6 +36,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
  */
 public class IsClassSatisfiable extends AbstractKBRequestWithOneObject<BooleanResponse, OWLClassExpression> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public IsClassSatisfiable(IRI kb, OWLClassExpression object) {
         super(kb, object);
     }

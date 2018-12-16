@@ -33,6 +33,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.StringResponse;
  * Date: 23.10.2009
  */
 public class GetKBLanguage extends AbstractKBRequest<StringResponse> {
+
+    /** @param kb knowledge base */
     public GetKBLanguage(IRI kb) {
         super(kb);
     }

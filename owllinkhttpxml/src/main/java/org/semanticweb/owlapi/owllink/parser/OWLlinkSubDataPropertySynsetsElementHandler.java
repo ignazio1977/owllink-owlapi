@@ -35,13 +35,14 @@ import org.semanticweb.owlapi.owllink.builtin.response.SubEntitySynsets;
  */
 public class OWLlinkSubDataPropertySynsetsElementHandler extends AbstractSubSynsetsElementHandler<OWLDataProperty> {
 
+    /** @param handler handler */
     public OWLlinkSubDataPropertySynsetsElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
-        super.synsets.add(handler.getOWLLinkObject());
+    public void handleChild(OWLlinkDataPropertySynsetElementHandler h) throws OWLXMLParserException {
+        super.synsets.add(h.getOWLLinkObject());
     }
 
     @Override

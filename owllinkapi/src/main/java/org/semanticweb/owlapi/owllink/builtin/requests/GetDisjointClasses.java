@@ -35,6 +35,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.ClassSynsets;
  */
 public class GetDisjointClasses extends AbstractKBRequestWithOneObject<ClassSynsets, OWLClassExpression> {
 
+    /** @param kb knowledge base 
+     * @param object object */
     public GetDisjointClasses(IRI kb, OWLClassExpression object) {
         super(kb, object);
     }

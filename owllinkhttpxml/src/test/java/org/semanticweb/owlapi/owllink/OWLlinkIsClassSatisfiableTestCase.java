@@ -33,6 +33,7 @@ import java.util.Set;
 /**
  * @author Olaf Noppens
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkIsClassSatisfiableTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -48,21 +49,21 @@ public class OWLlinkIsClassSatisfiableTestCase extends AbstractOWLlinkAxiomsTest
     public void testIsClassSatisfiable() throws Exception {
         IsClassSatisfiable query = new IsClassSatisfiable(getKBIRI(), a());
         BooleanResponse response = super.reasoner.answer(query);
-        assertTrue(response.getResult());
+        trueResponse(response);
         query = new IsClassSatisfiable(getKBIRI(), b());
         response = super.reasoner.answer(query);
-        assertTrue(response.getResult());
+        trueResponse(response);
         query = new IsClassSatisfiable(getKBIRI(), c());
         response = super.reasoner.answer(query);
-        assertFalse(response.getResult());
+        falseResponse(response);
         query = new IsClassSatisfiable(getKBIRI(), d());
         response = super.reasoner.answer(query);
-        assertFalse(response.getResult());
+        falseResponse(response);
         query = new IsClassSatisfiable(getKBIRI(), getDataFactory().getOWLNothing());
         response = super.reasoner.answer(query);
-        assertFalse(response.getResult());
+        falseResponse(response);
         query = new IsClassSatisfiable(getKBIRI(), getDataFactory().getOWLObjectIntersectionOf(getDataFactory().getOWLObjectExactCardinality(0, opP()), getDataFactory().getOWLObjectExactCardinality(1, opP())));
         response = super.reasoner.answer(query);
-        assertFalse(response.getResult());
+        falseResponse(response);
     }
 }

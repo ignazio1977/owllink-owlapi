@@ -27,60 +27,112 @@ import org.coode.owlapi.owlxmlparser.OWLElementHandler;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 
 /**
- *
+ * @param <O> object type
  */
 public interface OWLlinkElementHandler<O> extends OWLElementHandler<O> {
 
-    void handleChild(OWLlinkElementHandler handler) throws OWLXMLParserException;
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
+    void handleChild(OWLlinkElementHandler<?> handler) throws OWLXMLParserException;
 
-    void handleChild(OWLlinkResponseElementHandler handler) throws OWLXMLParserException;
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
+    void handleChild(OWLlinkResponseElementHandler<?> handler) throws OWLXMLParserException;
 
-    void handleChild(OWLlinkErrorElementHandler handler) throws OWLXMLParserException;
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
+    void handleChild(OWLlinkErrorElementHandler<?> handler) throws OWLXMLParserException;
 
     //here are then the built-in element handler, for all other use the first 3 methods.
-    void handleChild(OWLlinkConfigurationElementHandler handler) throws OWLXMLParserException;
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
+    void handleChild(OWLlinkBooleanResponseElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
+    void handleChild(OWLlinkConfigurationElementHandler<?> handler) throws OWLXMLParserException;
+
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkPropertyElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkSettingElementHandler handler) throws OWLXMLParserException;
 
-    void handleChild(OWLlinkDataRangeElementHandler handler) throws OWLXMLParserException;
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
+    void handleChild(OWLlinkDataRangeElementHandler<?> handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkLiteralElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkPrefixElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkProtocolVersionElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkReasonerVersionElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkPublicKBElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkSupportedExtensionElemenetHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkClassSynsetElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkObjectPropertySynsetElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkIndividualSynsetElementHandler handler) throws OWLXMLParserException;
 
-
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkClassSubClassesPairElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkObjectPropertySubPropertiesPairElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkDataPropertySubDataPropertiesPairElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkSubClassSynsetsElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkSubObjectPropertySynsetsElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkSubDataPropertySynsetsElementHandler handler) throws OWLXMLParserException;
 
+    /** @param handler handler
+     * @throws OWLXMLParserException parsing issue */
     void handleChild(OWLlinkResponseMessageElementHandler handler) throws OWLXMLParserException;
 
+    /** @return object
+     * @throws OWLXMLParserException parsing issue */
     O getOWLLinkObject() throws OWLXMLParserException;
-
 }

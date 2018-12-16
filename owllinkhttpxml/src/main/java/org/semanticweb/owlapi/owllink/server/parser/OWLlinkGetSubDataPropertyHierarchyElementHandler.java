@@ -26,13 +26,15 @@ package org.semanticweb.owlapi.owllink.server.parser;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSubDataPropertyHierarchy;
+import org.semanticweb.owlapi.owllink.builtin.response.DataPropertyHierarchy;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetSubDataPropertyHierarchyElementHandler extends AbstractOWLlinkDataPropertyElementHandler<GetSubDataPropertyHierarchy> {
+public class OWLlinkGetSubDataPropertyHierarchyElementHandler extends AbstractOWLlinkDataPropertyElementHandler<DataPropertyHierarchy, GetSubDataPropertyHierarchy> {
 
+    /** @param handler handler */
     public OWLlinkGetSubDataPropertyHierarchyElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

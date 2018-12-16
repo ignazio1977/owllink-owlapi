@@ -29,15 +29,17 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetDataPropertiesOfLiteral;
+import org.semanticweb.owlapi.owllink.builtin.response.SetOfDataPropertySynsets;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkGetDataPropertiesOfLiteralElementHandler extends AbstractOWLlinkKBRequestElementHandler<GetDataPropertiesOfLiteral> {
+public class OWLlinkGetDataPropertiesOfLiteralElementHandler extends AbstractOWLlinkKBRequestElementHandler<SetOfDataPropertySynsets, GetDataPropertiesOfLiteral> {
     OWLLiteral literal;
     boolean isNegative = false;
 
+    /** @param handler handler */
     public OWLlinkGetDataPropertiesOfLiteralElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -57,8 +59,8 @@ public class OWLlinkGetDataPropertiesOfLiteralElementHandler extends AbstractOWL
     }
 
     @Override
-    public void handleChild(OWLLiteralElementHandler handler) throws OWLXMLParserException {
-        this.literal = handler.getOWLObject();
+    public void handleChild(OWLLiteralElementHandler h) throws OWLXMLParserException {
+        this.literal = h.getOWLObject();
     }
 
     @Override

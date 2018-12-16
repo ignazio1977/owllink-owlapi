@@ -34,6 +34,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OK;
  */
 public class Classify extends AbstractKBRequest<OK> {
 
+    /** @param kb knowledge base */
     public Classify(IRI kb) {
         super(kb);
     }

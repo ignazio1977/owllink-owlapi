@@ -34,6 +34,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.OWLlinkLiteralImpl;
  */
 public class OWLlinkLiteralElementHandler extends AbstractOWLlinkElementHandler<OWLlinkLiteral> {
 
+    /** @param handler handler */
     public OWLlinkLiteralElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

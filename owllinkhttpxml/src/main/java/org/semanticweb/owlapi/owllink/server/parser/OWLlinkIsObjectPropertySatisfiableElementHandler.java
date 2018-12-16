@@ -28,14 +28,16 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserException;
 import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.requests.IsObjectPropertySatisfiable;
+import org.semanticweb.owlapi.owllink.builtin.response.BooleanResponse;
 
 /**
  * Author: Olaf Noppens
  * Date: 28.11.2009
  */
-public class OWLlinkIsObjectPropertySatisfiableElementHandler extends AbstractOWLlinkKBRequestElementHandler<IsObjectPropertySatisfiable> {
+public class OWLlinkIsObjectPropertySatisfiableElementHandler extends AbstractOWLlinkKBRequestElementHandler<BooleanResponse, IsObjectPropertySatisfiable> {
     protected OWLObjectPropertyExpression property;
 
+    /** @param handler handler */
     public OWLlinkIsObjectPropertySatisfiableElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
@@ -47,8 +49,8 @@ public class OWLlinkIsObjectPropertySatisfiableElementHandler extends AbstractOW
     }
 
     @Override
-    public void handleChild(AbstractOWLObjectPropertyElementHandler handler) throws OWLXMLParserException {
-        this.property = handler.getOWLObject();
+    public void handleChild(AbstractOWLObjectPropertyElementHandler h) throws OWLXMLParserException {
+        this.property = h.getOWLObject();
     }
 
     @Override

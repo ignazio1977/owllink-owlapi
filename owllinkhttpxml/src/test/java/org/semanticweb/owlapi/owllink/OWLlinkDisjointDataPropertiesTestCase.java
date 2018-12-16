@@ -35,10 +35,10 @@ import org.semanticweb.owlapi.util.CollectionFactory;
 import java.util.Set;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
+@SuppressWarnings("javadoc")
 public class OWLlinkDisjointDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     @Override
@@ -52,15 +52,15 @@ public class OWLlinkDisjointDataPropertiesTestCase extends AbstractOWLlinkAxioms
     public void testAreDataPropertiesDisjoint() {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB()));
         BooleanResponse answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpC()));
         answer = super.reasoner.answer(query);
-        assertTrue(answer.getResult());
+        trueResponse(answer);
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointDataPropertiesAxiom(dpA(), dpB(), dpE()));
         answer = super.reasoner.answer(query);
-        assertFalse(answer.getResult());
+        falseResponse(answer);
     }
 
     public void testAreDataPropertiesDisjointViaOWLReasoner() {

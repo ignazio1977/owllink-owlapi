@@ -29,12 +29,12 @@ import org.semanticweb.owlapi.owllink.builtin.response.Setting;
 import org.semanticweb.owlapi.owllink.builtin.response.SettingImpl;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 22.10.2009
  */
 public class OWLlinkSettingElementHandler extends OWLlinkConfigurationElementHandler<Setting> {
 
+    /** @param handler handler */
     public OWLlinkSettingElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }

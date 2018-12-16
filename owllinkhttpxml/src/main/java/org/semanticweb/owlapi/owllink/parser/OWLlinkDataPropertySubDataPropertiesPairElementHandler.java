@@ -28,24 +28,24 @@ import org.coode.owlapi.owlxmlparser.OWLXMLParserHandler;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 
 /**
- * Created by IntelliJ IDEA.
  * Author: Olaf Noppens
  * Date: 02.11.2009
  */
 public class OWLlinkDataPropertySubDataPropertiesPairElementHandler extends AbstractOWLlinkPairElementHandler<OWLDataProperty> {
 
+    /** @param handler handler */
     public OWLlinkDataPropertySubDataPropertiesPairElementHandler(OWLXMLParserHandler handler) {
         super(handler);
     }
 
     @Override
-    public void handleChild(OWLlinkDataPropertySynsetElementHandler handler) throws OWLXMLParserException {
-        super.superSynset = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkDataPropertySynsetElementHandler h) throws OWLXMLParserException {
+        super.superSynset = h.getOWLLinkObject();
     }
 
     @Override
-    public void handleChild(OWLlinkSubDataPropertySynsetsElementHandler handler) throws OWLXMLParserException {
-        super.subSetOfSynset = handler.getOWLLinkObject();
+    public void handleChild(OWLlinkSubDataPropertySynsetsElementHandler h) throws OWLXMLParserException {
+        super.subSetOfSynset = h.getOWLLinkObject();
     }
 
     @Override
