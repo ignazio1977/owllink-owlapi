@@ -134,7 +134,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     private Map<IRI, AbstractOWLlinkReasonerConfiguration> configurationsByKB;
     private Map<IRI, Stack<String>> warningsByReasoners;
 
-
     /** Blockable prefix manager provider. */
     public static class BlockablePrefixManagerProvider extends DefaultPrefixManagerProvider {
         private Set<IRI> blockedKBs = CollectionFactory.createSet();
@@ -170,7 +169,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
     }
 
-
     BlockablePrefixManagerProvider prov = new BlockablePrefixManagerProvider();
 
     /**
@@ -191,7 +189,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         this.configurationsByKB = CollectionFactory.createMap();
         this.warningsByReasoners = CollectionFactory.createMap();
     }
-
 
     /**
      * @param request request 
@@ -225,9 +222,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
         httpResponse.setField("Accept-Encoding", "gzip");
         this.process(clientContentIsGzip ? new GZIPInputStream(httpResponse.getInputStream()) : httpResponse.getInputStream(), httpResponse.getOutputStream(), httpResponse, clientAcceptGzip);
-
     }
-
 
     /**
      * @param in in 
@@ -274,7 +269,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         return false;
     }
 
-
     protected void listener(final List<Response> responses, Request<?> request) {
         try {
             request.accept(OWLlinkReasonerBridge.this);
@@ -283,7 +277,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
         responses.add(getResponse());
     }
-
 
     /**
      * @param kb kb 
@@ -690,7 +683,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         this.response = new ClassSynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
-
     protected <T extends OWLObject> Set<Node<T>> s(NodeSet<T> nodeSet) {
         return asUnorderedSet(nodeSet.nodes());
     }
@@ -718,7 +710,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
 
         this.response = new SetOfIndividualSynsetsImpl(convertTo(nodeSet), getWarning(query.getKB()));
     }
-
 
     protected Set<IndividualSynset> convertTo(NodeSet<OWLNamedIndividual> nodeSet) {
         Set<IndividualSynset> synonymsets = new HashSet<>();
@@ -1036,7 +1027,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
     }
 
-
     @Override
     public void answer(GetObjectPropertyTargets query) {
         if (query.isNegative()) {
@@ -1074,7 +1064,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
         return new IndividualSynsetImpl(CollectionFactory.createSet(individual));
     }
-
 
     protected NodeSet<OWLNamedIndividual> computeSynonyms(NodeSet<OWLNamedIndividual> nodeSet,
                                                           OWLReasoner reasoner,
@@ -1246,8 +1235,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
             this.response = new DataPropertyHierarchyImpl(pairs, unsatisfiables, warning);
         } else
             this.response = new DataPropertyHierarchyImpl(pairs, unsatisfiables, getWarning(query.getKB()));
-
-
     }
 
     @Override
@@ -1535,7 +1522,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
     }
 
-
     @Override
     public void answer(ReleaseKB query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
@@ -1556,7 +1542,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
         this.response = new OKImpl();
     }
-
 
     @Override
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.Set query) {
@@ -1652,7 +1637,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
 
         @Override
         public void remove() {
-
         }
 
         @Override
@@ -1668,5 +1652,3 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         }
     }
 }
-
-

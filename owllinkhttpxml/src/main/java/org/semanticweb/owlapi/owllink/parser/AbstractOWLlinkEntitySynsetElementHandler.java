@@ -49,11 +49,9 @@ public abstract class AbstractOWLlinkEntitySynsetElementHandler<S extends OWLObj
         this.elements = new HashSet<>();
     }
 
-
     @Override
     public void endElement() throws OWLXMLParserException {
         if (this.elements.isEmpty())
             throw new OWLXMLParserException("A synset must contain at least one element which is missing here!", getLineNumber(), getColumnNumber());
-
     }
 }

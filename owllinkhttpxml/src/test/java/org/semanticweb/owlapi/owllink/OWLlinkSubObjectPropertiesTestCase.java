@@ -83,7 +83,6 @@ public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTes
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
-
     public void testGetSubObjectProperties() {
         //indirect case
         GetSubObjectProperties query = new GetSubObjectProperties(getKBIRI(), opb());
@@ -123,7 +122,6 @@ public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTes
         assertEquals(1,response.nodes().count());
         assertEquals(set(opa()), asUnorderedSet(response.entities()));
     }
-
 
     public void testGetSuperProperties() {
         GetSuperObjectProperties query = new GetSuperObjectProperties(getKBIRI(), opa());

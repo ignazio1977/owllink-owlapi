@@ -23,7 +23,6 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 

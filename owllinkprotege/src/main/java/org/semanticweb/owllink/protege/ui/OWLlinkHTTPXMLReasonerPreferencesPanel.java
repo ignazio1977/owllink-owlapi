@@ -52,10 +52,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
     private JTextField urlField;
     private JTextField portNumberField;
     private JButton checkConnection;
-
-
     private static final int HORIZONTAL_SPACE = 25;
-
 
     @Override
     public void dispose() {
@@ -64,7 +61,6 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
     @Override
     public void initialise() {
         JComponent urlPanel = createURLPanel();
-
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(urlPanel);
     }
@@ -96,8 +92,6 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
     private JComponent createURLPanel() {
         OWLlinkHTTPXMLReasonerPreferences prefs = OWLlinkHTTPXMLReasonerPreferences.getInstance();
         JComponent c = createPane("Server end-point", BoxLayout.PAGE_AXIS);
-
-
         this.urlField = new JTextField() {
             @Override
             public Dimension getPreferredSize() {
@@ -108,12 +102,7 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
         this.portNumberField = new JTextField();
         this.portNumberField.setText(Integer.toString(prefs.getServerEndpointPort()));
         this.checkConnection = new JButton("Check connection now");
-        this.checkConnection.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkConnection();
-            }
-        });
+        this.checkConnection.addActionListener(e -> checkConnection());
 
         JComponent urlPanel = new JPanel();
         urlPanel.setLayout(new BoxLayout(urlPanel, BoxLayout.LINE_AXIS));
@@ -134,7 +123,6 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
         checkConnectionPanel.setAlignmentX(0.0f);
         checkConnectionPanel.add(checkConnection);
         checkConnectionPanel.add(Box.createHorizontalGlue());
-
 
         JPanel customLabelPane = new JPanel();
         customLabelPane.setLayout(new BoxLayout(customLabelPane, BoxLayout.PAGE_AXIS));
@@ -195,5 +183,4 @@ public class OWLlinkHTTPXMLReasonerPreferencesPanel extends OWLPreferencesPanel 
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-
 }

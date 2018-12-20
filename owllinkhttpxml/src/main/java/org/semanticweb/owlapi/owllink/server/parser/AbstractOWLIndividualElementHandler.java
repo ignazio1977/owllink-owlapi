@@ -39,7 +39,6 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
  */
 public abstract class AbstractOWLIndividualElementHandler<T extends KBResponse, R extends KBRequest<T>> extends AbstractOWLlinkObjectRequestElementHandler<T, R, OWLIndividual> {
 
-
     @Override
     public void handleChild(OWLIndividualElementHandler h) throws OWLXMLParserException {
         super.o = h.getOWLObject();

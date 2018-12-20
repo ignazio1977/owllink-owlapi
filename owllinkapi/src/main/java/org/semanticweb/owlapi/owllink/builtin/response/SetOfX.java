@@ -23,7 +23,6 @@
 
 package org.semanticweb.owlapi.owllink.builtin.response;
 
-
 import java.util.Set;
 
 /**

@@ -43,7 +43,6 @@ import java.util.*;
  */
 public class MyXMLWriterImpl implements XMLWriter {
 
-
     private Stack<XMLElement> elementStack;
 
     protected PrintWriter writer;
@@ -75,7 +74,6 @@ public class MyXMLWriterImpl implements XMLWriter {
         this(writer, xmlWriterNamespaceManager, "UTF-8", config);
     }
 
-
     /**
      * @param writer writer 
      * @param xmlWriterNamespaceManager xmlWriterNamespaceManager 
@@ -92,7 +90,6 @@ public class MyXMLWriterImpl implements XMLWriter {
         elementStack = new Stack<>();
         setupEntities();
     }
-
 
     private void setupEntities() {
         List<String> namespaces = new ArrayList<>();
@@ -118,7 +115,6 @@ public class MyXMLWriterImpl implements XMLWriter {
             }
         }
     }
-
 
     protected String swapForEntity(String value) {
         for (String curEntity : entities.keySet()) {
@@ -229,7 +225,6 @@ public class MyXMLWriterImpl implements XMLWriter {
         elementStack.push(element);
     }
 
-
     @Override
     public void writeEndElement() {
         // Pop the element off the stack and write it out
@@ -239,20 +234,17 @@ public class MyXMLWriterImpl implements XMLWriter {
         }
     }
 
-
     @Override
     public void writeAttribute(String attr, String val) {
         XMLElement element = elementStack.peek();
         element.setAttribute(xmlWriterNamespaceManager.getQName(attr), val);
     }
 
-
     @Override
     public void writeTextContent(String text) {
         XMLElement element = elementStack.peek();
         element.setText(text);
     }
-
 
     @Override
     public void writeComment(String commentText) {
@@ -270,7 +262,6 @@ public class MyXMLWriterImpl implements XMLWriter {
             elementStack.push(element);
         }
     }
-
 
     private void writeEntities(String rootName) {
         writer.write("\n\n<!DOCTYPE " + xmlWriterNamespaceManager.getQName(rootName) + " [\n");
@@ -316,7 +307,6 @@ public class MyXMLWriterImpl implements XMLWriter {
         }
     }
 
-
     @Override
     public void endDocument() {
         // Pop of each element
@@ -325,7 +315,6 @@ public class MyXMLWriterImpl implements XMLWriter {
         }
         writer.flush();
     }
-
 
     /**
      * XML element.
@@ -379,14 +368,12 @@ public class MyXMLWriterImpl implements XMLWriter {
             attributes.put(attribute, value);
         }
 
-
         /**
          * @param content content 
          */
         public void setText(String content) {
             textContent = content;
         }
-
 
         /**
          * @param close close 
@@ -443,7 +430,6 @@ public class MyXMLWriterImpl implements XMLWriter {
             }
         }
 
-
         /**
          * Write end.
          */
@@ -463,7 +449,6 @@ public class MyXMLWriterImpl implements XMLWriter {
             }
         }
 
-
         private void writeAttribute(String attr, String val) {
             writer.write(attr);
             writer.write('=');
@@ -475,7 +460,6 @@ public class MyXMLWriterImpl implements XMLWriter {
             }
             writer.write('"');
         }
-
 
         private void writeAttributes() {
             for (Iterator<String> it = attributes.keySet().iterator(); it.hasNext();) {
@@ -492,13 +476,11 @@ public class MyXMLWriterImpl implements XMLWriter {
             }
         }
 
-
         private void writeTextContent() {
             if (textContent != null) {
                 writer.write(XMLUtils.escapeXML(textContent));
             }
         }
-
 
         private void insertIndentation() {
             if (config.isIndenting()) {
@@ -507,7 +489,6 @@ public class MyXMLWriterImpl implements XMLWriter {
                 }
             }
         }
-
 
         private void writeNewLine() {
             writer.write('\n');

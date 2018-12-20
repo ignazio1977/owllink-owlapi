@@ -82,7 +82,6 @@ public class OWLlinkXMLResponseRenderer {
                 writer.writeAttribute(WARNING_ATTRIBUTE.getURI(), response.getWarning());
         }
 
-
         public void renderClassSynset(Node<OWLClass> synset) {
             writer.writeStartElement(CLASS_SYNSET);
             for (OWLClass clazz : synset)
@@ -110,7 +109,6 @@ public class OWLlinkXMLResponseRenderer {
                 writer.writeOWLObject(prop, defaultKB);
             writer.writeEndElement();
         }
-
 
         public void renderObjectPropertySubPair(HierarchyPair<OWLObjectPropertyExpression> pair) {
             writer.writeStartElement(OBJECTPROPERTY_SUBOBJECTPROPERTIESPAIR);
@@ -187,7 +185,6 @@ public class OWLlinkXMLResponseRenderer {
             writer.writeAttribute(ERROR_ATTRIBUTE.getURI(), response.getErrorString());
             writer.writeEndElement();
         }
-
 
         @Override
         public Void visit(BooleanResponse response) {

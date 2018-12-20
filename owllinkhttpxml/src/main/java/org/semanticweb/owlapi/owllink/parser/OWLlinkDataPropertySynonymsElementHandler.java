@@ -51,7 +51,6 @@ public class OWLlinkDataPropertySynonymsElementHandler extends AbstractOWLlinkKB
         this.props = new HashSet<>();
     }
 
-
     @Override
     public void handleChild(OWLDataPropertyElementHandler h) throws OWLXMLParserException {
         this.props.add(h.getOWLObject().asOWLDataProperty());

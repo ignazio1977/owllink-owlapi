@@ -239,7 +239,6 @@ public class AbstractOWLlinkReasonerConfiguration implements OWLlinkReasonerConf
         return settings;
     }
 
-
     @Override
     public Configuration getConfiguration(String key) {
         for (Configuration configuration : getConfigurations()) {

@@ -64,7 +64,6 @@ public class OWLlinkDescriptionElementHandler extends AbstractOWLlinkResponseEle
         this.rVersion = null;
     }
 
-
     @Override
     public void attribute(String localName, String value) throws OWLXMLParserException {
         if (OWLlinkXMLVocabulary.NAME_Attribute.getShortName().equals(localName)) {

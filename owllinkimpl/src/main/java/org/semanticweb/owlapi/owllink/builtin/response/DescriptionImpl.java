@@ -41,7 +41,6 @@ public class DescriptionImpl extends ConfirmationImpl implements Description {
     private ReasonerVersion rVersion;
     private ProtocolVersion pVersion;
 
-
     /**
      * @param warning warning 
      * @param name name 

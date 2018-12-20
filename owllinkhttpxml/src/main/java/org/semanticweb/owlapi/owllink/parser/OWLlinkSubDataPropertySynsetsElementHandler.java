@@ -54,6 +54,4 @@ public class OWLlinkSubDataPropertySynsetsElementHandler extends AbstractSubSyns
     public SubEntitySynsets<OWLDataProperty> getOWLLinkObject() throws OWLXMLParserException {
         return new SubDataPropertySynsets(super.synsets);
     }
-
-
 }

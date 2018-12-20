@@ -53,6 +53,4 @@ public abstract class AbstractOWLlinkHierarchyElementHandler<O extends OWLObject
         this.pairs = new HashSet<>();
         this.unsatisfiables = null;
     }
-
-
 }

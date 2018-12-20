@@ -75,7 +75,6 @@ public class SetOfIndividualSynsetsImpl extends KBResponseImpl implements SetOfI
         return this.synsets.isEmpty();
     }
 
-
     @Override
     public boolean isSingleton() {
         return synsets.size() == 1;

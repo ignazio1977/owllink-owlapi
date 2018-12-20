@@ -90,7 +90,5 @@ public class OWLlinkDescriptionTestCase extends AbstractOWLlinkTestCase {
                 break;
             }
         }
-
-
     }
 }

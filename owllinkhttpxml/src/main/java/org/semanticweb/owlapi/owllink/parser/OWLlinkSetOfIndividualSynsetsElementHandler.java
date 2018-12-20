@@ -55,7 +55,6 @@ public class OWLlinkSetOfIndividualSynsetsElementHandler extends AbstractOWLlink
         this.synsets.add(h.getOWLLinkObject());
     }
 
-
     @Override
     public SetOfIndividualSynsets getOWLLinkObject() throws OWLXMLParserException {
         return new SetOfIndividualSynsetsImpl(this.synsets);

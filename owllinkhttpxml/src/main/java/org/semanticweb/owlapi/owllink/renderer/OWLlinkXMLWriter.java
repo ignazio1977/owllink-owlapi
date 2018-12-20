@@ -23,7 +23,6 @@
 
 package org.semanticweb.owlapi.owllink.renderer;
 
-
 import org.coode.owlapi.owlxmlrenderer.OWLXMLObjectRenderer;
 import org.coode.owlapi.owlxmlrenderer.OWLXMLWriter;
 import org.semanticweb.owlapi.model.IRI;

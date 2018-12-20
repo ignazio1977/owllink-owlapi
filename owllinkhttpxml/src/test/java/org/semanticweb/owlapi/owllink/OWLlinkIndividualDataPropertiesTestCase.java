@@ -53,7 +53,6 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
         return axioms;
     }
 
-
     public void testGetDataPropertiesOfSource() throws Exception {
         GetDataPropertiesOfSource query = new GetDataPropertiesOfSource(getKBIRI(), getOWLIndividual("i"));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
@@ -74,11 +73,9 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
         assertEquals(set(dpp(),dpq(),dpr(),topProperty()), asUnorderedSet(response.entities()));
     }
 
-
     protected OWLDataProperty topProperty() {
         return manager.getOWLDataFactory().getOWLTopDataProperty();
     }
-
 
     public void testIsIndividualRelatedWithLiteral() throws Exception {
         IsEntailed query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpp(), getOWLIndividual("i"), getLiteral(1)));
@@ -92,7 +89,6 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
 
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDataPropertyAssertionAxiom(dpq(), getOWLIndividual("i"), getLiteral(2)));
         trueResponse(reasoner.answer(query));
-
     }
 
     public void testGetDataPropertyTargets() throws Exception {

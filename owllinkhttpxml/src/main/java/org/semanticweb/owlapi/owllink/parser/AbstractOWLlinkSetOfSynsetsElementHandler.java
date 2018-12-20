@@ -50,6 +50,4 @@ public abstract class AbstractOWLlinkSetOfSynsetsElementHandler<S extends OWLObj
         super.startElement(name);
         this.synsets = new HashSet<>();
     }
-
-
 }

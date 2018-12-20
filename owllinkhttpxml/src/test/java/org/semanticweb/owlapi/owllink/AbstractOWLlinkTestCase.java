@@ -229,7 +229,6 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
         }
     }
 
-
     @Override
     protected void tearDown() throws Exception {
         this.manager.removeOntology(rootOntology);

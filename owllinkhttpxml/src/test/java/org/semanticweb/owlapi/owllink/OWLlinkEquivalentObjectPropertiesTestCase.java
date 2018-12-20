@@ -81,7 +81,6 @@ public class OWLlinkEquivalentObjectPropertiesTestCase extends AbstractOWLlinkAx
         axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE(), opa());
         assertFalse(super.reasoner.isEntailed(axiom));
 
-
         axiom = getDataFactory().getOWLEquivalentObjectPropertiesAxiom(opd(), opE());
         assertTrue(super.reasoner.isEntailed(axiom));
     }

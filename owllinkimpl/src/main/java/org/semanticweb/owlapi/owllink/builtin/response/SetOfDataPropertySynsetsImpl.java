@@ -57,7 +57,6 @@ public class SetOfDataPropertySynsetsImpl extends OWLDataPropertyNodeSet impleme
         return visitor.visit(this);
     }
 
-
     @Override
     public boolean hasWarning() {
         return this.warning != null;

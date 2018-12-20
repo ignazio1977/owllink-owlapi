@@ -99,7 +99,6 @@ public class HTTPSessionImpl implements HTTPSession {
         this.useCompression = compression;
     }
 
-
     /**
      * Sets the URL of the inference.
      *
@@ -109,7 +108,6 @@ public class HTTPSessionImpl implements HTTPSession {
         // Pass this on to the reasoner connection
         reasonerURL = url;
     }
-
 
     /**
      * Gets the URL of the reasoner.

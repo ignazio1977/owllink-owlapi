@@ -64,7 +64,6 @@ public class OWLlinkDisjointObjectPropertiesTestCase extends AbstractOWLlinkAxio
         answer = reasoner.answer(query);
         falseResponse(answer);
 
-
         query = new IsEntailed(getKBIRI(), getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc()));
         answer = reasoner.answer(query);
         trueResponse(answer);
@@ -79,7 +78,6 @@ public class OWLlinkDisjointObjectPropertiesTestCase extends AbstractOWLlinkAxio
 
         axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opE());
         assertFalse(reasoner.isEntailed(axiom));
-
 
         axiom = getDataFactory().getOWLDisjointObjectPropertiesAxiom(opa(), opb(), opc());
         assertTrue(reasoner.isEntailed(axiom));

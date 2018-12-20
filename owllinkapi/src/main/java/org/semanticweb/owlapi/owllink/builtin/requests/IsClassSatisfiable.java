@@ -42,7 +42,6 @@ public class IsClassSatisfiable extends AbstractKBRequestWithOneObject<BooleanRe
         super(kb, object);
     }
 
-
     @Override
     public void accept(RequestVisitor visitor) {
         visitor.answer(this);

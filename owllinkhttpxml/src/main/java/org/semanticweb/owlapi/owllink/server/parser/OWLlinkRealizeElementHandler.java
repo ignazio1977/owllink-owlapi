@@ -39,7 +39,6 @@ public class OWLlinkRealizeElementHandler extends AbstractOWLlinkKBRequestElemen
         super(handler);
     }
 
-
     @Override
     public Realize getOWLObject() throws OWLXMLParserException {
         return new Realize(super.kb);

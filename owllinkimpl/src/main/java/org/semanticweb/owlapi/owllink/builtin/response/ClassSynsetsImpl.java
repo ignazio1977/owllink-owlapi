@@ -62,7 +62,6 @@ public class ClassSynsetsImpl extends OWLClassNodeSet implements ClassSynsets {
         return warning;
     }
 
-
     @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);

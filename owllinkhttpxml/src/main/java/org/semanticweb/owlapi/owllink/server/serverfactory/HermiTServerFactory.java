@@ -90,7 +90,6 @@ public class HermiTServerFactory implements OWLlinkServerFactory {
         System.out.println("Make sure that the HermiT binaries are in your classpath or set it via \"-cp\"");
     }
 
-
     /**
      * @param args arguments
      */

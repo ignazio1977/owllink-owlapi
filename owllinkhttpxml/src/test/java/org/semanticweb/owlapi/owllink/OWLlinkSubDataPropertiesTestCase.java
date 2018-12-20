@@ -82,7 +82,6 @@ public class OWLlinkSubDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestC
         assertFalse(super.reasoner.isEntailed(axiom));
     }
 
-
     public void testGetSubProperties() {
         GetSubDataProperties query = new GetSubDataProperties(getKBIRI(), dpB());
         SetOfDataPropertySynsets response = super.reasoner.answer(query);

@@ -51,7 +51,6 @@ public class OWLlinkIndividualSynsetElementHandler extends AbstractOWLlinkElemen
         this.elements = CollectionFactory.createSet();
     }
 
-
     @Override
     public IndividualSynset getOWLLinkObject() throws OWLXMLParserException {
         return new IndividualSynsetImpl(elements);
@@ -66,7 +65,6 @@ public class OWLlinkIndividualSynsetElementHandler extends AbstractOWLlinkElemen
     public void handleChild(OWLAnonymousIndividualElementHandler h) throws OWLXMLParserException {
         elements.add(h.getOWLObject());
     }
-
 
     @Override
     public void endElement() throws OWLXMLParserException {

@@ -47,7 +47,6 @@ public class OWLlinkDataPropertySynsetElementHandler extends AbstractOWLlinkEnti
             super.elements.add(h.getOWLObject().asOWLDataProperty());
     }
 
-
     @Override
     public void endElement() throws OWLXMLParserException {
         super.endElement();

@@ -39,7 +39,6 @@ import java.util.Map;
 public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVisitor {
     protected OWLlinkWriter writer;
 
-
     @Override
     public void answer(Classify query) {
         writer.writeStartElement(CLASSIFY.getURI());
@@ -166,7 +165,6 @@ public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVi
         writer.writeEndElement();
     }
 
-
     @Override
     public void answer(GetDescription query) {
         writer.writeStartElement(GET_DESCRIPTION.getIRI());
@@ -264,7 +262,6 @@ public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVi
         writer.writeOWLObject(query.getIndividual(), kb);
         writer.writeEndElement();
     }
-
 
     @Override
     public void answer(GetFlattenedInstances query) {
@@ -453,7 +450,6 @@ public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVi
         writer.writeEndElement();
     }
 
-
     @Override
     public void answer(GetSuperClasses query) {
         writer.writeStartElement(GET_SUPERCLASSES.getIRI());
@@ -618,7 +614,6 @@ public class BuiltinRequestRenderer implements OWLlinkRequestRenderer, RequestVi
     @Override
     public void answer(Request<?> request) {
     }
-
 
     @Override
     public void render(Request request, OWLlinkWriter w) {

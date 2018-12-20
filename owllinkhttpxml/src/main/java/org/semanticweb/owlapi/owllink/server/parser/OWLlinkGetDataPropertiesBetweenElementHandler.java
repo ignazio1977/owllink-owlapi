@@ -57,7 +57,6 @@ public class OWLlinkGetDataPropertiesBetweenElementHandler extends AbstractOWLIn
             this.isNegative = Boolean.parseBoolean(value);
     }
 
-
     @Override
     public void handleChild(OWLLiteralElementHandler h) throws OWLXMLParserException {
         this.literal = h.getOWLObject();

@@ -42,7 +42,6 @@ public enum BuiltinRequestVocabulary {
 
     private String shortName;
 
-
     BuiltinRequestVocabulary(String name) {
         this.iri = IRI.create(OWLlinkNamespaces.OWLLink + "#" + name);
         shortName = name;

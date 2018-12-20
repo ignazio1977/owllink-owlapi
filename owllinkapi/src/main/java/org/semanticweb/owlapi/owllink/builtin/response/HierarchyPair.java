@@ -45,6 +45,4 @@ public interface HierarchyPair<O extends OWLObject> {
      * of the sub elements.
      */
     SubEntitySynsets<O> getSubs();
-
-
 }

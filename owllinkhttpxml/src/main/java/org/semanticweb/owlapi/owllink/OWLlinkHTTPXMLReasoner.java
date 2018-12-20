@@ -485,7 +485,6 @@ public Set<InferenceType> getPrecomputableInferenceTypes() {
         performRequestOWLAPI(realize);
     }
 
-
     protected void createDefaultKB() {
         CreateKB kb = new CreateKB();
         KB kbResponse = performRequest(kb);

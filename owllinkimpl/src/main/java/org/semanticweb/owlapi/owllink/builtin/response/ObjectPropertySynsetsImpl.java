@@ -62,7 +62,6 @@ public class ObjectPropertySynsetsImpl extends OWLObjectPropertyNodeSet implemen
         return this.warning;
     }
 
-
     @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);

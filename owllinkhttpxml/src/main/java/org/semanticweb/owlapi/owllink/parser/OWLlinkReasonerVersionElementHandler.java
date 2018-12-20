@@ -54,7 +54,6 @@ public class OWLlinkReasonerVersionElementHandler extends AbstractOWLlinkElement
         }
     }
 
-
     @Override
     public void startElement(String name) throws OWLXMLParserException {
         super.startElement(name);

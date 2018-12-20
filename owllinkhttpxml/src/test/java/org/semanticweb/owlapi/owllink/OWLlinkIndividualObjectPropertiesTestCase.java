@@ -53,7 +53,6 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
         return axioms;
     }
 
-
     public void testGetObjectPropertiesOfSource() throws Exception {
         GetObjectPropertiesOfSource query = new GetObjectPropertiesOfSource(getKBIRI(), getOWLIndividual("i"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);

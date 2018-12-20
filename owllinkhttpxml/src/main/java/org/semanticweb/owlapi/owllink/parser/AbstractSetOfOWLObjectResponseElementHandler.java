@@ -48,6 +48,4 @@ public abstract class AbstractSetOfOWLObjectResponseElementHandler<O extends OWL
     public void startElement(String name) throws OWLXMLParserException {
         this.elements = CollectionFactory.createSet();
     }
-
-
 }

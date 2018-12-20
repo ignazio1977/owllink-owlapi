@@ -56,7 +56,6 @@ public class SubDataPropertySynsets extends OWLDataPropertyNodeSet implements Su
         super(nodes);
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {

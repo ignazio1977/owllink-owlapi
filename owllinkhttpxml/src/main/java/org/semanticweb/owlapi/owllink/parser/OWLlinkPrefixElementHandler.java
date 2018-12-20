@@ -59,7 +59,6 @@ public class OWLlinkPrefixElementHandler extends AbstractOWLlinkElementHandler<O
         }
     }
 
-
     @Override
     public void endElement() throws OWLXMLParserException {
         getParentHandler().handleChild(this);

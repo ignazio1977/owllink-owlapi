@@ -49,7 +49,6 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
     protected Map<String, OWLlinkElementHandlerFactory> owllinkHandlerMap;
     protected PrefixManagerProvider prov;
 
-
     /**
      * @param prov prov 
      * @param ontology ontology 
@@ -159,7 +158,6 @@ public class OWLlinkXMLRequestParserHandler extends MyOWLXMLParserHandler {
             this.owllinkHandlerMap.put(elementName, factory);
         }
     }
-
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {

@@ -187,7 +187,6 @@ public enum OWLlinkXMLVocabulary {
 
     private String shortName;
 
-
     OWLlinkXMLVocabulary(String name) {
         this.iri = IRI.create(OWLlinkNamespaces.OWLLink + "#" + name);
         shortName = name;
@@ -207,7 +206,6 @@ public enum OWLlinkXMLVocabulary {
     public String getShortName() {
         return shortName;
     }
-
 
     @Override
     public String toString() {

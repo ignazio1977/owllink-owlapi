@@ -25,7 +25,6 @@ package org.semanticweb.owlapi.owllink.builtin.requests;
 
 import org.semanticweb.owlapi.owllink.Request;
 
-
 /**
  * Visitor interface for requests. For OWLlink extension queries a
  * general {@link #answer(org.semanticweb.owlapi.owllink.Request) answer} method

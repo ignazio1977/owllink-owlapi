@@ -54,8 +54,6 @@ public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
         axioms.add(getDataFactory().getOWLSubClassOfAxiom(a(), b()));
         axioms.add(getDataFactory().getOWLSubClassOfAxiom(b(), c()));
         axioms.add(getDataFactory().getOWLSubClassOfAxiom(d(), c()));
-
-
         return axioms;
     }
 
@@ -100,7 +98,6 @@ public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
         Set<OWLClass> flattenedClasses = asUnorderedSet(nodeSet.entities());
         assertEquals(set(a(),manager.getOWLDataFactory().getOWLNothing()), flattenedClasses);
     }
-
 
     public void testGetSuperClasses() {
         GetSuperClasses query = new GetSuperClasses(getKBIRI(), a());

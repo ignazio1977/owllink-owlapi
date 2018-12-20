@@ -25,7 +25,6 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
-
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#KBEntities">SetOfObjectProperties</a>
  * in the OWLlink specification.

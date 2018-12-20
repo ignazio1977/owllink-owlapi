@@ -70,7 +70,6 @@ public class HierarchyPairImpl<O extends OWLObject> implements HierarchyPair<O> 
         return result;
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -81,5 +80,4 @@ public class HierarchyPairImpl<O extends OWLObject> implements HierarchyPair<O> 
         sb.append("]");
         return sb.toString();
     }
-
 }

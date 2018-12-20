@@ -50,6 +50,4 @@ public class OWLlinkSetOfLiteralsElementHandler extends AbstractSetOfOWLObjectRe
     public void handleChild(OWLLiteralElementHandler h) throws OWLXMLParserException {
         super.elements.add(h.getOWLObject());
     }
-
-
 }

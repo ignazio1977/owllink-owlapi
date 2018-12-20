@@ -169,6 +169,4 @@ public class OWLlinkXMLRenderer extends BuiltinRequestRenderer {
             visitor.answer(this);
         }
     }
-
-
 }
