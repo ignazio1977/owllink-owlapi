@@ -29,7 +29,7 @@ import org.semanticweb.owlapi.reasoner.Node;
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#IndividualClassQuery">Classes</a>
  * response in the OWLlink specification.
- * <p/>
+ * 
  * Author: Olaf Noppens
  */
 public interface Classes extends KBResponse, Node<OWLClass> {

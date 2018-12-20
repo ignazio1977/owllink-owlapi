@@ -26,7 +26,7 @@ package org.semanticweb.owlapi.owllink;
 import org.semanticweb.owlapi.owllink.builtin.requests.RequestVisitor;
 
 /**
- * <code>Request</code> is the base interface for all core (built-in as well as
+ * {@code Request} is the base interface for all core (built-in as well as
  * OWLlink extension queries) requests for the OWLlink protocol.
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ProtocolObjects">Request</a>
  * in the OWLlink specification.

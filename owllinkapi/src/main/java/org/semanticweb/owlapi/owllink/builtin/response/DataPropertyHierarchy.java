@@ -28,7 +28,7 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#DataPropHierarchy">DatPropertyHierarchy</a>
  * response in the OWLlink specification.
- * <p/>
+ * 
  * Author: Olaf Noppens
  */
 public interface DataPropertyHierarchy extends Hierarchy<OWLDataProperty> {

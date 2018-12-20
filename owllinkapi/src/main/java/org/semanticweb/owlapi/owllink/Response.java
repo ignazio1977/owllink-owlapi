@@ -26,8 +26,8 @@ package org.semanticweb.owlapi.owllink;
 import org.semanticweb.owlapi.owllink.builtin.response.ResponseVisitor;
 
 /**
- * <code>Response</code> is the base interface for all responses for the OWLlink protocol.
- * <p/>
+ * {@code Response} is the base interface for all responses for the OWLlink protocol.
+ * <p>
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ProtocolObjects">Response</a>
  * in the OWLlink specification.
  *

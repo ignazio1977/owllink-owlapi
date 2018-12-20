@@ -28,7 +28,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ClassQueries">ClassSynset</a>
  * in the OWLlink specification.
- * <p/>
+ * 
  * Author: Olaf Noppens
  */
 public interface ClassSynsets extends Synsets<OWLClass>, KBResponse {

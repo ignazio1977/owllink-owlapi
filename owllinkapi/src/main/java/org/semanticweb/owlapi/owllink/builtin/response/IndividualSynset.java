@@ -38,28 +38,28 @@ import java.util.Set;
 public interface IndividualSynset extends Iterable<OWLIndividual> {
 
     /**
-     * Determines <code>true</code> if this IndividualSynonyms object can be converted to
+     * Determines {@code true} if this IndividualSynonyms object can be converted to
      * a {@link org.semanticweb.owlapi.reasoner.Node Node&lt; OWLNamedIndividual &gt; } without any loss, i.e.,
      * iff the IndividualSynonyms object only contains OWLNamedIndividuals.
      *
-     * @return <code>true</code> if this object can be converted to a Node, otherwise <code>false</code>
+     * @return {@code true} if this object can be converted to a Node
      */
     boolean isNode();
 
     /**
      * Converts this object to a {@link org.semanticweb.owlapi.reasoner.Node Node&lt; OWLNamedIndividual &gt; }.
-     * This is only possible if {@link #isNode()} returns <code>true</code>.
+     * This is only possible if {@link #isNode()} returns {@code true}.
      *
      * @return Node&lt;OWLNamedIndividual&gt;
      * @throws org.semanticweb.owlapi.model.OWLRuntimeException
-     *          if {@link #isNode()} returns <code>false</code>
+     *          if {@link #isNode()} returns {@code false}
      */
     Node<OWLNamedIndividual> asNode();
 
     /**
      * Determines if this set of synonyms is a singleton set.
      *
-     * @return <code>true</code> if this synonym set is a singleton set, otherwise <code>false</code>
+     * @return {@code true} if this synonym set is a singleton set
      */
     boolean isSingleton();
 

@@ -41,7 +41,7 @@ import java.util.Map;
 
 /**
  * Handler for OWLlink Responses.
- * <p/>
+ * <p>
  * Here we also handle the prefix name mapping for abbreviated IRIs.
  */
 public class OWLlinkXMLParserHandler extends MyOWLXMLParserHandler {

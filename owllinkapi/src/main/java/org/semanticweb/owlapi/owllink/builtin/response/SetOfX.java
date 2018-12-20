@@ -37,7 +37,7 @@ public interface SetOfX<E> extends Set<E>, KBResponse {
     /**
      * Determines if this set of synonyms is a singleton set.
      *
-     * @return <code>true</code> if this synonym set is a singleton set, otherwise <code>false</code>
+     * @return {@code true} if this synonym set is a singleton set
      */
     boolean isSingleton();
 

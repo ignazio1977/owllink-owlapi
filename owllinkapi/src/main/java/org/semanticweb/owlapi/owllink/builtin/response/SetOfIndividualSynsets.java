@@ -39,9 +39,9 @@ import java.util.Set;
 public interface SetOfIndividualSynsets extends KBResponse {
 
     /**
-     * A convenience method that gets all of the entities contained in the <code>Nodes</code> in this <code>NodeSet</code>.
+     * A convenience method that gets all of the entities contained in the {@code Nodes} in this {@code NodeSet}.
      *
-     * @return The union of the entities contained in the <code>Nodes</code> in this <code>NodeSet</code>.
+     * @return The union of the entities contained in the {@code Nodes} in this {@code NodeSet}.
      */
     Set<OWLIndividual> getFlattened();
 
@@ -49,10 +49,10 @@ public interface SetOfIndividualSynsets extends KBResponse {
     boolean isEmpty();
 
     /**
-     * Determines if this <code>NodeSet</code> is a singleton.  A <code>NodeSet</code> is a singleton if it contains
-     * only one <code>Node</code>.
+     * Determines if this {@code NodeSet} is a singleton.  A {@code NodeSet} is a singleton if it contains
+     * only one {@code Node}.
      *
-     * @return <code>true</code> if this <code>NodeSet</code> is a singleton, otherwise <code>false</code>.
+     * @return {@code true} if this {@code NodeSet} is a singleton.
      */
     boolean isSingleton();
 

@@ -110,9 +110,9 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * The <code>OWLlinkReasonerBridge</code> mediates between OWLlink and an implementation of OWLReasoner.
+ * The {@code OWLlinkReasonerBridge} mediates between OWLlink and an implementation of OWLReasoner.
  * It supports the core OWLlink queries (as can be simulated via the OWL API) as well as the retraction extension.
- * <p/>
+ * <p>
  * Author: Olaf Noppens
  * Date: 25.10.2009
  */

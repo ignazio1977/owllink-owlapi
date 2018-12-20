@@ -26,7 +26,7 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#ProtocolObjects">ProfileViolationError</a>
  * in the OWLlink specification.
- * <p/>
+ * 
  * Author: Olaf Noppens
  * Date: 10.06.2010
  */

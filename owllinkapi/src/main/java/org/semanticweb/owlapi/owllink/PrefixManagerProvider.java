@@ -33,7 +33,7 @@ public interface PrefixManagerProvider {
 
     /**
      * Returns a {@link org.semanticweb.owlapi.model.PrefixManager PrefixManager}
-     * for the given knowledge base. Returns <code>null</code> if the knowledge base
+     * for the given knowledge base. Returns {@code null} if the knowledge base
      * is unknown.
      *
      * @param knowledgeBase knowledge base IRI
@@ -57,7 +57,7 @@ public interface PrefixManagerProvider {
     void removePrefixes(IRI knowledgeBase);
 
     /**
-     * Returns <code>true</code< if a prefix for the IRI is given, otherwise <code>false</code>
+     * Returns {@code true} if a prefix for the IRI is given
      *
      * @param knowledgeBase IRI of the knowledgebase
      * @return true if the IRI is given

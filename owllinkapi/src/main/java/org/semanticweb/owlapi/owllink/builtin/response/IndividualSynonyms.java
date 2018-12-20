@@ -32,7 +32,7 @@ import java.util.Set;
 /**
  * Represents a <a href="http://www.owllink.org/owllink-20091116/#IndividualQuery"> IndivididualSynonyms</a>
  * request of the <a href="http://www.owllink.org/owllink-20091116/#IndividualQuery">OWLlink Specification</a>.
- * <p/>
+ * <p>
  * The special treatment of individuals is necessary because OWLAPI only considered OWLNamedIndividuals in
  * responses. OWLlink, in contrast, also considers OWLAnonymousIndividuals.
  * Author: Olaf Noppens
@@ -43,7 +43,7 @@ public interface IndividualSynonyms extends KBResponse, Iterable<OWLIndividual> 
     /**
      * Determines if this set of synonyms is a singleton set.
      *
-     * @return <code>true</code> if this synonym set is a singleton set, otherwise <code>false</code>
+     * @return {@code true} if this synonym set is a singleton set
      */
     boolean isSingleton();
 
@@ -64,21 +64,21 @@ public interface IndividualSynonyms extends KBResponse, Iterable<OWLIndividual> 
     Set<OWLIndividual> getIndividuals();
 
     /**
-     * Determines <code>true</code> if this IndividualSynonyms object can be converted to
+     * Determines {@code true} if this IndividualSynonyms object can be converted to
      * a {@link org.semanticweb.owlapi.reasoner.Node Node&lt; OWLNamedIndividual &gt; } without any loss, i.e.,
      * iff the IndividualSynonyms object only contains OWLNamedIndividuals.
      *
-     * @return <code>true</code> if this object can be converted to a Node, otherwise <code>false</code>
+     * @return {@code true} if this object can be converted to a Node
      */
     boolean isNode();
 
     /**
      * Converts this object to a {@link org.semanticweb.owlapi.reasoner.Node Node&lt; OWLNamedIndividual &gt; }.
-     * This is only possible if {@link #isNode()} returns <code>true</code>.
+     * This is only possible if {@link #isNode()} returns {@code true}.
      *
      * @return Node&lt;OWLNamedIndividual&gt;
      * @throws org.semanticweb.owlapi.model.OWLRuntimeException
-     *          if {@link #isNode()} returns <code>false</code>
+     *          if {@link #isNode()} returns {@code false}
      */
     Node<OWLNamedIndividual> asNode();
 }

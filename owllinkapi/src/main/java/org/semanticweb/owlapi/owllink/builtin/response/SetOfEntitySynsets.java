@@ -28,7 +28,7 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 
 /**
  * A KBResponse that is in fact a NodeSet.
- * <p/>
+ * 
  * Author: Olaf Noppens
  * Date: 17.02.2010
  * @param <E> object type

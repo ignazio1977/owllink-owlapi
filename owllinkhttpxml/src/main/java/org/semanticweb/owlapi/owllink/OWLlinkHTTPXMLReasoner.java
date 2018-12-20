@@ -39,15 +39,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <code>OWLlinkHTTPXMLReasoner</code> is an implementation of <code>OWLlinkReasoner</code> that uses XML over
- * HTTP as binding protocol. <p/>
+ * {@code OWLlinkHTTPXMLReasoner} is an implementation of {@code OWLlinkReasoner} that uses XML over
+ * HTTP as binding protocol. <p>
  * It behaves as a normal OWLReasoner, i.e., changes on the root ontology will be transfered to the OWLlinkServer
  * via OWLlink. For that a knowledge base (see {@link #getDefaultKB}) will be created that contains all
  * axioms of the root ontology and its import closure. Calling methods of OWLReasoner will always be executed
  * with respect to that OWLlink knowledge base. In addition, additional knowledge bases can be created directly
  * over OWLlink (CreateKB requests) and all OWLlink requests (either on the knowledge base related to the
  * root ontolgoy or on any other knowledge base managed by the OWLlink server) are supported.
- * <p/>
  *
  * @author Olaf Noppens
  */

@@ -28,7 +28,7 @@ import org.semanticweb.owlapi.reasoner.Node;
 
 /**
  * Abstract interfaces for responses of synonyms (not synsets!).
- * <p/>
+ * 
  * Author: Olaf Noppens
  * Date: 17.02.2010
  * @param <E> object type

@@ -26,7 +26,7 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 /**
  * Represents an OWLlink BooleanResponse. It encapsulated also the UnknownResponse: if an OWLlink
  * server answers with an UnknownResponse instead of a BooleanResponse a BooleanResponse JAVA object
- * will be created which returns <code>true</code> for {@link #isUnknown()} and throws
+ * will be created which returns {@code true} for {@link #isUnknown()} and throws
  * an {@link org.semanticweb.owlapi.owllink.builtin.response.UnknownResponseException UnknownResponse}
  * if {@link #getResult()} is called.
  *
@@ -46,11 +46,7 @@ public interface BooleanResponse extends KBResponse {
     Boolean getResult() throws UnknownResponseException;
 
     /**
-     * Returns <code>true</code> if this response encapsulates an OWLlink UnknownResponse, otherwise
-     * <code>true</code>.
-     *
-     * @return <code>true</code> if this response encapsulates an OWLlink UnknownResponse, otherwise
-     *         <code>true</code>
+     * @return {@code true} if this response encapsulates an OWLlink UnknownResponse
      * @see #getResult()
      */
     boolean isUnknown();

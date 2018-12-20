@@ -29,7 +29,7 @@ import java.util.*;
 
 /**
  * SWR*Handler: protected class constructor
- * <p/>
+ * <p>
  * This OWLXMLParserHandler is based on Matthew Horridge's implementation.
  */
 public class MyOWLXMLParserHandler extends OWLXMLParserHandler {
@@ -50,7 +50,7 @@ public class MyOWLXMLParserHandler extends OWLXMLParserHandler {
      * element).
      *
      * @param ontology           The ontology object that the XML representation should be parsed into.
-     * @param topHandler         The handler for top level elements - may be <code>null</code>, in which
+     * @param topHandler         The handler for top level elements - may be {@code null}, in which
      *                           case the parser will expect an Ontology element to be the root element.
      */
     public MyOWLXMLParserHandler(OWLOntology ontology, OWLElementHandler<?> topHandler) {

@@ -51,10 +51,10 @@ public interface OWLlinkReasonerConfiguration {
     // boolean set(Setting setting);
 
     /**
-     * Returns the Configuration with the given key (if exists, otherwise returns <code>null</code>).
+     * Returns the Configuration with the given key (if exists, otherwise returns {@code null}).
      *
      * @param key key
-     * @return Configuration (or <code>null</code> if no configuration with the given key exists)
+     * @return Configuration (or {@code null} if no configuration with the given key exists)
      */
     Configuration getConfiguration(String key);
 

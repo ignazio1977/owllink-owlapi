@@ -27,12 +27,12 @@ import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
 /**
- * An SynsetSet is a <code>not-empty</code> NodeSet.
+ * An SynsetSet is a {@code not-empty} NodeSet.
  * It only differs from {@link org.semanticweb.owlapi.reasoner.NodeSet NodeSet}
  * in that it should be non-empty, i.e. {@link org.semanticweb.owlapi.reasoner.NodeSet#isEmpty() isEmpty}
  * must always return false. Creating a new SynsetSet with an empty set of Node objects must
  * also throw an IllegalArgumentException.
- * <p/>
+ * 
  * Author: Olaf Noppens
  * Date: 17.02.2010
  * @param <E> object type

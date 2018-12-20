@@ -34,7 +34,7 @@ import org.semanticweb.owlapi.owllink.Response;
  */
 public interface Confirmation extends Response {
     /**
-     * Returns <code>true</code> if this Confirmation contains a warning message
+     * Returns {@code true} if this Confirmation contains a warning message
      *
      * @return true or false
      * @see #getWarning()

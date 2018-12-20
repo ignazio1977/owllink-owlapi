@@ -33,15 +33,15 @@ import org.semanticweb.owlapi.owllink.builtin.response.KBResponse;
 
 /**
  * Abstract handler for all OWLlink KBResponse.
- * <p/>
+ * <p>
  * This implementation handles the correct prefixname2prefix mapping
  * for handling abbreviated IRIs.
- * <p/>
+ * <p>
  * Note that KBResponses that need the prefixname2prefix mapping for
  * abbreviated IRIs should derive from this abstract element handler class.
  * Otherwise the correct IRI resolution is not guaranteed.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Author: Olaf Noppens
  * Date: 30.11.2009
  * @param <R> response type

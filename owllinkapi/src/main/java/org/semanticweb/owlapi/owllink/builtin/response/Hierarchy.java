@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * Abstract Hierarchy object for OWLLogicalEntities (e.g. classes, properties).
- * <p/>
+ * 
  * Author: Olaf Noppens
  * @param <O> object type
  */
