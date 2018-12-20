@@ -31,6 +31,7 @@ import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.owllink.DefaultPrefixManagerProvider;
 import org.semanticweb.owlapi.owllink.Request;
 import org.semanticweb.owlapi.owllink.Response;
+import org.semanticweb.owlapi.owllink.builtin.requests.AbstractKBRequest;
 import org.semanticweb.owlapi.owllink.builtin.requests.Classify;
 import org.semanticweb.owlapi.owllink.builtin.requests.CreateKB;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetAllAnnotationProperties;
@@ -93,14 +94,18 @@ import org.semanticweb.owlapi.vocab.Namespaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import static org.semanticweb.owlapi.util.OWLAPIPreconditions.verifyNotNull;
-import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.add;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asList;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -237,7 +242,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
 
             f.setNamespaceAware(true);
             SAXParser parser = f.newSAXParser();
-            final OWLlinkXMLRequestParserHandler handler = new OWLlinkXMLRequestParserHandler(manager, prov, manager.createOntology());
+            final OWLlinkXMLRequestParserHandler handler = new OWLlinkXMLRequestParserHandler(prov, manager.createOntology());
             final List<Response> responses = new ArrayList<>();
 
             handler.setRequestListener(request -> listener(responses, request));
@@ -285,6 +290,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
      * @return reasoner
      * @throws KBException KBException 
      */
+    @Nonnull
     public final OWLReasoner getReasoner(IRI kb) throws KBException {
         final OWLReasoner reasoner = this.reasonersByKB.get(kb);
         if (reasoner == null)
@@ -429,72 +435,58 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
             this.kbNameByIRI.put(kb, query.getName());
         }
 
-
         this.reasonersByKB.put(kb, reasoner);
         this.response = new KBImpl(kb);
     }
 
+    private static <T> List<T> l(Function<Imports, Stream<T>> s) {
+        return asList(s.apply(Imports.INCLUDED));
+    }
+
+    private static <T> List<T> l(Function<Imports, Stream<? extends T>> s, Class<T> t) {
+        return asList(s.apply(Imports.INCLUDED), t);
+    }
+
+    private static <T> Set<T> s(Function<Imports, Stream<T>> s) {
+        return asUnorderedSet(s.apply(Imports.INCLUDED));
+    }
+
+    private static <T> Set<T> s(Function<Imports, Stream<? extends T>> s, Class<T> t) {
+        return asUnorderedSet(s.apply(Imports.INCLUDED), t);
+    }
+
+    protected OWLOntology root(AbstractKBRequest<?> query) {
+        return getReasoner(query.getKB()).getRootOntology();
+    }
+
     @Override
     public void answer(GetAllAnnotationProperties query) {
-        Set<OWLAnnotationProperty> properties = CollectionFactory.createSet();
-        OWLReasoner reasoner = getReasoner(query.getKB());
-
-        add(properties, reasoner.getRootOntology().annotationPropertiesInSignature(Imports.INCLUDED));
-        this.response = new SetOfAnnotationPropertiesImpl(properties, getWarning(query.getKB()));
+        this.response = new SetOfAnnotationPropertiesImpl(l(root(query)::annotationPropertiesInSignature), getWarning(query.getKB()));
     }
 
     @Override
     public void answer(GetAllClasses query) {
-        OWLReasoner reasoner = getReasoner(query.getKB());
-        Set<OWLClass> classes = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure()) {
-            classes.addAll(ontology.getClassesInSignature());
-        }
-        this.response = new SetOfClassesImpl(classes);
+        this.response = new SetOfClassesImpl(l(root(query)::classesInSignature));
     }
 
     @Override
     public void answer(GetAllDataProperties query) {
-        OWLReasoner reasoner = getReasoner(query.getKB());
-
-        Set<OWLDataProperty> properties = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure()) {
-            properties.addAll(ontology.getDataPropertiesInSignature());
-        }
-        this.response = new SetOfDataPropertiesImpl(properties);
+        this.response = new SetOfDataPropertiesImpl(l(root(query)::dataPropertiesInSignature));
     }
 
     @Override
     public void answer(GetAllDatatypes query) {
-        OWLReasoner reasoner = getReasoner(query.getKB());
-        Set<OWLDatatype> datatypes = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure()) {
-            for (OWLDatatype type : ontology.getDatatypesInSignature()) {
-                datatypes.add(type);
-            }
-        }
-        this.response = new SetOfDatatypesImpl(datatypes);
+        this.response = new SetOfDatatypesImpl(l(root(query)::datatypesInSignature));
     }
 
     @Override
     public void answer(GetAllIndividuals query) {
-        OWLReasoner reasoner = getReasoner(query.getKB());
-
-        Set<OWLIndividual> individuals = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure()) {
-            individuals.addAll(ontology.getIndividualsInSignature());
-        }
-        this.response = new SetOfIndividualsImpl(individuals);
+        this.response = new SetOfIndividualsImpl(l(root(query)::individualsInSignature, OWLIndividual.class));
     }
 
     @Override
     public void answer(GetAllObjectProperties query) {
-        OWLReasoner reasoner = getReasoner(query.getKB());
-        Set<OWLObjectPropertyExpression> classes = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure()) {
-            classes.addAll(ontology.getObjectPropertiesInSignature());
-        }
-        this.response = new SetOfObjectPropertiesImpl(classes);
+        this.response = new SetOfObjectPropertiesImpl(l(root(query)::objectPropertiesInSignature, OWLObjectPropertyExpression.class));
     }
 
     @Override
@@ -534,37 +526,23 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     }
 
     protected Set<OWLClass> getAllClasses(IRI kb) {
-        final OWLReasoner reasoner = getReasoner(kb);
-        Set<OWLClass> set = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure())
-            set.addAll(ontology.getClassesInSignature());
-
-        return set;
+        return s(root(kb)::classesInSignature);
     }
 
     protected Set<OWLDataProperty> getAllDataProperties(IRI kb) {
-        final OWLReasoner reasoner = getReasoner(kb);
-        final Set<OWLDataProperty> set = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure())
-            set.addAll(ontology.getDataPropertiesInSignature());
-        return set;
+        return s(root(kb)::dataPropertiesInSignature);
     }
 
     protected Set<OWLObjectProperty> getAllObjectProperties(IRI kb) {
-        final OWLReasoner reasoner = getReasoner(kb);
-        final Set<OWLObjectProperty> set = CollectionFactory.createSet();
-        for (OWLOntology ontology : reasoner.getRootOntology().getImportsClosure())
-            set.addAll(ontology.getObjectPropertiesInSignature());
-        return set;
+        return s(root(kb)::objectPropertiesInSignature);
     }
 
     protected Set<OWLIndividual> getAllIndividuals(IRI kb) {
-        final Set<OWLIndividual> set = CollectionFactory.createSet();
-        final OWLReasoner reasoner = getReasoner(kb);
-        for (OWLOntology indi : reasoner.getRootOntology().getImportsClosure()) {
-            set.addAll(indi.getIndividualsInSignature());
-        }
-        return set;
+        return s(root(kb)::individualsInSignature, OWLIndividual.class);
+    }
+
+    protected OWLOntology root(IRI kb) {
+        return getReasoner(kb).getRootOntology();
     }
 
     @Override
@@ -585,7 +563,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                     Node<OWLDataProperty> equivalents = reasoner.getEquivalentDataProperties(prop);
                     if (equivalents.getSize() > 0) { //should always be the case!
                         setOfNodes.add(equivalents);
-                        allProps.removeAll(equivalents.getEntities());
+                        equivalents.entities().forEach(allProps::remove);
                     }
                 }
                 for (OWLIndividual indi : allIndis) {
@@ -624,7 +602,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                 Node<OWLDataProperty> equivalents = reasoner.getEquivalentDataProperties(prop);
                 if (equivalents.getSize() > 0) { //should always be the case!
                     setOfNodes.add(equivalents);
-                    allProps.removeAll(equivalents.getEntities());
+                    equivalents.forEach(allProps::remove);
                 }
                 for (Node<OWLDataProperty> node : setOfNodes) {
                     Set<OWLLiteral> literals = reasoner.getDataPropertyValues(
@@ -661,13 +639,13 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                         Node<OWLNamedIndividual> node = reasoner.getSameIndividuals(individual.asOWLNamedIndividual());
                         IndividualSynset synset = new IndividualSynsetImpl(node);
                         indis.add(synset);
-                        individuals.removeAll(node.getEntities());
+                        node.entities().forEach(individuals::remove);
                     } catch (Exception e) {
                         warning = "Synonymous individuals are not considered ["+e.getMessage()+"]";
                         Node<OWLNamedIndividual> node = new OWLNamedIndividualNode(individual.asOWLNamedIndividual());
                         IndividualSynset synset = new IndividualSynsetImpl(node);
                         indis.add(synset);
-                        individuals.removeAll(node.getEntities());
+                        node.entities().forEach(individuals::remove);
                     }
                 }
             }
@@ -709,14 +687,19 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     public void answer(GetDisjointClasses query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
         NodeSet<OWLClass> nodeSet = reasoner.getDisjointClasses(query.getObject());
-        this.response = new ClassSynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+        this.response = new ClassSynsetsImpl(s(nodeSet), getWarning(query.getKB()));
+    }
+
+
+    protected <T extends OWLObject> Set<Node<T>> s(NodeSet<T> nodeSet) {
+        return asUnorderedSet(nodeSet.nodes());
     }
 
     @Override
     public void answer(GetDisjointDataProperties query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
         NodeSet<OWLDataProperty> nodeSet = reasoner.getDisjointDataProperties(query.getOWLProperty());
-        this.response = new DataPropertySynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+        this.response = new DataPropertySynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     @Override
@@ -741,41 +724,36 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         Set<IndividualSynset> synonymsets = new HashSet<>();
 
         for (Node<OWLNamedIndividual> node : nodeSet) {
-            Set<OWLIndividual> indis = new HashSet<>();
-            for (OWLNamedIndividual indi : node.getEntities())
-                indis.add(indi);
-            synonymsets.add(new IndividualSynsetImpl(indis));
+            synonymsets.add(new IndividualSynsetImpl(asList(node.entities(), OWLIndividual.class)));
         }
 
         return synonymsets;
     }
 
     protected IndividualSynonyms convertTo(Node<OWLNamedIndividual> node) {
-        Set<OWLIndividual> indi = new HashSet<>();
-        indi.addAll(node.getEntities());
-        return new IndividualSynonymsImpl(indi);
+        return new IndividualSynonymsImpl(asList(node.entities(), OWLIndividual.class));
     }
 
     @Override
     public void answer(GetDisjointObjectProperties query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
         NodeSet<OWLObjectPropertyExpression> nodeSet = reasoner.getDisjointObjectProperties(query.getOWLProperty());
-        this.response = new ObjectPropertySynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+        this.response = new ObjectPropertySynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     @Override
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetEquivalentClasses query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
         Node<OWLClass> node = reasoner.getEquivalentClasses(query.getObject());
-        this.response = new SetOfClassesImpl(node.getEntities(), getWarning(query.getKB()));
+        this.response = new SetOfClassesImpl(asList(node.entities()), getWarning(query.getKB()));
     }
 
     @Override
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetEquivalentDataProperties query) {
         try {
             OWLReasoner reasoner = getReasoner(query.getKB());
-            this.response = new DataPropertySynonymsImpl(reasoner.getEquivalentDataProperties(
-                    query.getObject()).getEntities(), getWarning(query.getKB()));
+            Node<OWLDataProperty> node = reasoner.getEquivalentDataProperties(query.getObject());
+            this.response = new DataPropertySynonymsImpl(asUnorderedSet(node.entities()), getWarning(query.getKB()));
         } catch (Exception e) {
             handle(e);
         }
@@ -797,8 +775,8 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetEquivalentObjectProperties query) {
         try {
             OWLReasoner reasoner = getReasoner(query.getKB());
-            this.response = new SetOfObjectPropertiesImpl(reasoner.getEquivalentObjectProperties(
-                    query.getObject()).getEntities(), getWarning(query.getKB()));
+            Node<OWLObjectPropertyExpression> props = reasoner.getEquivalentObjectProperties(query.getObject());
+            this.response = new SetOfObjectPropertiesImpl(asList(props.entities()), getWarning(query.getKB()));
         } catch (Exception e) {
             handle(e);
         }
@@ -895,7 +873,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                         query.isDirect());
         answer(subQuery);
         ClassSynsets subResponse = (ClassSynsets) this.response;
-        this.response = new ClassesImpl(subResponse.getFlattened(), subResponse.getWarning());
+        this.response = new ClassesImpl(asList(subResponse.entities()), subResponse.getWarning());
     }
 
     @Override
@@ -962,7 +940,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
             properties.remove(property);
             Node<OWLObjectPropertyExpression> node = reasoner.getEquivalentObjectProperties(property);
             setOfNodes.add(node);
-            properties.removeAll(node.getEntities());
+            node.entities().forEach(properties::remove);
         }
         return setOfNodes;
     }
@@ -1104,12 +1082,12 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         try {
             Set<Node<OWLNamedIndividual>> convertedSet = new HashSet<>();
             Set<OWLNamedIndividual> individuals = new HashSet<>();
-            individuals.addAll(nodeSet.getFlattened());
+            nodeSet.entities().forEach(individuals::add);
             while (individuals.size() > 0) {
                 OWLNamedIndividual indi = individuals.iterator().next();
                 individuals.remove(indi);
                 Node<OWLNamedIndividual> node = reasoner.getSameIndividuals(indi);
-                individuals.removeAll(node.getEntities());
+                node.entities().forEach(individuals::remove);
                 convertedSet.add(node);
             }
             return new OWLNamedIndividualNodeSet(convertedSet);
@@ -1142,10 +1120,10 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
             OWLReasoner reasoner = getReasoner(query.getKB());
             NodeSet<OWLClass> nodeSet = reasoner.getSubClasses(query.getClassExpression(), query.isDirect());
             if (!nodeSet.isEmpty())
-                this.response = new SetOfClassSynsetsImpl(nodeSet.getNodes());
+                this.response = new SetOfClassSynsetsImpl(s(nodeSet));
             else if (!query.getClassExpression().isOWLNothing()) {
                 nodeSet = new OWLClassNodeSet(df.getOWLNothing());
-                this.response = new SetOfClassSynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+                this.response = new SetOfClassSynsetsImpl(s(nodeSet), getWarning(query.getKB()));
             } else {
                 this.response = new SetOfClassSynsetsImpl(Collections.<Node<OWLClass>>emptySet(), getWarning(query.getKB()));
             }
@@ -1166,8 +1144,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         Set<HierarchyPair<OWLClass>> pairs = CollectionFactory.createSet();
         OWLClassNode equivalentClasses = new OWLClassNode();
         equivalentClasses.add(superClass);
-        for (OWLClass clazz : reasoner.getEquivalentClasses(superClass).getEntities())
-            equivalentClasses.add(clazz);
+        reasoner.getEquivalentClasses(superClass).entities().forEach(equivalentClasses::add);
         Node<OWLClass> superClassSynset = equivalentClasses;
         List<Node<OWLClass>> nextSynsets = new Vector<>();
 
@@ -1179,18 +1156,8 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
             Node<OWLClass> synset = nextSynsets.remove(0);
             if (synset.getSize() > 0) {
                 NodeSet<OWLClass> subClasses = reasoner.getSubClasses(synset.getRepresentativeElement(), true);
-                OWLClassNodeSet ruledOutSubClasses = new OWLClassNodeSet();
                 //rule out nothing set!
-                for (Node<OWLClass> classes : subClasses.getNodes()) {
-                    if (!classes.contains(nothing)) {
-                        ruledOutSubClasses.addNode(classes);
-                    }
-                }
-                subClasses = ruledOutSubClasses;
-                Set<Node<OWLClass>> setOfSynsets = CollectionFactory.createSet();
-                for (Node<OWLClass> classes : subClasses) {
-                    setOfSynsets.add(classes);
-                }
+                Set<Node<OWLClass>> setOfSynsets = asUnorderedSet(subClasses.nodes().filter(classes->!classes.contains(nothing)));
                 if (setOfSynsets.size() > 0) {
                     SubEntitySynsets<OWLClass> subClassSynset = new SubClassSynsets(setOfSynsets);
                     pairs.add(new HierarchyPairImpl<>(synset, subClassSynset));
@@ -1207,7 +1174,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetSubDataProperties query) {
         final OWLReasoner reasoner = getReasoner(query.getKB());
         NodeSet<OWLDataProperty> nodeSet = reasoner.getSubDataProperties(query.getProperty(), query.isDirect());
-        this.response = new SetOfDataPropertySynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+        this.response = new SetOfDataPropertySynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     @Override
@@ -1235,7 +1202,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                 NodeSet<OWLDataProperty> subProperties = reasoner.getSubDataProperties(property, true);
                 boolean containsNothing = false;
                 for (Node<OWLDataProperty> props : subProperties) {
-                    rootProperties.removeAll(props.getEntities());
+                    props.entities().forEach(rootProperties::remove);
                     containsNothing = props.contains(nothing);
                 }
                 if (!containsNothing) {
@@ -1267,9 +1234,9 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                 }
                 subClasses = ruledOut;
                 if (!subClasses.isEmpty()) {
-                    SubEntitySynsets<OWLDataProperty> subSynsets = new SubDataPropertySynsets(subClasses.getNodes());
+                    SubEntitySynsets<OWLDataProperty> subSynsets = new SubDataPropertySynsets(s(subClasses));
                     pairs.add(new HierarchyPairImpl<>(synset, subSynsets));
-                    nextSynsets.addAll(subClasses.getNodes());
+                    subClasses.nodes().forEach(nextSynsets::add);
                 }
             }
         }
@@ -1287,7 +1254,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetSubObjectProperties query) {
         final OWLReasoner reasoner = getReasoner(query.getKB());
         NodeSet<OWLObjectPropertyExpression> nodeSet = reasoner.getSubObjectProperties(query.getOWLObjectPropertyExpression(), query.isDirect());
-        this.response = new SetOfObjectPropertySynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+        this.response = new SetOfObjectPropertySynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     boolean reasonerKnowsTopProperty = true;
@@ -1324,7 +1291,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
                 NodeSet<OWLObjectPropertyExpression> subProperties = reasoner.getSubObjectProperties(property, true);
                 boolean containsNothing = false;
                 for (Node<OWLObjectPropertyExpression> props : subProperties) {
-                    rootProperties.removeAll(props.getEntities());
+                    props.entities().forEach(rootProperties::remove);
                     containsNothing = props.contains(nothing);
                 }
                 if (!containsNothing) {
@@ -1393,7 +1360,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         try {
             OWLReasoner reasoner = getReasoner(query.getKB());
             NodeSet<OWLClass> nodeSet = reasoner.getSuperClasses(query.getOWLClassExpression(), query.isDirect());
-            this.response = new SetOfClassSynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+            this.response = new SetOfClassSynsetsImpl(s(nodeSet), getWarning(query.getKB()));
         } catch (Exception e) {
             handle(e);
         }
@@ -1403,17 +1370,13 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     public void answer(Request<?> query) {
         if (query instanceof RetractRequest) {
             RetractRequest request = (RetractRequest) query;
-            OWLReasoner reasoner = getReasoner(request.getKB());
-            if (reasoner != null) {
-                OWLOntology ontology = manager.getOntology(request.getKB());
-                if(ontology==null) {
-                    this.response = new ErrorResponseImpl(request.getKB() + " matches no ontology");
-                    return;
-                }
-                ontology.removeAxioms(request.getAxioms());
-                this.response = new OKImpl();
-                //getReasoner(request.getKB()).prepareReasoner();
+            OWLOntology ontology = manager.getOntology(request.getKB());
+            if(ontology==null) {
+                this.response = new ErrorResponseImpl(request.getKB() + " matches no ontology");
+                return;
             }
+            ontology.removeAxioms(request.getAxioms());
+            this.response = new OKImpl();
         } else
             this.response = new ErrorResponseImpl(query.getClass().getSimpleName() + " is not supported");
     }
@@ -1422,13 +1385,14 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetSuperDataProperties query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
         NodeSet<OWLDataProperty> nodeSet = reasoner.getSuperDataProperties(query.getProperty(), query.isDirect());
-        this.response = new SetOfDataPropertySynsetsImpl(nodeSet.getNodes(), getWarning(query.getKB()));
+        this.response = new SetOfDataPropertySynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     @Override
     public void answer(org.semanticweb.owlapi.owllink.builtin.requests.GetSuperObjectProperties query) {
         OWLReasoner reasoner = getReasoner(query.getKB());
-        this.response = new SetOfObjectPropertySynsetsImpl(reasoner.getSuperObjectProperties(query.getProperty(), query.isDirect()).getNodes(), getWarning(query.getKB()));
+        NodeSet<OWLObjectPropertyExpression> nodeSet = reasoner.getSuperObjectProperties(query.getProperty(), query.isDirect());
+        this.response = new SetOfObjectPropertySynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     @Override
@@ -1439,7 +1403,8 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
             return;
         }
         OWLReasoner reasoner = getReasoner(query.getKB());
-        this.response = new ClassSynsetsImpl(reasoner.getTypes(query.getIndividual().asOWLNamedIndividual(), query.isDirect()).getNodes(), getWarning(query.getKB()));
+        NodeSet<OWLClass> nodeSet = reasoner.getTypes(query.getIndividual().asOWLNamedIndividual(), query.isDirect());
+        this.response = new ClassSynsetsImpl(s(nodeSet), getWarning(query.getKB()));
     }
 
     @Override
@@ -1458,14 +1423,11 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     @Override
     public void answer(IsDataPropertySatisfiable query) {
         this.response = new ErrorResponseImpl("IsDataPropertySatisfiable is not supported");
-
     }
-
 
     @Override
     public void answer(IsKBConsistentlyDeclared query) {
         this.response = new ErrorResponseImpl("IsKBConsistentlyDeclared is not supported");
-
     }
 
     @Override
@@ -1529,7 +1491,6 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
     @Override
     public void answer(IsObjectPropertySatisfiable query) {
         this.response = new ErrorResponseImpl("IsObjectPropertySatisfiable is not supported");
-
     }
 
     @Override
@@ -1628,9 +1589,7 @@ public class OWLlinkReasonerBridge implements RequestVisitor {
         } catch (Exception e) {
             handle(e);
         }
-
     }
-
 
     /**
      * Pairs iterator.

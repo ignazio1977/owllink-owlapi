@@ -32,6 +32,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectProperties;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -92,6 +94,6 @@ public class OWLlinkEquivalentObjectPropertiesTestCase extends AbstractOWLlinkAx
 
     public void testGetEquivalentObjectPropertiesViaOWLReasoner() {
         Node<OWLObjectPropertyExpression> result = super.reasoner.getEquivalentObjectProperties(opa());
-        assertEquals(set(opa(),opb()),result.getEntities());
+        assertEquals(set(opa(),opb()),asUnorderedSet(result.entities()));
     }
 }

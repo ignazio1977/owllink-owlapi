@@ -27,10 +27,9 @@ import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
-import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Author: Olaf Noppens
@@ -71,7 +70,7 @@ public class SetOfIndividualsImpl extends SetOfImpl<OWLIndividual> implements Se
      * @param elements elements 
      */
     public SetOfIndividualsImpl(NodeSet<OWLNamedIndividual> elements) {
-        this(convertToFlattened(elements));
+        this(asUnorderedSet(elements.entities(), OWLIndividual.class));
     }
 
     /**
@@ -79,19 +78,11 @@ public class SetOfIndividualsImpl extends SetOfImpl<OWLIndividual> implements Se
      * @param warning warning 
      */
     public SetOfIndividualsImpl(NodeSet<OWLNamedIndividual> elements, String warning) {
-        this(convertToFlattened(elements), warning);
+        this(asUnorderedSet(elements.entities(), OWLIndividual.class), warning);
     }
 
     @Override
     public <O> O accept(ResponseVisitor<O> visitor) {
         return visitor.visit(this);
-    }
-
-    /**
-     * @param nodeSet nodeSet 
-     * @return flattened individuals
-     */
-    public static Set<OWLIndividual> convertToFlattened(NodeSet<OWLNamedIndividual> nodeSet) {
-        return asSet(nodeSet.entities(), OWLIndividual.class);
     }
 }

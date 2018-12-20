@@ -30,6 +30,9 @@ import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.impl.DefaultNode;
 import org.semanticweb.owlapi.reasoner.impl.NodeFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asList;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,7 +48,7 @@ public class IndividualSynsetImpl implements IndividualSynset {
     /**
      * @param individuals individuals 
      */
-    public IndividualSynsetImpl(Set<OWLIndividual> individuals) {
+    public IndividualSynsetImpl(Collection<OWLIndividual> individuals) {
         if (individuals.isEmpty())
             throw new IllegalArgumentException("IndividualSynsets must not be empty!");
         this.individuals = new HashSet<>();
@@ -56,13 +59,7 @@ public class IndividualSynsetImpl implements IndividualSynset {
      * @param node node 
      */
     public IndividualSynsetImpl(Node<OWLNamedIndividual> node) {
-        this(convert(node));
-    }
-
-    static Set<OWLIndividual> convert(Node<OWLNamedIndividual> node) {
-        Set<OWLIndividual> indis = new HashSet<>();
-        indis.addAll(node.getEntities());
-        return indis;
+        this(asList(node.entities(), OWLIndividual.class));
     }
 
     @Override

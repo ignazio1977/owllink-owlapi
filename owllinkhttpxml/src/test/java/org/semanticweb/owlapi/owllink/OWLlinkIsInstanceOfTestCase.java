@@ -35,6 +35,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.Classes;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.util.Set;
 
@@ -87,23 +88,23 @@ public class OWLlinkIsInstanceOfTestCase extends AbstractOWLlinkAxiomsTestCase {
     public void testFlattenedTypes() {
         GetFlattenedTypes query = new GetFlattenedTypes(getKBIRI(), i());
         Classes answer = super.reasoner.answer(query);
-        assertEquals(set(a(),b(),top()), answer.getEntities());
+        assertEquals(set(a(),b(),top()), asUnorderedSet(answer.entities()));
 
         query = new GetFlattenedTypes(getKBIRI(), i(), true);
         answer = super.reasoner.answer(query);
-        assertEquals(set(a(),b()), answer.getEntities());
+        assertEquals(set(a(),b()), asUnorderedSet(answer.entities()));
     }
 
     public void testTypes() {
         GetTypes types = new GetTypes(getKBIRI(), i(), false);
         ClassSynsets answerTypes = super.reasoner.answer(types);
-        assertEquals(set(a(),b(),top()), answerTypes.getFlattened());
+        assertEquals(set(a(),b(),top()), asUnorderedSet(answerTypes.entities()));
     }
 
     public void testTypesViaOWLReasoner() {
         NodeSet<OWLClass> answerTypes = super.reasoner.getTypes(i(), false);
         Set<OWLClass> expected = set(a(),b(),top());
-        assertEquals(expected, answerTypes.getFlattened());
+        assertEquals(expected, asUnorderedSet(answerTypes.entities()));
     }
 
     public void testGetInstances() {
@@ -114,6 +115,6 @@ public class OWLlinkIsInstanceOfTestCase extends AbstractOWLlinkAxiomsTestCase {
 
     public void testGetInstancesViaOWLReasoner() {
         NodeSet<OWLNamedIndividual> response = super.reasoner.getInstances(a(), false);
-        assertEquals(set(i()), response.getFlattened());
+        assertEquals(set(i()), asUnorderedSet(response.entities()));
     }
 }

@@ -24,6 +24,7 @@
 package org.semanticweb.owlapi.owllink;
 
 import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSubObjectProperties;
 import org.semanticweb.owlapi.owllink.builtin.requests.GetSubObjectPropertyHierarchy;
@@ -34,6 +35,8 @@ import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.impl.OWLObjectPropertyNode;
 import org.semanticweb.owlapi.util.CollectionFactory;
+
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.util.Set;
 
@@ -88,8 +91,12 @@ public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTes
 
         assertEquals(2,response.nodes().count());
         Node<OWLObjectPropertyExpression> synset = response.iterator().next();
-        assertEquals(set(opa()), synset.getEntities());
-        assertEquals(set(opa(), manager.getOWLDataFactory().getOWLBottomObjectProperty()), response.getFlattened());
+        assertEquals(set(opa()), asUnorderedSet(synset.entities()));
+        assertEquals(set(opa(), bottomObject()), asUnorderedSet(response.entities()));
+    }
+
+    protected OWLObjectProperty bottomObject() {
+        return manager.getOWLDataFactory().getOWLBottomObjectProperty();
     }
 
     public void testGetSubObjectPropertiesViaOWLReasoner() {
@@ -98,8 +105,8 @@ public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTes
 
         assertEquals(2,response.nodes().count());
         Node<OWLObjectPropertyExpression> synset = response.iterator().next();
-        assertEquals(set(opa()), synset.getEntities());
-        assertEquals(set(opa(), manager.getOWLDataFactory().getOWLBottomObjectProperty()), response.getFlattened());
+        assertEquals(set(opa()), asUnorderedSet(synset.entities()));
+        assertEquals(set(opa(), bottomObject()), asUnorderedSet(response.entities()));
     }
 
     public void testGetDirectSubObjectProperties() {
@@ -107,14 +114,14 @@ public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTes
         GetSubObjectProperties query = new GetSubObjectProperties(getKBIRI(), opb(), true);
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
         assertEquals(1,response.nodes().count());
-        assertEquals(set(opa()), response.getFlattened());
+        assertEquals(set(opa()), asUnorderedSet(response.entities()));
     }
 
     public void testGetDirectSubObjectPropertiesViaOWLReasoner() {
         //direct case
         NodeSet<OWLObjectPropertyExpression> response = super.reasoner.getSubObjectProperties(opb(), true);
         assertEquals(1,response.nodes().count());
-        assertEquals(set(opa()), response.getFlattened());
+        assertEquals(set(opa()), asUnorderedSet(response.entities()));
     }
 
 
@@ -122,12 +129,16 @@ public class OWLlinkSubObjectPropertiesTestCase extends AbstractOWLlinkAxiomsTes
         GetSuperObjectProperties query = new GetSuperObjectProperties(getKBIRI(), opa());
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
         assertEquals(3,response.nodes().count());
-        assertEquals(set(new OWLObjectPropertyNode(opb()), new OWLObjectPropertyNode(opc()), new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty())),response.getNodes());
+        assertEquals(set(new OWLObjectPropertyNode(opb()), new OWLObjectPropertyNode(opc()), topObject()),asUnorderedSet(response.nodes()));
+    }
+
+    protected OWLObjectPropertyNode topObject() {
+        return new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty());
     }
 
     public void testGetSuperPropertiesViaOWLReasoner() {
         NodeSet<OWLObjectPropertyExpression> response = super.reasoner.getSuperObjectProperties(opa(), false);
-        assertEquals(set(new OWLObjectPropertyNode(opb()), new OWLObjectPropertyNode(opc()), new OWLObjectPropertyNode(manager.getOWLDataFactory().getOWLTopObjectProperty())),response.getNodes());
+        assertEquals(set(new OWLObjectPropertyNode(opb()), new OWLObjectPropertyNode(opc()), topObject()),asUnorderedSet(response.nodes()));
     }
 
     public void testGetSuperPropertiesDirect() {

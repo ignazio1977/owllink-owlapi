@@ -57,11 +57,6 @@ public class SubObjectPropertySynsets extends OWLObjectPropertyNodeSet implement
     }
 
     @Override
-    public int hashCode() {
-        return getNodes().hashCode();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -69,7 +64,6 @@ public class SubObjectPropertySynsets extends OWLObjectPropertyNodeSet implement
         if (!(obj instanceof SubObjectPropertySynsets)) {
             return false;
         }
-        SubObjectPropertySynsets other = (SubObjectPropertySynsets) obj;
-        return other.getNodes().equals(getNodes());
+        return super.equals(obj);
     }
 }

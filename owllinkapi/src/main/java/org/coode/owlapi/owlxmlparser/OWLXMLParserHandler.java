@@ -45,43 +45,11 @@ public class OWLXMLParserHandler extends DefaultHandler {
     protected OWLOntologyLoaderConfiguration configuration;
 
     /**
-     * @param owlOntologyManager
-     *        manager
-     * @param ontology
-     *        ontology
-     * @deprecated manager unnecessary
-     */
-    @Deprecated
-    public OWLXMLParserHandler(OWLOntologyManager owlOntologyManager,
-            OWLOntology ontology) {
-        this(owlOntologyManager, ontology, null,
-                new OWLOntologyLoaderConfiguration());
-    }
-
-    /**
      * @param ontology
      *        ontology to parse into
      */
     public OWLXMLParserHandler(OWLOntology ontology) {
         this(ontology, null, new OWLOntologyLoaderConfiguration());
-    }
-
-    /**
-     * Creates an OWLXML handler.
-     * 
-     * @param owlOntologyManager
-     *        The manager that should be used to obtain a data factory, imported
-     *        ontologies etc.
-     * @param ontology
-     *        The ontology that the XML representation will be parsed into.
-     * @param configuration
-     *        load configuration
-     * @deprecated manager is unnecessary
-     */
-    @Deprecated
-    public OWLXMLParserHandler(OWLOntologyManager owlOntologyManager,
-            OWLOntology ontology, OWLOntologyLoaderConfiguration configuration) {
-        this(owlOntologyManager, ontology, null, configuration);
     }
 
     /**
@@ -109,22 +77,6 @@ public class OWLXMLParserHandler extends DefaultHandler {
         	e.printStackTrace();
         }
         bases.push(base);
-    }
-
-    /**
-     * @param owlOntologyManager
-     *        manager
-     * @param ontology
-     *        ontology to parse into
-     * @param topHandler
-     *        top level handler
-     * @deprecated manager unnecessary
-     */
-    @Deprecated
-    public OWLXMLParserHandler(OWLOntologyManager owlOntologyManager,
-            OWLOntology ontology, OWLElementHandler<?> topHandler) {
-        this(owlOntologyManager, ontology, topHandler,
-                new OWLOntologyLoaderConfiguration());
     }
 
     /**
@@ -258,34 +210,6 @@ public class OWLXMLParserHandler extends DefaultHandler {
         addFactory(new AbstractElementHandlerFactory(BUILT_IN_ATOM, SWRLBuiltInAtomElementHandler::new));
         addFactory(new AbstractElementHandlerFactory(DIFFERENT_INDIVIDUALS_ATOM, SWRLDifferentIndividualsAtomElementHandler::new));
         addFactory(new AbstractElementHandlerFactory(SAME_INDIVIDUAL_ATOM, SWRLSameIndividualAtomElementHandler::new));
-    }
-
-    /**
-     * Creates an OWLXML handler with the specified top level handler. This
-     * allows OWL/XML representations of axioms to be embedded in abitrary XML
-     * documents e.g. DIG 2.0 documents. (The default handler behaviour expects
-     * the top level element to be an Ontology element).
-     * 
-     * @param owlOntologyManager
-     *        The manager that should be used to obtain a data factory, imported
-     *        ontologies etc.
-     * @param ontology
-     *        The ontology object that the XML representation should be parsed
-     *        into.
-     * @param topHandler
-     *        The handler for top level elements - may be {@code null}, in which
-     *        case the parser will expect an Ontology element to be the root
-     *        element.
-     * @param configuration
-     *        load configuration
-     * @deprecated manager is unnecessary
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    public OWLXMLParserHandler(OWLOntologyManager owlOntologyManager,
-            OWLOntology ontology, OWLElementHandler<?> topHandler,
-            OWLOntologyLoaderConfiguration configuration) {
-        this(ontology, topHandler, configuration);
     }
 
     /** @return config */

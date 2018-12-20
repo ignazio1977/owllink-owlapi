@@ -32,6 +32,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfClasses;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -76,6 +78,6 @@ public class OWLlinkEquivalentClassesTestCase extends AbstractOWLlinkAxiomsTestC
 
     public void testGetEquivalentClassesViaOWLReasoner() {
         Node<OWLClass> result = super.reasoner.getEquivalentClasses(a());
-        assertEquals(set(a(),b(),c()),result.getEntities());
+        assertEquals(set(a(),b(),c()),asUnorderedSet(result.entities()));
     }
 }

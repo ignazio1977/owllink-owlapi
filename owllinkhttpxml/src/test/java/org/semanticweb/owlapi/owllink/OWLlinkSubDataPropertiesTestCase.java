@@ -35,6 +35,8 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.impl.OWLDataPropertyNode;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -87,27 +89,27 @@ public class OWLlinkSubDataPropertiesTestCase extends AbstractOWLlinkAxiomsTestC
 
         assertEquals(2,response.nodes().count());
 
-        assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), response.getFlattened());
+        assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), asUnorderedSet(response.entities()));
     }
 
     public void testGetSubPropertiesViaOWLReasoner() {
         NodeSet<OWLDataProperty> response = super.reasoner.getSubDataProperties(dpB(), false);
 
         assertEquals(2,response.nodes().count());
-        assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), response.getFlattened());
+        assertEquals(set(dpA(), manager.getOWLDataFactory().getOWLBottomDataProperty()), asUnorderedSet(response.entities()));
     }
 
     public void testGetDirectSubProperties() {
         GetSubDataProperties query = new GetSubDataProperties(getKBIRI(), dpB(), true);
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
         assertEquals(1,response.nodes().count());
-        assertEquals(set(dpA()), response.getFlattened());
+        assertEquals(set(dpA()), asUnorderedSet(response.entities()));
     }
 
     public void testGetDirectSubPropertiesViaOWLReasoner() {
         NodeSet<OWLDataProperty> response = super.reasoner.getSubDataProperties(dpB(), true);
         assertEquals(1,response.nodes().count());
-        assertEquals(set(dpA()), response.getFlattened());
+        assertEquals(set(dpA()), asUnorderedSet(response.entities()));
     }
 
     public void testGetSuperProperties() {

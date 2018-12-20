@@ -26,7 +26,7 @@ package org.semanticweb.owlapi.owllink.builtin.response;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.reasoner.impl.OWLClassNode;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Author: Olaf Noppens
@@ -54,7 +54,7 @@ public class ClassesImpl extends OWLClassNode implements Classes {
     /**
      * @param classes classes 
      */
-    public ClassesImpl(Set<OWLClass> classes) {
+    public ClassesImpl(Collection<OWLClass> classes) {
         this(classes, null);
     }
 
@@ -62,7 +62,7 @@ public class ClassesImpl extends OWLClassNode implements Classes {
      * @param classes classes 
      * @param warning warning 
      */
-    public ClassesImpl(Set<OWLClass> classes, String warning) {
+    public ClassesImpl(Collection<OWLClass> classes, String warning) {
         super(classes);
         this.warning = warning;
         if (classes.isEmpty())

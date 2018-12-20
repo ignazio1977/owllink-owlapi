@@ -35,6 +35,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -94,7 +96,7 @@ public class OWLlinkDifferentIndividualsTestCase extends AbstractOWLlinkAxiomsTe
 
     public void testGetDisjointIndividualsWithOWLReasoner() {
         NodeSet<OWLNamedIndividual> response = super.reasoner.getDifferentIndividuals(ib());
-        assertEquals(set(ia(),ic(),id()),response.getFlattened());
+        assertEquals(set(ia(),ic(),id()),asUnorderedSet(response.entities()));
     }
 
     public void testGetFlattenedDisjointIndividuals() {

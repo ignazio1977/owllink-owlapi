@@ -83,13 +83,11 @@ public abstract class AbstractOWLlinkAxiomsTestCase extends AbstractOWLlinkTestC
     }
 
     protected void addAxiomsToRootOntology() {
-        for (OWLAxiom axiom : createAxioms())
-            addAxiom(getRootOntology(), axiom);
+        getRootOntology().add(createAxioms());
     }
 
     protected void removeAxiomsFromRootOntology() {
-        for (OWLAxiom axiom : createAxioms())
-            removeAxiom(getRootOntology(), axiom);
+        getRootOntology().remove(createAxioms());
     }
 
     @Override

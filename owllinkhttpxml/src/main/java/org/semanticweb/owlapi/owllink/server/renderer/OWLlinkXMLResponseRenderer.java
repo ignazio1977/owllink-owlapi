@@ -52,30 +52,6 @@ public class OWLlinkXMLResponseRenderer {
     /**
      * @param writer writer 
      * @param prov prov 
-     * @param dfKB dfKB 
-     * @param responses responses 
-     */
-    @Deprecated
-    public void render(PrintWriter writer, PrefixManagerProvider prov, IRI dfKB, Response... responses) {
-        this.defaultKB = dfKB;
-        OWLlinkXMLWriter w = new OWLlinkXMLWriter(writer, prov, config);
-        w.startDocument(false);
-        renderer.setWriter(w);
-        for (Response response : responses) {
-            //getRequestRenderer(request).render(request, w);
-            //render(response, w);
-            if (response instanceof KBResponse) {
-
-            }
-            response.accept(renderer);
-        }
-        w.endDocument();
-    }
-
-
-    /**
-     * @param writer writer 
-     * @param prov prov 
      * @param requests requests 
      * @param responses responses 
      */

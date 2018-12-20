@@ -52,6 +52,7 @@ public abstract class AbstractKBRequestWithTwoOrMoreObjects<R extends KBResponse
 
     /** @param kb knowledge base 
      * @param elem elem */
+    @SafeVarargs
     public AbstractKBRequestWithTwoOrMoreObjects(IRI kb, O... elem) {
         this(kb, Arrays.asList(elem));
     }

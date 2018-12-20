@@ -26,7 +26,6 @@ package org.semanticweb.owlapi.owllink.parser;
 import org.coode.owlapi.owlxmlparser.OWLElementHandler;
 import org.coode.owlapi.owlxmlparser.OWLElementHandlerFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLRuntimeException;
 import org.semanticweb.owlapi.owllink.OWLlinkXMLVocabulary;
 import org.semanticweb.owlapi.owllink.PrefixManagerProvider;
@@ -53,24 +52,22 @@ public class OWLlinkXMLParserHandler extends MyOWLXMLParserHandler {
     Request<?>[] requests;
 
     /**
-     * @param owlOntologyManager owlOntologyManager 
      * @param prov prov 
      * @param requests requests 
      * @param ontology ontology 
      */
-    public OWLlinkXMLParserHandler(OWLOntologyManager owlOntologyManager, PrefixManagerProvider prov, Request<?>[] requests, OWLOntology ontology) {
-        this(owlOntologyManager, prov, requests, ontology, null);
+    public OWLlinkXMLParserHandler(PrefixManagerProvider prov, Request<?>[] requests, OWLOntology ontology) {
+        this(prov, requests, ontology, null);
     }
 
     /**
-     * @param owlOntologyManager owlOntologyManager 
      * @param provider provider 
      * @param requests requests 
      * @param ontology ontology 
      * @param topHandler topHandler 
      */
-    public OWLlinkXMLParserHandler(OWLOntologyManager owlOntologyManager, PrefixManagerProvider provider, Request<?>[] requests, OWLOntology ontology, OWLElementHandler<?> topHandler) {
-        super(owlOntologyManager, ontology, topHandler);
+    public OWLlinkXMLParserHandler(PrefixManagerProvider provider, Request<?>[] requests, OWLOntology ontology, OWLElementHandler<?> topHandler) {
+        super(ontology, topHandler);
         this.owllinkHandlerMap = new HashMap<>();
         this.prov = provider;
         this.requests = requests;

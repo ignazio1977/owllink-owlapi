@@ -36,7 +36,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectProperties;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
 import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.add;
-import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.util.Set;
 
@@ -81,19 +81,19 @@ public class OWLlinkGetEntitiesTestCase extends AbstractOWLlinkAxiomsTestCase {
     public void testGetAllClasses() throws Exception {
         GetAllClasses query = new GetAllClasses(getKBIRI());
         SetOfClasses answer = reasoner.answer(query);
-        assertEquals(asSet(getOntology().classesInSignature()), answer);
+        assertEquals(asUnorderedSet(getOntology().classesInSignature()), answer);
     }
 
     public void testGetAllDataProperties() throws Exception {
         GetAllDataProperties query = new GetAllDataProperties(getKBIRI());
         SetOfDataProperties answer = reasoner.answer(query);
-        assertEquals(asSet(getOntology().dataPropertiesInSignature()), answer);
+        assertEquals(asUnorderedSet(getOntology().dataPropertiesInSignature()), answer);
     }
 
     public void testGetAllObjectProperties() throws Exception {
         GetAllObjectProperties query = new GetAllObjectProperties(getKBIRI());
         SetOfObjectProperties answer = reasoner.answer(query);
-        assertEquals(asSet(getOntology().objectPropertiesInSignature()), answer);
+        assertEquals(asUnorderedSet(getOntology().objectPropertiesInSignature()), answer);
     }
 
     public void testGetAllIndividuals() throws Exception {

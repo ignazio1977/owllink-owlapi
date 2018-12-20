@@ -56,10 +56,6 @@ public class SubDataPropertySynsets extends OWLDataPropertyNodeSet implements Su
         super(nodes);
     }
 
-    @Override
-    public int hashCode() {
-        return getNodes().hashCode();
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -69,7 +65,6 @@ public class SubDataPropertySynsets extends OWLDataPropertyNodeSet implements Su
         if (!(obj instanceof SubDataPropertySynsets)) {
             return false;
         }
-        SubDataPropertySynsets other = (SubDataPropertySynsets) obj;
-        return other.getNodes().equals(getNodes());
+        return super.equals(obj);
     }
 }

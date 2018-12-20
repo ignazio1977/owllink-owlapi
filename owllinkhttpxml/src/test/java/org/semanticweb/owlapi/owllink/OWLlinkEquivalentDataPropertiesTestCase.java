@@ -32,6 +32,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.DataPropertySynonyms;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -86,11 +88,11 @@ public class OWLlinkEquivalentDataPropertiesTestCase extends AbstractOWLlinkAxio
     public void testGetEquivalentDataProperties() {
         GetEquivalentDataProperties query = new GetEquivalentDataProperties(getKBIRI(), dpA());
         DataPropertySynonyms result = super.reasoner.answer(query);
-        assertEquals(set(dpA(),dpB(),dpC()),result.getEntities());
+        assertEquals(set(dpA(),dpB(),dpC()),asUnorderedSet(result.entities()));
     }
 
     public void testGetEquivalentDataPropertiesViaOWLReasoner() {
         Node<OWLDataProperty> result = super.reasoner.getEquivalentDataProperties(dpA());
-        assertEquals(set(dpA(),dpB(),dpC()),result.getEntities());
+        assertEquals(set(dpA(),dpB(),dpC()),asUnorderedSet(result.entities()));
     }
 }

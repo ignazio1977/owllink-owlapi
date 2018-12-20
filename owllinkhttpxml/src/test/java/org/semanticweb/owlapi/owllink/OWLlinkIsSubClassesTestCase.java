@@ -36,6 +36,8 @@ import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.impl.OWLClassNode;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -87,7 +89,7 @@ public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
         GetSubClasses query = new GetSubClasses(getKBIRI(), b());
         NodeSet<OWLClass> response = super.reasoner.answer(query);
         assertEquals(2,response.nodes().count());
-        Set<OWLClass> flattenedClasses = response.getFlattened();
+        Set<OWLClass> flattenedClasses = asUnorderedSet(response.entities());
         assertEquals(set(a(),manager.getOWLDataFactory().getOWLNothing()), flattenedClasses);
     }
 
@@ -95,7 +97,7 @@ public class OWLlinkIsSubClassesTestCase extends AbstractOWLlinkAxiomsTestCase {
         NodeSet<OWLClass> nodeSet = super.reasoner.getSubClasses(b(), false);
         assertEquals(2,nodeSet.nodes().count());
 
-        Set<OWLClass> flattenedClasses = nodeSet.getFlattened();
+        Set<OWLClass> flattenedClasses = asUnorderedSet(nodeSet.entities());
         assertEquals(set(a(),manager.getOWLDataFactory().getOWLNothing()), flattenedClasses);
     }
 

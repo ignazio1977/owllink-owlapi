@@ -37,12 +37,10 @@ public class MyOWLXMLParserHandler extends OWLXMLParserHandler {
     /**
      * Creates an OWLXML handler.
      *
-     * @param owlOntologyManager The manager that should be used to obtain a data factory,
-     *                           imported ontologies etc.
      * @param ontology           The ontology that the XML representation will be parsed into.
      */
-    public MyOWLXMLParserHandler(OWLOntologyManager owlOntologyManager, OWLOntology ontology) {
-        this(owlOntologyManager, ontology, null);
+    public MyOWLXMLParserHandler(OWLOntology ontology) {
+        this(ontology, null);
     }
 
     /**
@@ -51,15 +49,12 @@ public class MyOWLXMLParserHandler extends OWLXMLParserHandler {
      * (The default handler behaviour expects the top level element to be an Ontology
      * element).
      *
-     * @param owlOntologyManager The manager that should be used to obtain a data factory,
-     *                           imported ontologies etc.
      * @param ontology           The ontology object that the XML representation should be parsed into.
      * @param topHandler         The handler for top level elements - may be <code>null</code>, in which
      *                           case the parser will expect an Ontology element to be the root element.
      */
-    public MyOWLXMLParserHandler(OWLOntologyManager owlOntologyManager, OWLOntology ontology,
-                                 OWLElementHandler<?> topHandler) {
-        super(owlOntologyManager, ontology, topHandler);
+    public MyOWLXMLParserHandler(OWLOntology ontology, OWLElementHandler<?> topHandler) {
+        super(ontology, topHandler);
     }
 
     /**

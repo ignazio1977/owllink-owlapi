@@ -8,7 +8,6 @@ import org.semanticweb.owlapi.io.AbstractOWLRenderer;
 import org.semanticweb.owlapi.io.OWLRendererException;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyWriterConfiguration;
 import org.semanticweb.owlapi.vocab.Namespaces;
 
@@ -18,16 +17,6 @@ import org.semanticweb.owlapi.vocab.Namespaces;
  */
 public class OWLXMLRenderer extends AbstractOWLRenderer {
     private OWLOntologyWriterConfiguration config = new OWLOntologyWriterConfiguration();
-
-    /**
-     * @param owlOntologyManager owlOntologyManager
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    public OWLXMLRenderer(OWLOntologyManager owlOntologyManager) {}
-
-    /** default constructor */
-    public OWLXMLRenderer() {}
 
     /**
      * @param ontology ontology

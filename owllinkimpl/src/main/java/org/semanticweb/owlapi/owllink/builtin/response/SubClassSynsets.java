@@ -56,11 +56,6 @@ public class SubClassSynsets extends OWLClassNodeSet implements SubEntitySynsets
     }
 
     @Override
-    public int hashCode() {
-        return getNodes().hashCode();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -68,7 +63,6 @@ public class SubClassSynsets extends OWLClassNodeSet implements SubEntitySynsets
         if (!(obj instanceof SubClassSynsets)) {
             return false;
         }
-        SubClassSynsets other = (SubClassSynsets) obj;
-        return other.getNodes().equals(getNodes());
+        return super.equals(obj);
     }
 }

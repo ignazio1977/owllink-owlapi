@@ -32,6 +32,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.ObjectPropertySynsets;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.util.CollectionFactory;
 
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -86,11 +88,11 @@ public class OWLlinkDisjointObjectPropertiesTestCase extends AbstractOWLlinkAxio
     public void testGetDisjointObjectProperties() {
         GetDisjointObjectProperties query = new GetDisjointObjectProperties(getKBIRI(), opb());
         ObjectPropertySynsets response = reasoner.answer(query);
-        assertEquals(response.getNodes().toString(),3,response.nodes().count());
+        assertEquals(asUnorderedSet(response.nodes()).toString(),3,response.nodes().count());
     }
 
     public void testGetDisjointObjectPropertiesViaOWLReasoner() {
         NodeSet<OWLObjectPropertyExpression> response = reasoner.getDisjointObjectProperties(opb());
-        assertEquals(response.getNodes().toString(),3,response.nodes().count());
+        assertEquals(asUnorderedSet(response.nodes()).toString(),3,response.nodes().count());
     }
 }

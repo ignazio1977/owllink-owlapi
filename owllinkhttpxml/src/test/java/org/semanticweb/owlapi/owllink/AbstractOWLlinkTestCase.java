@@ -279,29 +279,5 @@ public abstract class AbstractOWLlinkTestCase extends TestCase {
         return getDataFactory().getOWLLiteral(value);
     }
 
-    /**
-     * @param ont
-     * @param ax
-     */
-    public void addAxiom(OWLOntology ont, OWLAxiom ax) {
-        try {
-            manager.addAxiom(ont, ax);
-        } catch (OWLOntologyChangeException e) {
-            fail(e.getMessage() + " " + e.getStackTrace().toString());
-        }
-    }
-
-    /**
-     * @param ont
-     * @param ax
-     */
-    public void removeAxiom(OWLOntology ont, OWLAxiom ax) {
-        try {
-            manager.removeAxiom(ont, ax);
-        } catch (OWLOntologyChangeException e) {
-            fail(e.getMessage() + " " + e.getStackTrace().toString());
-        }
-    }
-
     protected abstract Set<? extends OWLAxiom> createAxioms();
 }

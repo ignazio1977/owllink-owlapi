@@ -190,7 +190,7 @@ public class HTTPSessionImpl implements HTTPSession {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 factory.setNamespaceAware(true);
                 SAXParser parser = factory.newSAXParser();
-                OWLlinkXMLParserHandler handler = new OWLlinkXMLParserHandler(manager, prov, askedRequests, manager.createOntology());
+                OWLlinkXMLParserHandler handler = new OWLlinkXMLParserHandler(prov, askedRequests, manager.createOntology());
                 handler.addFactories(registry.getParserFactories());
                 parser.parse(is, handler);
                 reader.close();

@@ -31,6 +31,7 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfObjectPropertySynsets;
 import org.semanticweb.owlapi.reasoner.Node;
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.util.Set;
 
@@ -56,41 +57,34 @@ public class OWLlinkIndividualObjectPropertiesTestCase extends AbstractOWLlinkAx
     public void testGetObjectPropertiesOfSource() throws Exception {
         GetObjectPropertiesOfSource query = new GetObjectPropertiesOfSource(getKBIRI(), getOWLIndividual("i"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(opp()));
-        assertTrue(response.getFlattened().contains(opq()));
-        assertTrue(response.getFlattened().contains(opr()));
-        assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
-
-        /* Set<Node<OWLObjectProperty>> synsets = CollectionFactory.createSet();
-        Synset<OWLObjectProperty> synset = new SynsetImpl<OWLObjectProperty>(opp(), opr());
-        synsets.add(synset);
-        synset = new SynsetImpl<OWLObjectProperty>(opq());
-        synsets.add(synset);
-        for (Synset<OWLObjectProperty> set : response) {
-            synsets.remove(set);
-        }
-        assertTrue(synsets.isEmpty());*/
+        Set<OWLObjectPropertyExpression> flattened = asUnorderedSet(response.entities());
+        assertTrue(flattened.size() == 4);
+        assertTrue(flattened.contains(opp()));
+        assertTrue(flattened.contains(opq()));
+        assertTrue(flattened.contains(opr()));
+        assertTrue(flattened.contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
     }
 
     public void testGetObjectPropertiesOfTarget() throws Exception {
         GetObjectPropertiesOfTarget query = new GetObjectPropertiesOfTarget(getKBIRI(), getOWLIndividual("k"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(opp()));
-        assertTrue(response.getFlattened().contains(opq()));
-        assertTrue(response.getFlattened().contains(opr()));
-        assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
+        Set<OWLObjectPropertyExpression> flattened = asUnorderedSet(response.entities());
+        assertTrue(flattened.size() == 4);
+        assertTrue(flattened.contains(opp()));
+        assertTrue(flattened.contains(opq()));
+        assertTrue(flattened.contains(opr()));
+        assertTrue(flattened.contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
     }
 
     public void testGetObjectPropertiesBetween() throws Exception {
         GetObjectPropertiesBetween query = new GetObjectPropertiesBetween(getKBIRI(), getOWLIndividual("i"), getOWLIndividual("j"));
         SetOfObjectPropertySynsets response = super.reasoner.answer(query);
-        assertTrue(response.getFlattened().size() == 4);
-        assertTrue(response.getFlattened().contains(opp()));
-        assertTrue(response.getFlattened().contains(opq()));
-        assertTrue(response.getFlattened().contains(opr()));
-        assertTrue(response.getFlattened().contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
+        Set<OWLObjectPropertyExpression> flattened = asUnorderedSet(response.entities());
+        assertTrue(flattened.size() == 4);
+        assertTrue(flattened.contains(opp()));
+        assertTrue(flattened.contains(opq()));
+        assertTrue(flattened.contains(opr()));
+        assertTrue(flattened.contains(manager.getOWLDataFactory().getOWLTopObjectProperty()));
         for (Node<OWLObjectPropertyExpression> synset : response) {
             if (synset.contains(opr()))
                 assertFalse(synset.isSingleton());

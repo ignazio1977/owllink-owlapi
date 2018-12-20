@@ -60,12 +60,6 @@ public abstract class ObjectPropertySynsetSet extends OWLObjectPropertyNodeSet i
         super(entity);
     }
 
-
-    @Override
-    public int hashCode() {
-        return getNodes().hashCode();
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -74,7 +68,6 @@ public abstract class ObjectPropertySynsetSet extends OWLObjectPropertyNodeSet i
         if (!(obj instanceof ObjectPropertySynsetSet)) {
             return false;
         }
-        ObjectPropertySynsetSet other = (ObjectPropertySynsetSet) obj;
-        return other.getNodes().equals(getNodes());
+        return super.equals(obj);
     }
 }

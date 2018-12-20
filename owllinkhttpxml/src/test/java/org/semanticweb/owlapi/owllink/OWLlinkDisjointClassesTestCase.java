@@ -85,11 +85,11 @@ public class OWLlinkDisjointClassesTestCase extends AbstractOWLlinkAxiomsTestCas
     public void testGetDisjointClasses() {
         GetDisjointClasses query = new GetDisjointClasses(getKBIRI(), b());
         ClassSynsets response = super.reasoner.answer(query);
-        assertEquals(3,response.getNodes().size());
+        assertEquals(3,response.nodes().count());
     }
 
     public void testGetDisjointClassesViaOWLReasoner() {
         NodeSet<OWLClass> response = super.reasoner.getDisjointClasses(b());
-        assertEquals(3,response.getNodes().size());
+        assertEquals(3,response.nodes().count());
     }
 }

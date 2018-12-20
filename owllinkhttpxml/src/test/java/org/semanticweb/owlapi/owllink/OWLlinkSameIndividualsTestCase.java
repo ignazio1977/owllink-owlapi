@@ -30,6 +30,7 @@ import org.semanticweb.owlapi.owllink.builtin.requests.IsEntailed;
 import org.semanticweb.owlapi.owllink.builtin.response.IndividualSynonyms;
 import org.semanticweb.owlapi.reasoner.Node;
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
 
 import java.util.Set;
 
@@ -85,6 +86,6 @@ public class OWLlinkSameIndividualsTestCase extends AbstractOWLlinkAxiomsTestCas
 
     public void testGetSameIndividualsViaOWLReasoner() {
         Node<OWLNamedIndividual> nodeSet = super.reasoner.getSameIndividuals(getOWLIndividual("i"));
-        assertEquals(set(getOWLIndividual("i"),getOWLIndividual("j"),getOWLIndividual("k")), nodeSet.getEntities());
+        assertEquals(set(getOWLIndividual("i"),getOWLIndividual("j"),getOWLIndividual("k")), asUnorderedSet(nodeSet.entities()));
     }
 }

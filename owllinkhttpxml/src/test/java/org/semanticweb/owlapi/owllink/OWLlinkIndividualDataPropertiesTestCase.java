@@ -31,6 +31,8 @@ import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividualSynsets;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfIndividuals;
 import org.semanticweb.owlapi.owllink.builtin.response.SetOfLiterals;
 import static org.semanticweb.owlapi.util.CollectionFactory.createSet;
+import static org.semanticweb.owlapi.util.OWLAPIStreamUtils.asUnorderedSet;
+
 import java.util.Set;
 
 /**
@@ -55,31 +57,26 @@ public class OWLlinkIndividualDataPropertiesTestCase extends AbstractOWLlinkAxio
     public void testGetDataPropertiesOfSource() throws Exception {
         GetDataPropertiesOfSource query = new GetDataPropertiesOfSource(getKBIRI(), getOWLIndividual("i"));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        Set<OWLDataProperty> expected = set(dpp(), dpq(), dpr(), manager.getOWLDataFactory().getOWLTopDataProperty()); 
-        assertEquals(expected, response.getFlattened());
-
-        /*Set<Synset<OWLDataProperty>> synsets = CollectionFactory.createSet();
-        Synset<OWLDataProperty> synset = new SynsetImpl<OWLDataProperty>(dpp(), dpr());
-        synsets.add(synset);
-        synset = new SynsetImpl<OWLDataProperty>(dpq());
-        synsets.add(synset);
-        for (Synset<OWLDataProperty> set : response) {
-            synsets.remove(set);
-        }
-        assertTrue(synsets.isEmpty());  */
+        Set<OWLDataProperty> expected = set(dpp(), dpq(), dpr(), topProperty()); 
+        assertEquals(expected, asUnorderedSet(response.entities()));
     }
 
     public void testGetDataPropertiesOfTarget() throws Exception {
         GetDataPropertiesOfLiteral query = new GetDataPropertiesOfLiteral(getKBIRI(), getLiteral(2));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        Set<OWLDataProperty> expected = set(dpp(), dpq(), dpr(), manager.getOWLDataFactory().getOWLTopDataProperty()); 
-        assertEquals(expected, response.getFlattened());
+        Set<OWLDataProperty> expected = set(dpp(), dpq(), dpr(), topProperty()); 
+        assertEquals(expected, asUnorderedSet(response.entities()));
     }
 
     public void testGetDataPropertiesBetween() throws Exception {
         GetDataPropertiesBetween query = new GetDataPropertiesBetween(getKBIRI(), getOWLIndividual("i"), getLiteral(1));
         SetOfDataPropertySynsets response = super.reasoner.answer(query);
-        assertEquals(set(dpp(),dpq(),dpr(),manager.getOWLDataFactory().getOWLTopDataProperty()), response.getFlattened());
+        assertEquals(set(dpp(),dpq(),dpr(),topProperty()), asUnorderedSet(response.entities()));
+    }
+
+
+    protected OWLDataProperty topProperty() {
+        return manager.getOWLDataFactory().getOWLTopDataProperty();
     }
 
 
