@@ -59,18 +59,22 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Implementation-Title>${project.name}</Implementation-Title>
-						<Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+						<Update-Url>https://github.com/ignazio1977/owllink-owlapi/blob/master/owllinkprotege/src/main/java/update.properties</Update-Url>
+						<Implementation-Title>OWLlink</Implementation-Title>
 						<Implementation-Version>${project.version}.${maven.build.timestamp}</Implementation-Version>
-						<Bundle-SymbolicName>OWLLink</Bundle-SymbolicName>
+						<Bundle-SymbolicName>org.semanticweb.owllink.protege.owllink;singleton:=true</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
+						<Bundle-Name>OWLlink HTTPXML Reasoner</Bundle-Name>
+						<Bundle-Category>protege</Bundle-Category>
+						<Bundle-Description>An OWL 2 reasoner adapter to OWLlink servers</Bundle-Description>
 						<Embed-Dependency>
-							groupId=${project.groupId};inline=false;scope=compile|runtime|provided
+							artifactId=owllinkapi;groupId=${project.groupId};inline=true,
+							artifactId=owllinkhttpxml;groupId=${project.groupId};inline=true,
+							artifactId=owllinkimpl;groupId=${project.groupId};inline=true,
+							artifactId=owllinkserver;groupId=${project.groupId};inline=true
 						</Embed-Dependency>
-						<Embed-Directory>lib</Embed-Directory>
-						<Embed-Transitive>true</Embed-Transitive>
 						<_exportcontents>
-							org.*;-split-package:=merge-first
+							org.semanticweb.owlapi.owllink.*;-split-package:=merge-first
 						</_exportcontents>
 						<Import-Package>
 							!sun.misc,
